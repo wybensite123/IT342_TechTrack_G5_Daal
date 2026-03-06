@@ -8,10 +8,10 @@
 		<version>3.5.0</version>
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
-	<groupId>com.techtrack</groupId>
-	<artifactId>backend</artifactId>
+	<groupId>edu.cit.daal</groupId>
+	<artifactId>techtrack</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>backend</name>
+	<name>techtrack</name>
 	<description>TechTrack Backend - Spring Boot REST API</description>
 	<url/>
 	<licenses>

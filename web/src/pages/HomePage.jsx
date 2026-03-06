@@ -178,6 +178,7 @@ export default function HomePage() {
   const [retDate, setRetDate]     = useState("");
   const [note, setNote]           = useState("");
   const [toast, setToast]         = useState({ msg: "", type: "info", visible: false });
+  const [menuOpen, setMenuOpen]   = useState(false);
   const toastTimer                = useRef(null);
 
   // Compute tomorrow for date min
@@ -241,34 +242,38 @@ export default function HomePage() {
       <div className="orb orb-b" />
 
       <div className="app">
+        {/* ─── SIDEBAR BACKDROP ─── */}
+        {menuOpen && <div className="sidebar-backdrop" onClick={() => setMenuOpen(false)} />}
+
         {/* ─── SIDEBAR ─── */}
-        <aside className="sidebar">
+        <aside className={`sidebar ${menuOpen ? "open" : ""}`}>
+          <button className="sidebar-close" onClick={() => setMenuOpen(false)}>✕</button>
           <div className="sidebar-logo">
             <img src={`data:image/png;base64,${LOGO_B64}`} alt="TechTrack" />
           </div>
 
           <p className="nav-section-label">Main Menu</p>
 
-          <a className="nav-item active" href="#">
+          <a className="nav-item active" href="#" onClick={() => setMenuOpen(false)}>
             <IconGrid /> Asset Catalog
           </a>
-          <a className="nav-item" href="#">
+          <a className="nav-item" href="#" onClick={() => setMenuOpen(false)}>
             <IconCheck /> My Loans
             <span className="nav-badge blue">3</span>
           </a>
-          <a className="nav-item" href="#">
+          <a className="nav-item" href="#" onClick={() => setMenuOpen(false)}>
             <IconInfo /> Pending Requests
             <span className="nav-badge">2</span>
           </a>
-          <a className="nav-item" href="#">
+          <a className="nav-item" href="#" onClick={() => setMenuOpen(false)}>
             <IconWatchlist /> Watchlist
           </a>
 
           <p className="nav-section-label">History</p>
-          <a className="nav-item" href="#">
+          <a className="nav-item" href="#" onClick={() => setMenuOpen(false)}>
             <IconClock /> Loan History
           </a>
-          <a className="nav-item" href="#">
+          <a className="nav-item" href="#" onClick={() => setMenuOpen(false)}>
             <IconFile /> Reports
           </a>
 
@@ -288,6 +293,9 @@ export default function HomePage() {
         <div className="main">
           {/* TOPBAR */}
           <header className="topbar">
+            <button className="hamburger" onClick={() => setMenuOpen(true)} title="Open menu">
+              <span /><span /><span />
+            </button>
             <div className="topbar-title">Asset <span>Catalog</span></div>
 
             <div className="search-bar">
