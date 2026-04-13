@@ -13,6 +13,24 @@
   to   { opacity: 0; transform: translateY(-20px) scale(0.98); }
 }
 
+/* ── FORM CARD ANIMATIONS ─────────────────────────────────────────── */
+@keyframes slideInRight {
+  from { opacity: 0; transform: translateX(40px) scale(0.96); }
+  to   { opacity: 1; transform: translateX(0)    scale(1); }
+}
+@keyframes slideOutLeft {
+  from { opacity: 1; transform: translateX(0)    scale(1); }
+  to   { opacity: 0; transform: translateX(-40px) scale(0.96); }
+}
+@keyframes slideInLeft {
+  from { opacity: 0; transform: translateX(-40px) scale(0.96); }
+  to   { opacity: 1; transform: translateX(0)    scale(1); }
+}
+@keyframes slideOutRight {
+  from { opacity: 1; transform: translateX(0)    scale(1); }
+  to   { opacity: 0; transform: translateX(40px) scale(0.96); }
+}
+
 /* ── AUTH HEADER ────────────────────────────────────────────────────── */
 .auth-header {
   position: fixed;
@@ -300,6 +318,30 @@
   display: flex;
   align-items: center;
   justify-content: center;
+  position: relative;
+}
+
+/* ── ANIMATED CARD WRAPPER ──────────────────────────────────────────── */
+.auth-card-wrapper {
+  position: absolute;
+  width: 100%;
+  max-width: 420px;
+  pointer-events: none;
+  opacity: 0;
+  transform: translateX(40px) scale(0.96);
+  transition: opacity 0.35s ease, transform 0.35s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.auth-card-wrapper.active {
+  pointer-events: auto;
+  opacity: 1;
+  transform: translateX(0) scale(1);
+}
+
+.auth-card-wrapper.hidden {
+  opacity: 0;
+  transform: translateX(-40px) scale(0.96);
+  pointer-events: none;
 }
 
 .login-card {
@@ -309,7 +351,6 @@
   padding: 48px 40px;
   box-shadow: 0 24px 64px rgba(0,0,0,0.4);
   width: 100%;
-  max-width: 420px;
   display: flex;
   flex-direction: column;
   gap: 24px;
@@ -372,6 +413,12 @@ form {
   display: flex;
   flex-direction: column;
   gap: 8px;
+}
+
+.form-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
 }
 
 .field-label {
