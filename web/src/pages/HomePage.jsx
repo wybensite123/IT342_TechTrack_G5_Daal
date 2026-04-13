@@ -1,4 +1,4 @@
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
 import "./HomePage.css";
 import logo from '../assets/TechTrack.png';
 
@@ -109,6 +109,64 @@ const IconPin = () => (
   </svg>
 );
 
+// ── Skeleton Components ────────────────────────────────────────────────────
+const SkeletonStatCard = () => (
+  <div className="stat-card skeleton">
+    <div className="stat-top">
+      <div className="stat-icon skeleton-pulse" />
+      <div className="stat-trend skeleton-pulse" />
+    </div>
+    <div className="stat-num skeleton-pulse" />
+    <div className="stat-label skeleton-pulse" />
+  </div>
+);
+
+const SkeletonAssetCard = () => (
+  <div className="asset-card skeleton">
+    <div className="asset-card-img skeleton-pulse">
+      <div className="skeleton-emoji" />
+      <div className="asset-status-float skeleton-pulse" />
+    </div>
+    <div className="asset-card-body">
+      <div className="asset-category skeleton-pulse" />
+      <div className="asset-name skeleton-pulse" />
+      <div className="asset-tag skeleton-pulse" />
+      <div className="asset-meta">
+        <div className="asset-meta-item skeleton-pulse" />
+      </div>
+      <div className="asset-meta">
+        <div className="asset-meta-item skeleton-pulse" />
+      </div>
+      <div className="asset-card-footer">
+        <div className="btn-request skeleton-pulse" />
+        <div className="wishlist-btn skeleton-pulse" />
+      </div>
+    </div>
+  </div>
+);
+
+const SkeletonActivityItem = () => (
+  <div className="activity-item skeleton">
+    <div className="activity-dot skeleton-pulse" />
+    <div className="activity-text">
+      <div className="activity-msg skeleton-pulse" />
+      <div className="activity-time skeleton-pulse" />
+    </div>
+    <div className="activity-status skeleton-pulse" />
+  </div>
+);
+
+const SkeletonQuickItem = () => (
+  <div className="quick-item skeleton">
+    <div className="quick-item-icon skeleton-pulse" />
+    <div className="quick-item-text">
+      <div className="quick-item-label skeleton-pulse" />
+      <div className="quick-item-sub skeleton-pulse" />
+    </div>
+    <div className="skeleton-arrow skeleton-pulse" />
+  </div>
+);
+
 // ── Toast ───────────────────────────────────────────────────────────────────
 function Toast({ message, type, visible }) {
   return (
@@ -176,7 +234,13 @@ export default function HomePage() {
   const [note, setNote]           = useState("");
   const [toast, setToast]         = useState({ msg: "", type: "info", visible: false });
   const [menuOpen, setMenuOpen]   = useState(false);
+  const [loading, setLoading]     = useState(true);
   const toastTimer                = useRef(null);
+
+  useEffect(() => {
+    const timer = setTimeout(() => setLoading(false), 1400);
+    return () => clearTimeout(timer);
+  }, []);
 
   // Compute tomorrow for date min
   const tomorrowStr = (() => {
@@ -322,38 +386,49 @@ export default function HomePage() {
           <div className="content">
             {/* STAT CARDS */}
             <div className="stat-grid">
-              <div className="stat-card">
-                <div className="stat-top">
-                  <div className="stat-icon blue">📦</div>
-                  <span className="stat-trend up">+4 today</span>
-                </div>
-                <div className="stat-num blue">172</div>
-                <div className="stat-label">Total Assets</div>
-              </div>
-              <div className="stat-card">
-                <div className="stat-top">
-                  <div className="stat-icon green">✅</div>
-                  <span className="stat-trend up">124 ready</span>
-                </div>
-                <div className="stat-num green">124</div>
-                <div className="stat-label">Available Now</div>
-              </div>
-              <div className="stat-card">
-                <div className="stat-top">
-                  <div className="stat-icon amber">🔄</div>
-                  <span className="stat-trend neu">active</span>
-                </div>
-                <div className="stat-num amber">35</div>
-                <div className="stat-label">On Loan</div>
-              </div>
-              <div className="stat-card">
-                <div className="stat-top">
-                  <div className="stat-icon red">🔧</div>
-                  <span className="stat-trend down">needs attn</span>
-                </div>
-                <div className="stat-num red">13</div>
-                <div className="stat-label">Under Maintenance</div>
-              </div>
+              {loading ? (
+                <>
+                  <SkeletonStatCard />
+                  <SkeletonStatCard />
+                  <SkeletonStatCard />
+                  <SkeletonStatCard />
+                </>
+              ) : (
+                <>
+                  <div className="stat-card">
+                    <div className="stat-top">
+                      <div className="stat-icon blue">📦</div>
+                      <span className="stat-trend up">+4 today</span>
+                    </div>
+                    <div className="stat-num blue">172</div>
+                    <div className="stat-label">Total Assets</div>
+                  </div>
+                  <div className="stat-card">
+                    <div className="stat-top">
+                      <div className="stat-icon green">✅</div>
+                      <span className="stat-trend up">124 ready</span>
+                    </div>
+                    <div className="stat-num green">124</div>
+                    <div className="stat-label">Available Now</div>
+                  </div>
+                  <div className="stat-card">
+                    <div className="stat-top">
+                      <div className="stat-icon amber">🔄</div>
+                      <span className="stat-trend neu">active</span>
+                    </div>
+                    <div className="stat-num amber">35</div>
+                    <div className="stat-label">On Loan</div>
+                  </div>
+                  <div className="stat-card">
+                    <div className="stat-top">
+                      <div className="stat-icon red">🔧</div>
+                      <span className="stat-trend down">needs attn</span>
+                    </div>
+                    <div className="stat-num red">13</div>
+                    <div className="stat-label">Under Maintenance</div>
+                  </div>
+                </>
+              )}
             </div>
 
             {/* ASSET CATALOG HEADER */}
@@ -389,7 +464,9 @@ export default function HomePage() {
 
             {/* ASSET GRID */}
             <div className="asset-grid">
-              {filtered.length === 0 ? (
+              {loading ? (
+                Array.from({ length: 8 }, (_, i) => <SkeletonAssetCard key={i} />)
+              ) : filtered.length === 0 ? (
                 <div className="empty-state">
                   <div className="empty-state-icon">🔍</div>
                   <div className="empty-state-title">No Assets Found</div>
@@ -418,7 +495,9 @@ export default function HomePage() {
                   <button className="view-all-btn" style={{ fontSize: 11 }}>All History →</button>
                 </div>
                 <div className="activity-list">
-                  {[
+                  {loading ? (
+                    Array.from({ length: 4 }, (_, i) => <SkeletonActivityItem key={i} />)
+                  ) : [
                     {
                       dot:"green", icon:"✓",
                       msg: <><strong>Dell Latitude 5420</strong> was returned successfully</>,
@@ -456,7 +535,9 @@ export default function HomePage() {
               <div className="quick-card">
                 <div className="section-title" style={{ fontSize: 16, marginBottom: 0 }}>Quick <span>Actions</span></div>
                 <div className="quick-list">
-                  {[
+                  {loading ? (
+                    Array.from({ length: 3 }, (_, i) => <SkeletonQuickItem key={i} />)
+                  ) : [
                     { icon:"📋", color:"blue",  label:"New Loan Request",  sub:"Browse and request available equipment",  toast:"Opening loan request form…" },
                     { icon:"↩️", color:"green", label:"Return Equipment",   sub:"Mark a borrowed item as returned",         toast:"Opening return form…" },
                     { icon:"📊", color:"amber", label:"My Active Loans",    sub:"3 active · 2 due this week",               toast:"Loading your active loans…" },

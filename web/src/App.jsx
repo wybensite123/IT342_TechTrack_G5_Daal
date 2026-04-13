@@ -22,7 +22,7 @@ function App() {
             path="/dashboard"
             element={
               <ProtectedRoute>
-                <Suspense fallback={<div>Loading dashboard...</div>}>
+                <Suspense fallback={<div className="suspense-fallback" /> }>
                   <HomePage />
                 </Suspense>
               </ProtectedRoute>
