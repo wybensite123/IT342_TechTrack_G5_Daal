@@ -1,6 +1,7 @@
 package edu.cit.daal.techtrack.controller;
 
 import edu.cit.daal.techtrack.service.FileStorageService;
+import edu.cit.daal.techtrack.service.ProfileStorageService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.UrlResource;
@@ -19,10 +20,21 @@ import java.nio.file.Path;
 public class FileController {
 
     private final FileStorageService fileStorageService;
+    private final ProfileStorageService profileStorageService;
 
+    /** Serve asset images */
     @GetMapping("/{filename:.+}")
     public ResponseEntity<Resource> serveFile(@PathVariable String filename) {
-        Path file = fileStorageService.resolve(filename);
+        return serve(fileStorageService.resolve(filename), filename);
+    }
+
+    /** Serve profile pictures */
+    @GetMapping("/profiles/{filename:.+}")
+    public ResponseEntity<Resource> serveProfileFile(@PathVariable String filename) {
+        return serve(profileStorageService.resolve(filename), filename);
+    }
+
+    private ResponseEntity<Resource> serve(Path file, String filename) {
         try {
             Resource resource = new UrlResource(file.toUri());
             if (!resource.exists() || !resource.isReadable()) {

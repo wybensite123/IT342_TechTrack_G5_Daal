@@ -123,7 +123,7 @@ public class AuthService {
                 .build();
     }
 
-    private AuthResponse.UserDto toUserDto(User user) {
+    public AuthResponse.UserDto toUserDto(User user) {
         return AuthResponse.UserDto.builder()
                 .id(user.getId())
                 .firstName(user.getFirstName())
@@ -132,6 +132,7 @@ public class AuthService {
                 .role(user.getRole().name())
                 .studentId(user.getStudentId())
                 .department(user.getDepartment())
+                .profilePicture(user.getProfilePicture())
                 .build();
     }
 }

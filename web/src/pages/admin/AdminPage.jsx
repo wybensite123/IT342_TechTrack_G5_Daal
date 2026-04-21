@@ -102,38 +102,7 @@ export default function AdminPage() {
   const initials = user ? `${user.firstName?.[0] ?? ''}${user.lastName?.[0] ?? ''}`.toUpperCase() : '?';
 
   return (
-    <div className="app-shell">
-      {/* Sidebar */}
-      <aside className="sidebar">
-        <div className="sidebar-logo">
-          <div className="logo-icon">T</div>
-          <span className="logo-text">TechTrack</span>
-        </div>
-        <nav className="sidebar-nav">
-          <Link to="/dashboard" className="nav-item">
-            <span className="nav-icon">📊</span>
-            <span>Dashboard</span>
-          </Link>
-          <Link to="/loans" className="nav-item">
-            <span className="nav-icon">📋</span>
-            <span>My Loans</span>
-          </Link>
-          <Link to="/admin" className="nav-item active">
-            <span className="nav-icon">⚙️</span>
-            <span>Admin Panel</span>
-          </Link>
-        </nav>
-        <div className="sidebar-footer">
-          <div className="user-avatar">{initials}</div>
-          <div className="user-info">
-            <p className="user-name">{user?.firstName} {user?.lastName}</p>
-            <p className="user-role">Administrator</p>
-          </div>
-          <button className="logout-btn" onClick={logout} title="Logout">↩</button>
-        </div>
-      </aside>
-
-      {/* Main */}
+    <>
       <main className="main-content">
         <Toast msg={toast?.msg} type={toast?.type} onClose={() => setToast(null)} />
 
@@ -405,6 +374,6 @@ export default function AdminPage() {
           </div>
         </div>
       )}
-    </div>
+    </>
   );
 }

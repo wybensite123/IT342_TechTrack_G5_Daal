@@ -6,6 +6,7 @@ export interface User {
   role: string;
   studentId?: string;
   department?: string;
+  profilePicture?: string | null;
 }
 
 export interface AuthResponse {

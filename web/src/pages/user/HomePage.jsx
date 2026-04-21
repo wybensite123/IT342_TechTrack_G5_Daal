@@ -1,12 +1,10 @@
 import { useState, useRef, useEffect } from "react";
-import { useNavigate, Link } from "react-router-dom";
+import { useNavigate, Link, useOutletContext } from "react-router-dom";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { getAssets, searchAssets } from "../../api/assetApi";
 import { submitLoan, getMyLoans } from "../../api/loanApi";
 import { useAuth } from "../../context/AuthContext";
 import "./HomePage.css";
-import logo from "../../assets/TechTrack.png";
-
 const STATUS_LABEL = {
   AVAILABLE:         "Available",
   PENDING_APPROVAL:  "Pending",
@@ -42,24 +40,6 @@ const IconClock = () => (
 const IconSearch = () => (
   <svg className="search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
     <circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/>
-  </svg>
-);
-const IconBell = () => (
-  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-    <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/>
-    <path d="M13.73 21a2 2 0 0 1-3.46 0"/>
-  </svg>
-);
-const IconLogout = () => (
-  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-    <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/>
-    <polyline points="16 17 21 12 16 7"/>
-    <line x1="21" y1="12" x2="9" y2="12"/>
-  </svg>
-);
-const IconChevron = () => (
-  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#94A3B8" strokeWidth="2">
-    <polyline points="6 9 12 15 18 9"/>
   </svg>
 );
 const IconSpec = () => (
@@ -169,9 +149,10 @@ const LOAN_LABEL = { PENDING_APPROVAL: "Pending", ON_LOAN: "On Loan", RETURNED: 
 
 // ── Main Component ──────────────────────────────────────────────────────────
 export default function HomePage() {
-  const { user, logout } = useAuth();
+  const { user } = useAuth();
   const navigate = useNavigate();
   const qc = useQueryClient();
+  const { setMenuOpen } = useOutletContext() ?? {};
 
   const [search, setSearch]         = useState("");
   const [debouncedSearch, setDS]    = useState("");
@@ -181,7 +162,6 @@ export default function HomePage() {
   const [modal, setModal]           = useState(null);
   const [retDate, setRetDate]       = useState("");
   const [purpose, setPurpose]       = useState("");
-  const [menuOpen, setMenuOpen]     = useState(false);
   const [toast, setToast]           = useState({ msg: "", type: "info", visible: false });
   const toastTimer                  = useRef(null);
 
@@ -281,72 +261,18 @@ export default function HomePage() {
     submitMutation.mutate({ assetId: modal.id, purpose, requestedReturnDate: retDate });
   };
 
-  const handleLogout = () => { logout(); navigate("/login"); };
-
-  const userInitials = user ? (user.firstName[0] + user.lastName[0]).toUpperCase() : "??";
-  const userFullName = user ? `${user.firstName} ${user.lastName}` : "";
-
   const isAdmin = user?.role === "ROLE_ADMIN";
 
   return (
     <>
-      <div className="tt-body-bg" />
-      <div className="orb orb-a" />
-      <div className="orb orb-b" />
-
-      <div className="app">
-        {menuOpen && <div className="sidebar-backdrop" onClick={() => setMenuOpen(false)} />}
-
-        {/* ─── SIDEBAR ─── */}
-        <aside className={`sidebar ${menuOpen ? "open" : ""}`}>
-          <button className="sidebar-close" onClick={() => setMenuOpen(false)}>✕</button>
-          <div className="sidebar-logo"><img src={logo} alt="TechTrack" /></div>
-
-          <p className="nav-section-label">Main Menu</p>
-          <Link className="nav-item active" to="/dashboard" onClick={() => setMenuOpen(false)}>
-            <IconGrid /> Asset Catalog
-          </Link>
-          <Link className="nav-item" to="/loans" onClick={() => setMenuOpen(false)}>
-            <IconCheck /> My Loans
-            {pendingCount > 0 && <span className="nav-badge blue">{pendingCount}</span>}
-          </Link>
-          {isAdmin && (
-            <Link className="nav-item" to="/admin" onClick={() => setMenuOpen(false)}>
-              <IconClock /> Admin Panel
-            </Link>
-          )}
-
-          <div className="sidebar-footer">
-            <div className="user-chip">
-              <div className="user-avatar">{userInitials}</div>
-              <div className="user-info">
-                <div className="user-name">{userFullName}</div>
-                <div className="user-role">{isAdmin ? "Admin" : "Student"} · {user?.department || "CIT"}</div>
-              </div>
-              <button style={{ background: "none", border: "none", cursor: "pointer", color: "#94A3B8" }} onClick={handleLogout} title="Logout">
-                <IconLogout />
-              </button>
-            </div>
+      <div className="content">
+        <div className="content-search-row">
+          <div className="search-bar">
+            <IconSearch />
+            <input className="search-input" type="text" placeholder="Search by name, tag, category…"
+              value={search} onChange={e => setSearch(e.target.value)} />
           </div>
-        </aside>
-
-        {/* ─── MAIN ─── */}
-        <div className="main">
-          <header className="topbar">
-            <button className="hamburger" onClick={() => setMenuOpen(true)}><span /><span /><span /></button>
-            <div className="topbar-title">Asset <span>Catalog</span></div>
-            <div className="search-bar">
-              <IconSearch />
-              <input className="search-input" type="text" placeholder="Search by name, tag, category…"
-                value={search} onChange={e => setSearch(e.target.value)} />
-            </div>
-            <div className="topbar-actions">
-              <div className="icon-btn" title="Notifications"><IconBell /></div>
-              <div className="topbar-avatar" title={userFullName}>{userInitials}</div>
-            </div>
-          </header>
-
-          <div className="content">
+        </div>
             {/* STAT CARDS */}
             <div className="stat-grid">
               {!statsAll ? (
@@ -514,8 +440,6 @@ export default function HomePage() {
               </div>
             </div>
           </div>
-        </div>
-      </div>
 
       {/* ─── REQUEST MODAL ─── */}
       <div className={`modal-overlay ${modal ? "open" : ""}`}

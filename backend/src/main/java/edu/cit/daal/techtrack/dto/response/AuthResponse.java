@@ -29,5 +29,6 @@ public class AuthResponse {
         private String role;
         private String studentId;
         private String department;
+        private String profilePicture;
     }
 }
