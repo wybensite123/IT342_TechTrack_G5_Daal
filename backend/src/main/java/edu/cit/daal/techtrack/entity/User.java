@@ -1,5 +1,6 @@
 package edu.cit.daal.techtrack.entity;
 
+import edu.cit.daal.techtrack.enums.Role;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -17,6 +18,12 @@ public class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Column(name = "student_id")
+    private String studentId;
+
+    @Column(name = "username")
+    private String username;
+
     @Column(name = "first_name", nullable = false)
     private String firstName;
 
@@ -26,23 +33,35 @@ public class User {
     @Column(unique = true, nullable = false)
     private String email;
 
-    @Column(nullable = false)
-    private String password;
+    @Column(name = "password_hash", nullable = false)
+    private String passwordHash;
+
+    @Column(name = "department")
+    private String department;
 
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
     @Builder.Default
-    private Role role = Role.STUDENT;
+    private Role role = Role.ROLE_BORROWER;
+
+    @Column(name = "is_active", nullable = false)
+    @Builder.Default
+    private boolean isActive = true;
 
     @Column(name = "created_at", updatable = false)
     private LocalDateTime createdAt;
 
+    @Column(name = "updated_at")
+    private LocalDateTime updatedAt;
+
     @PrePersist
     protected void onCreate() {
         createdAt = LocalDateTime.now();
+        updatedAt = LocalDateTime.now();
     }
 
-    public enum Role {
-        STUDENT, FACULTY, ADMIN
+    @PreUpdate
+    protected void onUpdate() {
+        updatedAt = LocalDateTime.now();
     }
 }

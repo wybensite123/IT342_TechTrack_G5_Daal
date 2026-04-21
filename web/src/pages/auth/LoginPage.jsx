@@ -1,8 +1,8 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { login as loginApi, register as registerApi } from '../api/authApi';
-import { useAuth } from '../context/AuthContext';
-import logo from '../assets/TechTrack.png';
+import { login as loginApi, register as registerApi } from '../../api/authApi';
+import { useAuth } from '../../context/AuthContext';
+import logo from '../../assets/TechTrack.png';
 import './LoginPage.css';
 
 /* ── Auth Header ─────────────────────────────────────────────────── */
@@ -57,17 +57,12 @@ const LoginPage = () => {
     setIsLoading(true);
     try {
       const res = await loginApi(form);
-      const data = res.data ?? {};
-      if (!data.token) throw new Error('Missing authentication token from server response.');
-      const userData = data.user ?? {
-        email: data.email ?? form.email,
-        firstName: data.firstName ?? '',
-        lastName: data.lastName ?? '',
-      };
-      login(data.token, userData);
+      const payload = res.data?.data;
+      if (!payload?.accessToken) throw new Error('Missing authentication token from server response.');
+      login(payload.accessToken, payload.user);
       navigate('/dashboard', { replace: true });
     } catch (err) {
-      setError(err.response?.data?.message || err.message || 'Login failed.');
+      setError(err.response?.data?.error?.message || err.response?.data?.message || err.message || 'Login failed.');
     } finally {
       setIsLoading(false);
     }
@@ -87,17 +82,12 @@ const LoginPage = () => {
     setIsLoading(true);
     try {
       const res = await registerApi(registerForm);
-      const data = res.data ?? {};
-      if (!data.token) throw new Error('Missing authentication token from server response.');
-      const userData = data.user ?? {
-        email: data.email ?? registerForm.email,
-        firstName: data.firstName ?? registerForm.firstName,
-        lastName: data.lastName ?? registerForm.lastName,
-      };
-      login(data.token, userData);
+      const payload = res.data?.data;
+      if (!payload?.accessToken) throw new Error('Missing authentication token from server response.');
+      login(payload.accessToken, payload.user);
       navigate('/dashboard', { replace: true });
     } catch (err) {
-      setError(err.response?.data?.message || err.message || 'Registration failed.');
+      setError(err.response?.data?.error?.message || err.response?.data?.message || err.message || 'Registration failed.');
     } finally {
       setIsLoading(false);
     }

@@ -1,0 +1,18 @@
+# ============================================================
+# application-local.properties  — LOCAL OVERRIDES
+# Copy this file to application-local.properties and fill in
+# your actual values. That file is gitignored — never commit it.
+# ============================================================
+
+# Supabase PostgreSQL (pooler, session mode port 5432)
+SPRING_DATASOURCE_URL=jdbc:postgresql://aws-1-ap-southeast-1.pooler.supabase.com:5432/postgres
+SPRING_DATASOURCE_USERNAME=postgres.YOUR_PROJECT_REF
+SPRING_DATASOURCE_PASSWORD=YOUR_DB_PASSWORD
+
+# JWT — generate a 256-bit random string, e.g.:
+#   openssl rand -base64 32
+JWT_SECRET=YOUR_256_BIT_RANDOM_SECRET
+
+# Google OAuth2 (leave blank until OAuth2 feature is built)
+GOOGLE_CLIENT_ID=
+GOOGLE_CLIENT_SECRET=

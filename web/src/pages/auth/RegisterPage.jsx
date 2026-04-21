@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { register as registerApi } from '../api/authApi';
-import logo from '../assets/TechTrack.png';
+import { register as registerApi } from '../../api/authApi';
+import logo from '../../assets/TechTrack.png';
 import './LoginPage.css';
 import './RegisterPage.css';
 
@@ -99,12 +99,12 @@ const RegisterPage = () => {
         email: formData.email,
         password: formData.password,
       });
-      if (res.status === 201 || res.status === 200) {
+      if (res.data?.success) {
         setSuccess(true);
         setTimeout(() => navigate('/login'), 3000);
       }
     } catch (err) {
-      setError(err.response?.data?.message || 'Registration failed. Please try again.');
+      setError(err.response?.data?.error?.message || err.response?.data?.message || 'Registration failed. Please try again.');
     } finally {
       setIsLoading(false);
     }

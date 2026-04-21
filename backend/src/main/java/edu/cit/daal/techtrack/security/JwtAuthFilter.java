@@ -1,6 +1,5 @@
 package edu.cit.daal.techtrack.security;
 
-import edu.cit.daal.techtrack.repository.UserRepository;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -22,7 +21,6 @@ import java.util.List;
 public class JwtAuthFilter extends OncePerRequestFilter {
 
     private final JwtUtil jwtUtil;
-    private final UserRepository userRepository;
 
     @Override
     protected void doFilterInternal(@NonNull HttpServletRequest request,
@@ -37,25 +35,26 @@ public class JwtAuthFilter extends OncePerRequestFilter {
 
         final String token = authHeader.substring(7);
         try {
-            final String email = jwtUtil.extractEmail(token);
-            if (email != null && SecurityContextHolder.getContext().getAuthentication() == null) {
-                userRepository.findByEmail(email).ifPresent(user -> {
-                    var userDetails = org.springframework.security.core.userdetails.User
-                            .withUsername(user.getEmail())
-                            .password(user.getPassword())
-                            .authorities(List.of(new SimpleGrantedAuthority("ROLE_" + user.getRole().name())))
-                            .build();
+            if (jwtUtil.isAccessTokenValid(token) &&
+                    SecurityContextHolder.getContext().getAuthentication() == null) {
 
-                    if (jwtUtil.isTokenValid(token, userDetails)) {
-                        var auth = new UsernamePasswordAuthenticationToken(
-                                userDetails, null, userDetails.getAuthorities());
-                        auth.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
-                        SecurityContextHolder.getContext().setAuthentication(auth);
-                    }
-                });
+                Long userId = jwtUtil.extractUserId(token);
+                String email = jwtUtil.extractEmail(token);
+                String role  = jwtUtil.extractRole(token);
+
+                var userDetails = org.springframework.security.core.userdetails.User
+                        .withUsername(email)
+                        .password("")
+                        .authorities(List.of(new SimpleGrantedAuthority(role)))
+                        .build();
+
+                var auth = new UsernamePasswordAuthenticationToken(
+                        userDetails, userId, userDetails.getAuthorities());
+                auth.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
+                SecurityContextHolder.getContext().setAuthentication(auth);
             }
         } catch (Exception ignored) {
-            // Invalid token — just continue without setting auth
+            // Invalid token — continue without setting auth, request will get 401
         }
 
         filterChain.doFilter(request, response);
