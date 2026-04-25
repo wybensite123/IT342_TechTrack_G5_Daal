@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">TechTrack</string>
+
+    <!-- Auth -->
+    <string name="login_title">Welcome Back</string>
+    <string name="login_subtitle">Sign in to TechTrack</string>
+    <string name="hint_email">Email address</string>
+    <string name="hint_password">Password</string>
+    <string name="btn_login">Log In</string>
+    <string name="btn_register">Register</string>
+    <string name="no_account">Don\'t have an account?</string>
+    <string name="have_account">Already have an account?</string>
+    <string name="sign_in">Sign in</string>
+
+    <string name="register_title">Create Account</string>
+    <string name="hint_username">Username</string>
+    <string name="hint_first_name">First name</string>
+    <string name="hint_last_name">Last name</string>
+    <string name="hint_confirm_password">Confirm password</string>
+    <string name="password_strength">Password strength</string>
+
+    <!-- Navigation -->
+    <string name="nav_home">Home</string>
+    <string name="nav_my_loans">My Loans</string>
+    <string name="nav_profile">Profile</string>
+    <string name="nav_admin_dashboard">Dashboard</string>
+    <string name="nav_loan_queue">Loan Queue</string>
+
+    <!-- Home / Assets -->
+    <string name="hint_search">Search equipment…</string>
+    <string name="all_categories">All</string>
+    <string name="btn_request_loan">Request Loan</string>
+    <string name="not_available">Not Available</string>
+    <string name="empty_assets">No equipment found</string>
+    <string name="pull_to_refresh">Pull to refresh</string>
+
+    <!-- Asset Detail -->
+    <string name="label_category">Category</string>
+    <string name="label_asset_tag">Asset Tag</string>
+    <string name="label_serial_number">Serial Number</string>
+    <string name="label_status">Status</string>
+    <string name="label_description">Description</string>
+    <string name="no_images">No images available</string>
+
+    <!-- Loan Request Dialog -->
+    <string name="dialog_loan_title">Request Equipment Loan</string>
+    <string name="hint_purpose">Purpose / reason for borrowing</string>
+    <string name="hint_return_date">Return date (max 7 days)</string>
+    <string name="btn_submit">Submit Request</string>
+    <string name="btn_cancel">Cancel</string>
+
+    <!-- My Loans -->
+    <string name="tab_active_loans">Active</string>
+    <string name="tab_past_loans">Past</string>
+    <string name="empty_loans">No loans found</string>
+    <string name="label_requested_return">Return by</string>
+    <string name="label_requested_at">Requested</string>
+
+    <!-- Admin Dashboard -->
+    <string name="label_available">Available</string>
+    <string name="label_on_loan">On Loan</string>
+    <string name="label_pending">Pending Approval</string>
+    <string name="label_maintenance">Under Maintenance</string>
+    <string name="btn_view_loan_queue">View Loan Queue</string>
+    <string name="recent_activity">Recent Activity</string>
+
+    <!-- Admin Loan Queue -->
+    <string name="tab_pending">Pending</string>
+    <string name="tab_active">Active</string>
+    <string name="tab_history">History</string>
+    <string name="btn_approve">Approve</string>
+    <string name="btn_reject">Reject</string>
+    <string name="btn_return">Return</string>
+    <string name="dialog_approve_title">Confirm Approval</string>
+    <string name="dialog_approve_message">Approve this loan request?</string>
+    <string name="dialog_reject_title">Reject Loan</string>
+    <string name="hint_rejection_reason">Reason for rejection (required)</string>
+    <string name="dialog_return_title">Process Return</string>
+    <string name="label_condition">Condition on return</string>
+    <string name="condition_good">Good</string>
+    <string name="condition_damaged">Damaged</string>
+    <string name="empty_queue">No loans in this category</string>
+
+    <!-- Profile -->
+    <string name="label_email">Email</string>
+    <string name="label_role">Role</string>
+    <string name="label_department">Department</string>
+    <string name="label_student_id">Student ID</string>
+    <string name="btn_logout">Log Out</string>
+    <string name="role_admin">Admin</string>
+    <string name="role_borrower">Student</string>
+
+    <!-- Common -->
+    <string name="loading">Loading…</string>
+    <string name="error_network">Network error. Please check your connection.</string>
+    <string name="error_permission_denied">Permission denied</string>
+    <string name="btn_retry">Retry</string>
+    <string name="btn_ok">OK</string>
+    <string name="btn_confirm">Confirm</string>
+</resources>

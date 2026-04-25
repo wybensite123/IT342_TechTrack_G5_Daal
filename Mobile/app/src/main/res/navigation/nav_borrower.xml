@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/nav_borrower"
+    app:startDestination="@id/homeFragment">
+
+    <fragment
+        android:id="@+id/homeFragment"
+        android:name="com.techtrack.inventory.ui.home.HomeFragment"
+        android:label="Home">
+        <action
+            android:id="@+id/action_home_to_assetDetail"
+            app:destination="@id/assetDetailFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/assetDetailFragment"
+        android:name="com.techtrack.inventory.ui.assetdetail.AssetDetailFragment"
+        android:label="Asset Detail">
+        <argument
+            android:name="assetId"
+            app:argType="long" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/myLoansFragment"
+        android:name="com.techtrack.inventory.ui.loans.MyLoansFragment"
+        android:label="My Loans" />
+
+    <fragment
+        android:id="@+id/profileFragment"
+        android:name="com.techtrack.inventory.ui.profile.ProfileFragment"
+        android:label="Profile" />
+
+</navigation>
