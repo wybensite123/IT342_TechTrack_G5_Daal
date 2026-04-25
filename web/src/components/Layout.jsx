@@ -160,6 +160,8 @@ export default function Layout() {
                 <>
                   <div className="profile-backdrop" onClick={() => setProfileOpen(false)} />
                   <div className="profile-dropdown">
+
+                    {/* Avatar + name header */}
                     <div className="profile-drop-header">
                       <div
                         className="profile-avatar-wrap"
@@ -182,10 +184,35 @@ export default function Layout() {
                       />
                       <div className="profile-info">
                         <div className="profile-name">{userFullName}</div>
-                        <div className="profile-role-tag">
-                          {isAdmin ? 'Admin' : 'Student'} · {user?.department || 'CIT'}
+                        <span className={`profile-role-badge ${isAdmin ? 'admin' : 'student'}`}>
+                          {isAdmin ? '⚙ Admin' : '🎓 Student'}
+                        </span>
+                      </div>
+                    </div>
+
+                    <div className="profile-drop-divider" />
+
+                    {/* User details */}
+                    <div className="profile-details">
+                      <div className="profile-detail-row">
+                        <span className="detail-label">Email</span>
+                        <span className="detail-value">{user?.email}</span>
+                      </div>
+                      {user?.department && (
+                        <div className="profile-detail-row">
+                          <span className="detail-label">Department</span>
+                          <span className="detail-value">{user.department}</span>
                         </div>
-                        <div className="profile-email">{user?.email}</div>
+                      )}
+                      {user?.studentId && (
+                        <div className="profile-detail-row">
+                          <span className="detail-label">Student ID</span>
+                          <span className="detail-value">{user.studentId}</span>
+                        </div>
+                      )}
+                      <div className="profile-detail-row">
+                        <span className="detail-label">Account ID</span>
+                        <span className="detail-value">#{user?.id}</span>
                       </div>
                     </div>
 

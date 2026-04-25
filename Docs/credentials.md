@@ -1,5 +1,7 @@
 # TechTrack — Test Credentials
 
+> Both accounts are permanently seeded by Flyway migrations (V6 + V8) and will exist on every fresh database.
+
 ## Admin Account
 | Field      | Value                    |
 |------------|--------------------------|
@@ -31,4 +33,4 @@
 | Provider | Supabase (PostgreSQL 17.6)                                   |
 | Host     | aws-1-ap-southeast-1.pooler.supabase.com:5432               |
 | Database | postgres                                                     |
-| Schema   | public (Flyway v6)                                           |
+| Schema   | public (Flyway — latest migration V8)                        |

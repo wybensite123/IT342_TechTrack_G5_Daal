@@ -2,10 +2,12 @@ package edu.cit.daal.techtrack.service;
 
 import edu.cit.daal.techtrack.dto.request.LoanActionRequest;
 import edu.cit.daal.techtrack.dto.request.LoanRequest;
+import edu.cit.daal.techtrack.dto.response.LoanHistoryResponse;
 import edu.cit.daal.techtrack.dto.response.LoanResponse;
 import edu.cit.daal.techtrack.dto.response.PageResponse;
 import edu.cit.daal.techtrack.entity.Asset;
 import edu.cit.daal.techtrack.entity.Loan;
+import edu.cit.daal.techtrack.entity.LoanHistory;
 import edu.cit.daal.techtrack.entity.User;
 import edu.cit.daal.techtrack.enums.AssetStatus;
 import edu.cit.daal.techtrack.enums.LoanStatus;
@@ -13,6 +15,7 @@ import edu.cit.daal.techtrack.enums.ReturnCondition;
 import edu.cit.daal.techtrack.exception.BusinessRuleException;
 import edu.cit.daal.techtrack.exception.ResourceNotFoundException;
 import edu.cit.daal.techtrack.repository.AssetRepository;
+import edu.cit.daal.techtrack.repository.LoanHistoryRepository;
 import edu.cit.daal.techtrack.repository.LoanRepository;
 import edu.cit.daal.techtrack.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
@@ -33,6 +36,7 @@ public class LoanService {
     private final LoanRepository loanRepository;
     private final AssetRepository assetRepository;
     private final UserRepository userRepository;
+    private final LoanHistoryRepository historyRepository;
 
     // ── Submit ────────────────────────────────────────────────
 
@@ -76,7 +80,10 @@ public class LoanService {
                 .status(LoanStatus.PENDING_APPROVAL)
                 .build();
 
-        return toDto(loanRepository.save(loan));
+        Loan saved = loanRepository.save(loan);
+        record(saved, "SUBMITTED", borrower.getId(),
+                borrower.getFirstName() + " " + borrower.getLastName(), null);
+        return toDto(saved);
     }
 
     // ── Admin: Approve ────────────────────────────────────────
@@ -101,7 +108,10 @@ public class LoanService {
         loan.getAsset().setStatus(AssetStatus.ON_LOAN);
         assetRepository.save(loan.getAsset());
 
-        return toDto(loanRepository.save(loan));
+        Loan saved = loanRepository.save(loan);
+        record(saved, "APPROVED", admin.getId(),
+                admin.getFirstName() + " " + admin.getLastName(), null);
+        return toDto(saved);
     }
 
     // ── Admin: Reject ─────────────────────────────────────────
@@ -131,7 +141,11 @@ public class LoanService {
         loan.getAsset().setStatus(AssetStatus.AVAILABLE);
         assetRepository.save(loan.getAsset());
 
-        return toDto(loanRepository.save(loan));
+        Loan saved = loanRepository.save(loan);
+        record(saved, "REJECTED", admin.getId(),
+                admin.getFirstName() + " " + admin.getLastName(),
+                "Reason: " + request.getRejectionReason());
+        return toDto(saved);
     }
 
     // ── Admin: Return ─────────────────────────────────────────
@@ -167,7 +181,10 @@ public class LoanService {
         loan.getAsset().setStatus(nextStatus);
         assetRepository.save(loan.getAsset());
 
-        return toDto(loanRepository.save(loan));
+        Loan saved = loanRepository.save(loan);
+        record(saved, "RETURNED", null, "System",
+                "Condition: " + condition.name());
+        return toDto(saved);
     }
 
     // ── Queries ───────────────────────────────────────────────
@@ -196,7 +213,51 @@ public class LoanService {
         return toDto(loan);
     }
 
+    // ── History queries ───────────────────────────────────────
+
+    @Transactional(readOnly = true)
+    public PageResponse<LoanHistoryResponse> getAllHistory(int page, int size) {
+        Pageable pageable = PageRequest.of(page, Math.min(size, 100));
+        Page<LoanHistory> result = historyRepository.findAllWithContext(pageable);
+        return PageResponse.<LoanHistoryResponse>builder()
+                .content(result.getContent().stream().map(this::toHistoryDto).toList())
+                .page(result.getNumber())
+                .size(result.getSize())
+                .totalElements(result.getTotalElements())
+                .totalPages(result.getTotalPages())
+                .last(result.isLast())
+                .build();
+    }
+
     // ── Helpers ───────────────────────────────────────────────
+
+    private void record(Loan loan, String action, Long actorId, String actorName, String notes) {
+        historyRepository.save(LoanHistory.builder()
+                .loan(loan)
+                .action(action)
+                .actorId(actorId)
+                .actorName(actorName)
+                .notes(notes)
+                .build());
+    }
+
+    private LoanHistoryResponse toHistoryDto(LoanHistory h) {
+        Loan loan = h.getLoan();
+        return LoanHistoryResponse.builder()
+                .id(h.getId())
+                .loanId(loan.getId())
+                .action(h.getAction())
+                .actorId(h.getActorId())
+                .actorName(h.getActorName())
+                .notes(h.getNotes())
+                .createdAt(h.getCreatedAt())
+                .borrowerName(loan.getBorrower().getFirstName() + " " + loan.getBorrower().getLastName())
+                .borrowerEmail(loan.getBorrower().getEmail())
+                .assetName(loan.getAsset().getName())
+                .assetTag(loan.getAsset().getAssetTag())
+                .loanStatus(loan.getStatus().name())
+                .build();
+    }
 
     private Loan findOrThrow(Long id) {
         return loanRepository.findById(id)

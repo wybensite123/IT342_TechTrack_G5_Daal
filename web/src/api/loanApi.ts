@@ -1,6 +1,6 @@
 import api from './axiosInstance';
-import type { ApiResponse, User } from '../types/auth.types';
-import type { Asset, PageResponse } from './assetApi';
+import type { ApiResponse } from '../types/auth.types';
+import type { PageResponse } from './assetApi';
 
 export interface LoanBorrower {
   id: number; firstName: string; lastName: string;
@@ -18,6 +18,13 @@ export interface Loan {
 }
 export interface LoanRequest {
   assetId: number; purpose: string; requestedReturnDate: string;
+}
+export interface LoanHistory {
+  id: number; loanId: number; action: string;
+  actorId: number | null; actorName: string | null; notes: string | null;
+  createdAt: string;
+  borrowerName: string; borrowerEmail: string;
+  assetName: string; assetTag: string; loanStatus: string;
 }
 
 export const submitLoan = (data: LoanRequest) =>
@@ -39,3 +46,7 @@ export const rejectLoan = (id: number, rejectionReason: string) =>
 
 export const returnLoan = (id: number, conditionOnReturn: 'GOOD' | 'DAMAGED') =>
   api.put<ApiResponse<Loan>>(`/loans/${id}/return`, { conditionOnReturn }).then(r => r.data.data!);
+
+export const getAllLoanHistory = (page = 0, size = 50) =>
+  api.get<ApiResponse<PageResponse<LoanHistory>>>('/loans/history', { params: { page, size } })
+     .then(r => r.data.data!);

@@ -3,6 +3,7 @@ package edu.cit.daal.techtrack.controller;
 import edu.cit.daal.techtrack.dto.request.LoanActionRequest;
 import edu.cit.daal.techtrack.dto.request.LoanRequest;
 import edu.cit.daal.techtrack.dto.response.ApiResponse;
+import edu.cit.daal.techtrack.dto.response.LoanHistoryResponse;
 import edu.cit.daal.techtrack.dto.response.LoanResponse;
 import edu.cit.daal.techtrack.dto.response.PageResponse;
 import edu.cit.daal.techtrack.service.LoanService;
@@ -74,6 +75,14 @@ public class LoanController {
             Authentication auth) {
         return ResponseEntity.ok(ApiResponse.success(
                 loanService.reject(id, currentUserId(auth), request)));
+    }
+
+    @GetMapping("/history")
+    @PreAuthorize("hasRole('ADMIN')")
+    public ResponseEntity<ApiResponse<PageResponse<LoanHistoryResponse>>> history(
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "50") int size) {
+        return ResponseEntity.ok(ApiResponse.success(loanService.getAllHistory(page, size)));
     }
 
     @PutMapping("/{id}/return")
