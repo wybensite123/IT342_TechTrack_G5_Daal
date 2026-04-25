@@ -7,10 +7,10 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
+import com.techtrack.inventory.R
 import com.techtrack.inventory.TechTrackApplication
 import com.techtrack.inventory.databinding.FragmentProfileBinding
 import com.techtrack.inventory.ui.auth.LoginActivity
-import com.techtrack.inventory.util.hide
 import com.techtrack.inventory.util.show
 import kotlinx.coroutines.launch
 
@@ -25,6 +25,7 @@ class ProfileFragment : Fragment() {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
         val app = requireActivity().application as TechTrackApplication
         val token = app.tokenManager
 
@@ -32,8 +33,8 @@ class ProfileFragment : Fragment() {
         val lastName = token.getLastName() ?: ""
         binding.tvFullName.text = "$firstName $lastName".trim()
         binding.tvEmail.text = token.getEmail() ?: "—"
-        binding.tvRole.text = if (token.isAdmin()) getString(com.techtrack.inventory.R.string.role_admin)
-                              else getString(com.techtrack.inventory.R.string.role_borrower)
+        binding.tvRole.text = if (token.isAdmin()) getString(R.string.role_admin)
+                              else getString(R.string.role_borrower)
         binding.tvRoleBadge.text = if (token.isAdmin()) "⚙ Admin" else "🎓 Student"
 
         val dept = token.getDepartment()

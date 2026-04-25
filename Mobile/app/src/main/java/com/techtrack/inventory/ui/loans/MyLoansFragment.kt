@@ -8,6 +8,7 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.tabs.TabLayout
+import com.techtrack.inventory.R
 import com.techtrack.inventory.TechTrackApplication
 import com.techtrack.inventory.data.remote.model.response.LoanResponse
 import com.techtrack.inventory.databinding.FragmentMyLoansBinding
@@ -30,6 +31,7 @@ class MyLoansFragment : Fragment() {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
         val app = requireActivity().application as TechTrackApplication
         viewModel = ViewModelProvider(
             this, MyLoansViewModelFactory(app.loanRepository)
@@ -42,8 +44,8 @@ class MyLoansFragment : Fragment() {
     }
 
     private fun setupTabs() {
-        binding.tabLayout.addTab(binding.tabLayout.newTab().setText(getString(com.techtrack.inventory.R.string.tab_active_loans)))
-        binding.tabLayout.addTab(binding.tabLayout.newTab().setText(getString(com.techtrack.inventory.R.string.tab_past_loans)))
+        binding.tabLayout.addTab(binding.tabLayout.newTab().setText(getString(R.string.tab_active_loans)))
+        binding.tabLayout.addTab(binding.tabLayout.newTab().setText(getString(R.string.tab_past_loans)))
 
         binding.tabLayout.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
             override fun onTabSelected(tab: TabLayout.Tab) {

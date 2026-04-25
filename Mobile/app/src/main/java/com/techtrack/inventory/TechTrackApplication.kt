@@ -1,6 +1,7 @@
 package com.techtrack.inventory
 
 import android.app.Application
+import androidx.appcompat.app.AppCompatDelegate
 import com.techtrack.inventory.data.remote.RetrofitClient
 import com.techtrack.inventory.data.repository.AssetRepository
 import com.techtrack.inventory.data.repository.AuthRepository
@@ -27,6 +28,7 @@ class TechTrackApplication : Application() {
 
     override fun onCreate() {
         super.onCreate()
+        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
         tokenManager = TokenManager(this)
         val api = RetrofitClient.create(tokenManager)
         authRepository = AuthRepository(api, tokenManager)

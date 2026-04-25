@@ -4,7 +4,8 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical"
-    android:padding="16dp">
+    android:background="@color/surface"
+    android:padding="20dp">
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/tilPurpose"
@@ -18,7 +19,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:inputType="textMultiLine"
-            android:minLines="2" />
+            android:minLines="2"
+            android:textColor="@color/text_primary" />
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputLayout
@@ -34,7 +36,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:inputType="date"
-            android:hint="YYYY-MM-DD" />
+            android:hint="YYYY-MM-DD"
+            android:textColor="@color/text_primary" />
     </com.google.android.material.textfield.TextInputLayout>
 
 </LinearLayout>

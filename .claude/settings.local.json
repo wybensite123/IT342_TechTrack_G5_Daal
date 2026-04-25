@@ -1,0 +1,7 @@
+{
+  "permissions": {
+    "allow": [
+      "PowerShell(Copy-Item \"c:\\\\Users\\\\Wyben\\\\Documents\\\\IT342_TechTrack_G5_Daal\\\\web\\\\src\\\\assets\\\\TechTrack.png\" \"c:\\\\Users\\\\Wyben\\\\Documents\\\\IT342_TechTrack_G5_Daal\\\\Mobile\\\\app\\\\src\\\\main\\\\res\\\\drawable\\\\techtrack_logo.png\" -Force)"
+    ]
+  }
+}

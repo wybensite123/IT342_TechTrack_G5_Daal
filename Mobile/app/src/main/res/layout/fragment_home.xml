@@ -6,30 +6,49 @@
     android:orientation="vertical"
     android:background="@color/background">
 
+    <!-- Topbar matching web's .topbar -->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:background="@color/primary"
+        android:background="@color/surface2"
         android:padding="16dp">
 
-        <TextView
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Equipment Inventory"
-            android:textSize="20sp"
-            android:textStyle="bold"
-            android:textColor="@color/on_primary" />
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            android:layout_marginBottom="12dp">
 
+            <ImageView
+                android:layout_width="100dp"
+                android:layout_height="wrap_content"
+                android:adjustViewBounds="true"
+                android:src="@drawable/techtrack_logo"
+                android:contentDescription="TechTrack" />
+
+            <View android:layout_width="0dp" android:layout_height="0dp" android:layout_weight="1" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Equipment Inventory"
+                android:textSize="14sp"
+                android:textStyle="bold"
+                android:textColor="@color/text_secondary" />
+        </LinearLayout>
+
+        <!-- Search bar matching web's .search-input -->
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/tilSearch"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="12dp"
             android:hint="@string/hint_search"
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-            app:boxBackgroundColor="#FFFFFF"
-            app:hintTextColor="#FFFFFF">
+            style="@style/Widget.TechTrack.TextInputLayout"
+            app:boxBackgroundColor="@color/surface"
+            app:boxStrokeColor="@color/border"
+            app:hintTextColor="@color/text_secondary">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/etSearch"
@@ -37,16 +56,18 @@
                 android:layout_height="wrap_content"
                 android:inputType="text"
                 android:imeOptions="actionSearch"
-                android:background="@color/surface" />
+                android:textColor="@color/text_primary" />
         </com.google.android.material.textfield.TextInputLayout>
     </LinearLayout>
 
+    <!-- Category chips -->
     <HorizontalScrollView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:scrollbars="none"
-        android:paddingStart="16dp"
-        android:paddingTop="8dp"
+        android:background="@color/surface2"
+        android:paddingStart="12dp"
+        android:paddingEnd="12dp"
         android:paddingBottom="8dp">
 
         <com.google.android.material.chip.ChipGroup
@@ -57,6 +78,7 @@
             app:selectionRequired="true" />
     </HorizontalScrollView>
 
+    <!-- Content area -->
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"

@@ -30,6 +30,7 @@ class AssetDetailFragment : Fragment() {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
         val app = requireActivity().application as TechTrackApplication
         viewModel = ViewModelProvider(
             this,

@@ -13,7 +13,7 @@ import com.techtrack.inventory.data.remote.model.response.LoanResponse
 import com.techtrack.inventory.databinding.ItemLoanRowBinding
 import com.techtrack.inventory.util.StatusHelper
 
-class LoanAdapter(
+open class LoanAdapter(
     private val showAdminActions: Boolean = false,
     private val onApprove: ((LoanResponse) -> Unit)? = null,
     private val onReject: ((LoanResponse, String) -> Unit)? = null,

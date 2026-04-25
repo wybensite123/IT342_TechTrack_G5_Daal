@@ -1,32 +1,35 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="primary">#2563EB</color>
-    <color name="primary_dark">#1D4ED8</color>
-    <color name="secondary">#7C3AED</color>
+    <!-- Dark theme base — matches web CSS variables -->
+    <color name="background">#1E293B</color>
+    <color name="surface">#334155</color>
+    <color name="surface2">#283447</color>
+    <color name="primary">#3B82F6</color>
+    <color name="primary_dark">#2563EB</color>
+    <color name="secondary">#10B981</color>
     <color name="success">#10B981</color>
     <color name="warning">#F59E0B</color>
     <color name="error">#EF4444</color>
-    <color name="surface">#FFFFFF</color>
-    <color name="background">#F8FAFC</color>
     <color name="on_primary">#FFFFFF</color>
-    <color name="text_primary">#1E293B</color>
-    <color name="text_secondary">#64748B</color>
-    <color name="divider">#E2E8F0</color>
-    <color name="card_background">#FFFFFF</color>
+    <color name="text_primary">#F1F5F9</color>
+    <color name="text_secondary">#94A3B8</color>
+    <color name="divider">#1A2234</color>
+    <color name="card_background">#334155</color>
+    <color name="border">#283447</color>
 
-    <!-- Status colors -->
-    <color name="status_available_bg">#D1FAE5</color>
-    <color name="status_available_text">#065F46</color>
-    <color name="status_pending_bg">#FEF3C7</color>
-    <color name="status_pending_text">#92400E</color>
-    <color name="status_on_loan_bg">#DBEAFE</color>
-    <color name="status_on_loan_text">#1E40AF</color>
-    <color name="status_maintenance_bg">#FFEDD5</color>
-    <color name="status_maintenance_text">#9A3412</color>
-    <color name="status_retired_bg">#F1F5F9</color>
-    <color name="status_retired_text">#64748B</color>
-    <color name="status_rejected_bg">#FEE2E2</color>
-    <color name="status_rejected_text">#991B1B</color>
-    <color name="status_returned_bg">#D1FAE5</color>
-    <color name="status_returned_text">#065F46</color>
+    <!-- Status badge colors — semi-transparent approximations on #1E293B -->
+    <color name="status_available_bg">#1B3A2F</color>
+    <color name="status_available_text">#10B981</color>
+    <color name="status_pending_bg">#362D18</color>
+    <color name="status_pending_text">#F59E0B</color>
+    <color name="status_on_loan_bg">#1A2840</color>
+    <color name="status_on_loan_text">#3B82F6</color>
+    <color name="status_maintenance_bg">#361A1A</color>
+    <color name="status_maintenance_text">#EF4444</color>
+    <color name="status_retired_bg">#283447</color>
+    <color name="status_retired_text">#94A3B8</color>
+    <color name="status_rejected_bg">#361A1A</color>
+    <color name="status_rejected_text">#EF4444</color>
+    <color name="status_returned_bg">#1B3A2F</color>
+    <color name="status_returned_text">#10B981</color>
 </resources>

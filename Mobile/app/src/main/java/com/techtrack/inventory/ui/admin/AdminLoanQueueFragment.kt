@@ -10,7 +10,6 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.tabs.TabLayout
 import com.techtrack.inventory.R
 import com.techtrack.inventory.TechTrackApplication
-import com.techtrack.inventory.data.remote.model.response.LoanResponse
 import com.techtrack.inventory.databinding.FragmentAdminLoanQueueBinding
 import com.techtrack.inventory.util.Resource
 import com.techtrack.inventory.util.hide
@@ -35,9 +34,10 @@ class AdminLoanQueueFragment : Fragment() {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
         val app = requireActivity().application as TechTrackApplication
         viewModel = ViewModelProvider(
-            requireActivity(),
+            this,
             AdminViewModelFactory(app.assetRepository, app.loanRepository)
         )[AdminViewModel::class.java]
 
@@ -79,7 +79,6 @@ class AdminLoanQueueFragment : Fragment() {
         val status = when (tab) {
             TAB_PENDING -> "PENDING_APPROVAL"
             TAB_ACTIVE -> "ON_LOAN"
-            TAB_HISTORY -> null
             else -> null
         }
         viewModel.loadQueue(status)
