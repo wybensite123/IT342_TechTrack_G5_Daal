@@ -28,13 +28,17 @@ public final class ActivitySplashBinding implements ViewBinding {
   public final ProgressBar progressBar;
 
   @NonNull
+  public final TextView textView;
+
+  @NonNull
   public final TextView tvTagline;
 
   private ActivitySplashBinding(@NonNull ConstraintLayout rootView, @NonNull ImageView ivLogo,
-      @NonNull ProgressBar progressBar, @NonNull TextView tvTagline) {
+      @NonNull ProgressBar progressBar, @NonNull TextView textView, @NonNull TextView tvTagline) {
     this.rootView = rootView;
     this.ivLogo = ivLogo;
     this.progressBar = progressBar;
+    this.textView = textView;
     this.tvTagline = tvTagline;
   }
 
@@ -77,13 +81,20 @@ public final class ActivitySplashBinding implements ViewBinding {
         break missingId;
       }
 
+      id = R.id.textView;
+      TextView textView = ViewBindings.findChildViewById(rootView, id);
+      if (textView == null) {
+        break missingId;
+      }
+
       id = R.id.tvTagline;
       TextView tvTagline = ViewBindings.findChildViewById(rootView, id);
       if (tvTagline == null) {
         break missingId;
       }
 
-      return new ActivitySplashBinding((ConstraintLayout) rootView, ivLogo, progressBar, tvTagline);
+      return new ActivitySplashBinding((ConstraintLayout) rootView, ivLogo, progressBar, textView,
+          tvTagline);
     }
     String missingId = rootView.getResources().getResourceName(id);
     throw new NullPointerException("Missing required view with ID: ".concat(missingId));

@@ -32,6 +32,7 @@ color text_secondary
 color warning
 drawable bg_avatar_circle
 drawable bg_card_top_line
+drawable ic_launcher_background
 drawable ic_launcher_foreground
 drawable techtrack_logo
 id actionButtons
@@ -80,6 +81,7 @@ id scrollContent
 id statsGrid
 id swipeRefresh
 id tabLayout
+id textView
 id tilConfirmPassword
 id tilEmail
 id tilFirstName
@@ -131,6 +133,7 @@ layout item_loan_row
 menu bottom_nav_admin
 menu bottom_nav_borrower
 mipmap ic_launcher
+mipmap ic_launcher_foreground
 mipmap ic_launcher_round
 navigation nav_admin
 navigation nav_borrower

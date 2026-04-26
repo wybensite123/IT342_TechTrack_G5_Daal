@@ -1,0 +1,4 @@
+com.techtrack.inventory.test.app-androidTest-0 C:\Users\Wyben\Documents\IT342_TechTrack_G5_Daal\Mobile\app\build\generated\res\resValues\androidTest\debug
+com.techtrack.inventory.test.app-mergeDebugAndroidTestResources-1 C:\Users\Wyben\Documents\IT342_TechTrack_G5_Daal\Mobile\app\build\intermediates\incremental\debugAndroidTest\mergeDebugAndroidTestResources\merged.dir
+com.techtrack.inventory.test.app-mergeDebugAndroidTestResources-2 C:\Users\Wyben\Documents\IT342_TechTrack_G5_Daal\Mobile\app\build\intermediates\incremental\debugAndroidTest\mergeDebugAndroidTestResources\stripped.dir
+com.techtrack.inventory.test.app-merged_res-3 C:\Users\Wyben\Documents\IT342_TechTrack_G5_Daal\Mobile\app\build\intermediates\merged_res\debugAndroidTest
