@@ -1,0 +1,159 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@color/background">
+
+    <!-- Profile header matching web's user chip / profile card -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:background="@color/surface2"
+        android:padding="24dp"
+        android:gravity="center_horizontal">
+
+        <!-- Avatar: blue-green gradient circle -->
+        <View
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:background="@drawable/bg_avatar_circle" />
+
+        <TextView
+            android:id="@+id/tvFullName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:textColor="@color/text_primary"
+            android:layout_marginTop="12dp" />
+
+        <!-- Role badge -->
+        <TextView
+            android:id="@+id/tvRoleBadge"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:paddingStart="14dp"
+            android:paddingEnd="14dp"
+            android:paddingTop="5dp"
+            android:paddingBottom="5dp"
+            android:textSize="12sp"
+            android:textStyle="bold"
+            android:textColor="@color/primary"
+            android:background="@color/surface" />
+
+        <!-- Logo below avatar area -->
+        <ImageView
+            android:layout_width="80dp"
+            android:layout_height="wrap_content"
+            android:adjustViewBounds="true"
+            android:src="@drawable/techtrack_logo"
+            android:contentDescription="TechTrack"
+            android:layout_marginTop="16dp" />
+    </LinearLayout>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="16dp">
+
+            <!-- Info card -->
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:cardCornerRadius="14dp"
+                app:cardElevation="0dp"
+                app:cardBackgroundColor="@color/surface">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="16dp">
+
+                    <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
+                        android:orientation="horizontal" android:paddingVertical="10dp">
+                        <TextView android:layout_width="0dp" android:layout_height="wrap_content"
+                            android:layout_weight="1" android:text="@string/label_email"
+                            android:textSize="11sp" android:textAllCaps="true" android:letterSpacing="0.07"
+                            android:textColor="@color/text_secondary" android:textStyle="bold" />
+                        <TextView android:id="@+id/tvEmail" android:layout_width="0dp"
+                            android:layout_height="wrap_content" android:layout_weight="2"
+                            android:textColor="@color/text_primary" android:textSize="13sp"
+                            android:gravity="end" />
+                    </LinearLayout>
+
+                    <View android:layout_width="match_parent" android:layout_height="1dp"
+                        android:background="@color/divider" />
+
+                    <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
+                        android:orientation="horizontal" android:paddingVertical="10dp">
+                        <TextView android:layout_width="0dp" android:layout_height="wrap_content"
+                            android:layout_weight="1" android:text="@string/label_role"
+                            android:textSize="11sp" android:textAllCaps="true" android:letterSpacing="0.07"
+                            android:textColor="@color/text_secondary" android:textStyle="bold" />
+                        <TextView android:id="@+id/tvRole" android:layout_width="0dp"
+                            android:layout_height="wrap_content" android:layout_weight="2"
+                            android:textColor="@color/text_primary" android:textSize="13sp"
+                            android:gravity="end" />
+                    </LinearLayout>
+
+                    <View android:layout_width="match_parent" android:layout_height="1dp"
+                        android:background="@color/divider" />
+
+                    <LinearLayout android:id="@+id/rowDepartment" android:layout_width="match_parent"
+                        android:layout_height="wrap_content" android:orientation="horizontal"
+                        android:paddingVertical="10dp" android:visibility="gone">
+                        <TextView android:layout_width="0dp" android:layout_height="wrap_content"
+                            android:layout_weight="1" android:text="@string/label_department"
+                            android:textSize="11sp" android:textAllCaps="true" android:letterSpacing="0.07"
+                            android:textColor="@color/text_secondary" android:textStyle="bold" />
+                        <TextView android:id="@+id/tvDepartment" android:layout_width="0dp"
+                            android:layout_height="wrap_content" android:layout_weight="2"
+                            android:textColor="@color/text_primary" android:textSize="13sp"
+                            android:gravity="end" />
+                    </LinearLayout>
+
+                    <View android:id="@+id/dividerDepartment" android:layout_width="match_parent"
+                        android:layout_height="1dp" android:background="@color/divider"
+                        android:visibility="gone" />
+
+                    <LinearLayout android:id="@+id/rowStudentId" android:layout_width="match_parent"
+                        android:layout_height="wrap_content" android:orientation="horizontal"
+                        android:paddingVertical="10dp" android:visibility="gone">
+                        <TextView android:layout_width="0dp" android:layout_height="wrap_content"
+                            android:layout_weight="1" android:text="@string/label_student_id"
+                            android:textSize="11sp" android:textAllCaps="true" android:letterSpacing="0.07"
+                            android:textColor="@color/text_secondary" android:textStyle="bold" />
+                        <TextView android:id="@+id/tvStudentId" android:layout_width="0dp"
+                            android:layout_height="wrap_content" android:layout_weight="2"
+                            android:textColor="@color/text_primary" android:textSize="13sp"
+                            android:gravity="end" />
+                    </LinearLayout>
+
+                </LinearLayout>
+            </androidx.cardview.widget.CardView>
+
+            <!-- Logout button matching web's logout danger style -->
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btnLogout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:text="@string/btn_logout"
+                android:textSize="15sp"
+                android:backgroundTint="@color/error"
+                style="@style/Widget.TechTrack.Button" />
+
+        </LinearLayout>
+    </ScrollView>
+</LinearLayout>

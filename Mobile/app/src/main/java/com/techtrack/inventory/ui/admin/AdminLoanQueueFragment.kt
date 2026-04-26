@@ -114,10 +114,10 @@ class AdminLoanQueueFragment : Fragment() {
         viewModel.actionResult.observe(viewLifecycleOwner) { resource ->
             when (resource) {
                 is Resource.Success -> {
-                    toast("Action successful")
+                    requireContext().toast("Action successful")
                     loadForTab(activeTab)
                 }
-                is Resource.Error -> toast(resource.message)
+                is Resource.Error -> requireContext().toast(resource.message)
                 else -> {}
             }
         }

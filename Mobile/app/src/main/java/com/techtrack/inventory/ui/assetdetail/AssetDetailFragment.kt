@@ -100,10 +100,10 @@ class AssetDetailFragment : Fragment() {
         viewModel.loanSubmitResult.observe(viewLifecycleOwner) { resource ->
             when (resource) {
                 is Resource.Success -> {
-                    toast("Loan request submitted!")
+                    requireContext().toast("Loan request submitted!")
                     viewModel.loadAsset(arguments?.getLong("assetId") ?: return@observe)
                 }
-                is Resource.Error -> toast(resource.message)
+                is Resource.Error -> requireContext().toast(resource.message)
                 else -> {}
             }
         }
@@ -118,7 +118,7 @@ class AssetDetailFragment : Fragment() {
                 val purpose = dialogBinding.etPurpose.text.toString().trim()
                 val returnDate = dialogBinding.etReturnDate.text.toString().trim()
                 if (purpose.isEmpty() || returnDate.isEmpty()) {
-                    toast("Please fill all fields")
+                    requireContext().toast("Please fill all fields")
                 } else {
                     viewModel.submitLoan(asset.id, purpose, returnDate)
                 }

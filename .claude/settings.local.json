@@ -1,7 +1,13 @@
 {
   "permissions": {
     "allow": [
-      "PowerShell(Copy-Item \"c:\\\\Users\\\\Wyben\\\\Documents\\\\IT342_TechTrack_G5_Daal\\\\web\\\\src\\\\assets\\\\TechTrack.png\" \"c:\\\\Users\\\\Wyben\\\\Documents\\\\IT342_TechTrack_G5_Daal\\\\Mobile\\\\app\\\\src\\\\main\\\\res\\\\drawable\\\\techtrack_logo.png\" -Force)"
+      "PowerShell(Copy-Item \"c:\\\\Users\\\\Wyben\\\\Documents\\\\IT342_TechTrack_G5_Daal\\\\web\\\\src\\\\assets\\\\TechTrack.png\" \"c:\\\\Users\\\\Wyben\\\\Documents\\\\IT342_TechTrack_G5_Daal\\\\Mobile\\\\app\\\\src\\\\main\\\\res\\\\drawable\\\\techtrack_logo.png\" -Force)",
+      "Bash(./gradlew assembleDebug)",
+      "PowerShell(Invoke-WebRequest -Uri \"https://github.com/gradle/gradle/raw/v8.4.0/gradle/wrapper/gradle-wrapper.jar\" -OutFile \"C:\\\\Users\\\\Wyben\\\\Documents\\\\IT342_TechTrack_G5_Daal\\\\Mobile\\\\gradle\\\\wrapper\\\\gradle-wrapper.jar\" -UseBasicParsing; Write-Host \"Downloaded: $\\(\\(Get-Item 'C:\\\\Users\\\\Wyben\\\\Documents\\\\IT342_TechTrack_G5_Daal\\\\Mobile\\\\gradle\\\\wrapper\\\\gradle-wrapper.jar'\\).Length\\) bytes\")",
+      "PowerShell(Set-Location \"C:\\\\Users\\\\Wyben\\\\Documents\\\\IT342_TechTrack_G5_Daal\\\\Mobile\"; .\\\\gradlew.bat assembleDebug 2>&1 | Tee-Object -Variable out | Select-Object -Last 40; Write-Host \"Exit: $LASTEXITCODE\")",
+      "Read(//c/Users/Wyben/Downloads/android-studio-2023.2.1.6-windows/android-studio/jbr//**)",
+      "Bash(\"/c/Users/Wyben/Downloads/android-studio-2023.2.1.6-windows/android-studio/jbr/bin/java.exe\" -version)",
+      "PowerShell(Set-Location \"C:\\\\Users\\\\Wyben\\\\Documents\\\\IT342_TechTrack_G5_Daal\\\\Mobile\"; .\\\\gradlew.bat assembleDebug 2>&1 | Select-Object -Last 30; Write-Host \"Exit: $LASTEXITCODE\")"
     ]
   }
 }

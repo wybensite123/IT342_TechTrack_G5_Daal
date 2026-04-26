@@ -130,8 +130,8 @@ class HomeFragment : Fragment() {
     private fun observeLoan() {
         loanViewModel.loanSubmitResult.observe(viewLifecycleOwner) { resource ->
             when (resource) {
-                is Resource.Success -> toast("Loan request submitted!")
-                is Resource.Error -> toast(resource.message)
+                is Resource.Success -> requireContext().toast("Loan request submitted!")
+                is Resource.Error -> requireContext().toast(resource.message)
                 else -> {}
             }
         }
@@ -146,7 +146,7 @@ class HomeFragment : Fragment() {
                 val purpose = dialogBinding.etPurpose.text.toString().trim()
                 val returnDate = dialogBinding.etReturnDate.text.toString().trim()
                 if (purpose.isEmpty() || returnDate.isEmpty()) {
-                    toast("Please fill all fields")
+                    requireContext().toast("Please fill all fields")
                 } else {
                     loanViewModel.submitLoan(asset.id, purpose, returnDate)
                 }
