@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 import { register as registerApi } from '../../api/authApi';
 import logo from '../../assets/TechTrack.png';
 import './LoginPage.css';
@@ -8,10 +8,12 @@ import './RegisterPage.css';
 /* ── Auth Header ─────────────────────────────────────────────────── */
 const AuthHeader = ({ onLogin }) => (
   <nav className="auth-header">
-    <div className="auth-brand">
+    <Link to="/" className="auth-brand" aria-label="TechTrack home">
       <img src={logo} alt="TechTrack" className="auth-brand-logo" />
-    </div>
+      <span className="auth-brand-name">TechTrack</span>
+    </Link>
     <div className="auth-header-nav">
+      <Link to="/" className="auth-nav-link">Home</Link>
       <span className="auth-nav-label">Already have an account?</span>
       <button className="auth-nav-btn" onClick={onLogin}>Sign In</button>
     </div>

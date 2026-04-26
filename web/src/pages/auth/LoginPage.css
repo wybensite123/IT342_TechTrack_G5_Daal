@@ -3,6 +3,16 @@
 
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
+/* Force the document to be scrollable while on auth pages
+   (overrides any leftover overflow:hidden from other routes). */
+html:has(.login-container),
+html:has(.login-container) body {
+  overflow-x: hidden;
+  overflow-y: auto !important;
+  height: auto !important;
+  min-height: 100%;
+}
+
 /* ── PAGE TRANSITIONS ───────────────────────────────────────────────── */
 @keyframes authPageIn {
   from { opacity: 0; transform: translateY(28px) scale(0.98); }
@@ -31,81 +41,118 @@
   to   { opacity: 0; transform: translateX(40px) scale(0.96); }
 }
 
-/* ── AUTH HEADER ────────────────────────────────────────────────────── */
+/* ── AUTH HEADER (matches landing page nav) ─────────────────────────── */
 .auth-header {
   position: fixed;
   top: 0; left: 0; right: 0;
-  height: 72px;
+  height: 110px;
   z-index: 200;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 0 36px;
-  background: rgba(30,41,59,0.92);
-  backdrop-filter: blur(16px);
-  border-bottom: 1px solid rgba(148,163,184,0.08);
+  padding: 0 40px;
+  background: rgba(15,23,42,0.92);
+  backdrop-filter: blur(12px);
+  border-bottom: 1px solid rgba(148,163,184,0.18);
+  box-shadow: 0 8px 24px -16px rgba(0,0,0,0.6);
 }
 
 .auth-brand {
   display: flex;
   align-items: center;
+  gap: 14px;
   text-decoration: none;
+  color: #F1F5F9;
+  cursor: pointer;
+  background: transparent;
+  border: none;
+  padding: 0;
+  font-family: inherit;
+  transition: transform .2s ease, filter .2s ease;
+}
+
+.auth-brand:hover {
+  transform: scale(1.04);
+  filter: drop-shadow(0 2px 12px rgba(59,130,246,0.4));
 }
 
 .auth-brand-logo {
-  height: 60px;
-  width: auto;
+  width: 72px;
+  height: 72px;
   object-fit: contain;
-  mix-blend-mode: screen;
+  filter: drop-shadow(0 4px 12px rgba(59,130,246,0.35));
+  transition: filter .2s ease;
+}
+
+.auth-brand:hover .auth-brand-logo {
+  filter: drop-shadow(0 6px 20px rgba(59,130,246,0.6));
 }
 
 .auth-brand-name {
   font-family: 'Rajdhani', sans-serif;
-  font-size: 20px;
+  font-size: 30px;
   font-weight: 700;
   color: #F1F5F9;
-  letter-spacing: 0.5px;
+  letter-spacing: 0.05em;
 }
 
 .auth-header-nav {
   display: flex;
   align-items: center;
-  gap: 16px;
+  gap: 18px;
 }
 
 .auth-nav-label {
-  font-size: 13px;
+  font-size: 14px;
   color: #94A3B8;
+  font-weight: 500;
 }
 
-.auth-nav-btn {
+.auth-nav-link {
   background: transparent;
-  color: #3B82F6;
-  border: 1px solid rgba(59,130,246,0.35);
-  padding: 8px 22px;
-  border-radius: 8px;
-  font-size: 13px;
+  color: #94A3B8;
+  border: none;
+  padding: 8px 12px;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  font-family: 'DM Sans', sans-serif;
+  text-decoration: none;
+  transition: color .15s ease;
+}
+
+.auth-nav-link:hover { color: #F1F5F9; }
+
+.auth-nav-btn {
+  background: #3B82F6;
+  color: #fff;
+  border: 1px solid transparent;
+  padding: 10px 22px;
+  border-radius: 10px;
+  font-size: 14px;
   font-weight: 600;
   cursor: pointer;
   font-family: 'DM Sans', sans-serif;
-  transition: all 0.2s ease;
+  transition: transform .15s ease, background .15s ease;
+  white-space: nowrap;
 }
 
 .auth-nav-btn:hover {
-  background: rgba(59,130,246,0.1);
-  border-color: #3B82F6;
+  background: #2563EB;
+  transform: translateY(-1px);
 }
 
 /* ── CONTAINER ──────────────────────────────────────────────────────── */
 .login-container {
   min-height: 100vh;
   display: flex;
-  align-items: center;
+  align-items: flex-start;
   justify-content: center;
-  padding: 88px 20px 24px;
+  padding: 130px 20px 40px;
   background: #1E293B;
   position: relative;
-  overflow: hidden;
+  overflow-x: hidden;
+  overflow-y: auto;
   animation: authPageIn 0.38s cubic-bezier(0.22, 1, 0.36, 1) both;
 }
 
@@ -166,7 +213,7 @@
   gap: 64px;
   max-width: 1200px;
   width: 100%;
-  align-items: center;
+  align-items: flex-start;
   position: relative;
   z-index: 1;
 }
@@ -316,9 +363,13 @@
 /* RIGHT SECTION - LOGIN CARD */
 .login-right {
   display: flex;
-  align-items: center;
+  align-items: flex-start;
   justify-content: center;
   position: relative;
+  /* Reserve space for the absolutely-positioned login/register cards
+     so the page can scroll on short viewports. Register card is the taller one. */
+  min-height: 720px;
+  width: 100%;
 }
 
 /* ── ANIMATED CARD WRAPPER ──────────────────────────────────────────── */
@@ -586,19 +637,23 @@ form {
 }
 
 @media (max-width: 768px) {
-  .auth-header { padding: 0 20px; }
-  .auth-nav-label { display: none; }
+  .auth-header { padding: 0 24px; height: 88px; }
+  .auth-brand-logo { width: 56px; height: 56px; }
+  .auth-brand-name { font-size: 24px; }
+  .auth-nav-label, .auth-nav-link { display: none; }
+  .login-container { padding: 108px 16px 20px; }
 }
 
 @media (max-width: 480px) {
-  .auth-header { padding: 0 16px; height: 56px; }
-  .auth-brand-name { font-size: 17px; }
-  .auth-nav-btn { padding: 7px 14px; font-size: 12px; }
-  .login-container { padding: 76px 12px 16px; }
+  .auth-header { padding: 0 16px; height: 76px; }
+  .auth-brand-logo { width: 48px; height: 48px; }
+  .auth-brand-name { font-size: 20px; }
+  .auth-nav-btn { padding: 8px 16px; font-size: 13px; }
+  .login-container { padding: 96px 12px 16px; }
   .login-card { padding: 32px 20px; border-radius: 16px; }
   .login-title { font-size: 22px; }
   .logo-svg { width: 64px; height: 64px; }
   .input-field { padding: 10px 12px 10px 40px; font-size: 13px; }
   .btn-signin { padding: 12px; font-size: 14px; }
-  .error-toast { top: 70px; right: 16px; left: 16px; }
+  .error-toast { top: 90px; right: 16px; left: 16px; }
 }

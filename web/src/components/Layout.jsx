@@ -37,11 +37,18 @@ const IconCamera = () => (
     <circle cx="12" cy="13" r="4"/>
   </svg>
 );
+const IconUser = () => (
+  <svg className="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+    <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>
+    <circle cx="12" cy="7" r="4"/>
+  </svg>
+);
 
 const PAGE_TITLES = {
-  '/dashboard': { prefix: 'Asset', accent: 'Catalog' },
-  '/loans':     { prefix: 'My',    accent: 'Loans'   },
-  '/admin':     { prefix: 'Admin', accent: 'Panel'   },
+  '/dashboard': { prefix: 'Asset',   accent: 'Catalog' },
+  '/loans':     { prefix: 'My',      accent: 'Loans'   },
+  '/admin':     { prefix: 'Admin',   accent: 'Panel'   },
+  '/profile':   { prefix: 'My',      accent: 'Profile' },
 };
 
 export default function Layout() {
@@ -116,6 +123,10 @@ export default function Layout() {
               <IconSettings /> Admin Panel
             </NavLink>
           )}
+
+          <NavLink className={navClass} to="/profile" onClick={close}>
+            <IconUser /> Profile
+          </NavLink>
 
           <div className="sidebar-footer">
             <div className="user-chip">
