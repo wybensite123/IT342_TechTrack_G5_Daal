@@ -330,6 +330,8 @@ spring.servlet.multipart.max-file-size=5MB
 spring.servlet.multipart.max-request-size=10MB
 ```
 
+> If Supabase is unavailable, you can use a local fallback profile with H2. Copy `backend/src/main/resources/application-local.properties.example` to `backend/src/main/resources/application-local.properties`, enable the H2 section, and run with `-Dspring.profiles.active=local`.
+
 ### Web — `web/.env.local`
 
 ```bash

@@ -4,10 +4,23 @@
 # your actual values. That file is gitignored — never commit it.
 # ============================================================
 
-# Supabase PostgreSQL (pooler, session mode port 5432)
-SPRING_DATASOURCE_URL=jdbc:postgresql://aws-1-ap-southeast-1.pooler.supabase.com:5432/postgres
-SPRING_DATASOURCE_USERNAME=postgres.YOUR_PROJECT_REF
+# Option 1: Supabase PostgreSQL (direct database connection)
+SPRING_DATASOURCE_URL=jdbc:postgresql://db.YOUR_PROJECT_REF.supabase.co:5432/postgres
+SPRING_DATASOURCE_USERNAME=postgres
 SPRING_DATASOURCE_PASSWORD=YOUR_DB_PASSWORD
+# Hikari settings for direct connections (higher pool size is safe)
+SPRING_DATASOURCE_HIKARI_MAXIMUM-POOL-SIZE=5
+SPRING_DATASOURCE_HIKARI_MINIMUM-IDLE=1
+SPRING_DATASOURCE_HIKARI_CONNECTION-TIMEOUT=30000
+
+# Option 2: Local H2 database (development fallback)
+# Uncomment this block and run with -Dspring.profiles.active=local
+# SPRING_DATASOURCE_URL=jdbc:h2:file:./data/techtrack;DB_CLOSE_ON_EXIT=FALSE;AUTO_SERVER=TRUE
+# SPRING_DATASOURCE_USERNAME=sa
+# SPRING_DATASOURCE_PASSWORD=
+# SPRING_JPA_DATABASE-PLATFORM=org.hibernate.dialect.H2Dialect
+# SPRING_JPA_HIBERNATE_DDL-AUTO=update
+# SPRING_FLYWAY_ENABLED=false
 
 # JWT — generate a 256-bit random string, e.g.:
 #   openssl rand -base64 32
