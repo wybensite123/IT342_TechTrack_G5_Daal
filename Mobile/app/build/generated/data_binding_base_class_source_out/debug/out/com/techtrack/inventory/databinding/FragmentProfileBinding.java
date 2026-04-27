@@ -8,6 +8,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.core.widget.NestedScrollView;
 import androidx.viewbinding.ViewBinding;
 import androidx.viewbinding.ViewBindings;
 import com.google.android.material.button.MaterialButton;
@@ -18,7 +19,7 @@ import java.lang.String;
 
 public final class FragmentProfileBinding implements ViewBinding {
   @NonNull
-  private final LinearLayout rootView;
+  private final NestedScrollView rootView;
 
   @NonNull
   public final MaterialButton btnLogout;
@@ -27,10 +28,19 @@ public final class FragmentProfileBinding implements ViewBinding {
   public final View dividerDepartment;
 
   @NonNull
+  public final View dividerStudentId;
+
+  @NonNull
   public final LinearLayout rowDepartment;
 
   @NonNull
   public final LinearLayout rowStudentId;
+
+  @NonNull
+  public final TextView tvAccountId;
+
+  @NonNull
+  public final TextView tvAvatarInitials;
 
   @NonNull
   public final TextView tvDepartment;
@@ -50,16 +60,21 @@ public final class FragmentProfileBinding implements ViewBinding {
   @NonNull
   public final TextView tvStudentId;
 
-  private FragmentProfileBinding(@NonNull LinearLayout rootView, @NonNull MaterialButton btnLogout,
-      @NonNull View dividerDepartment, @NonNull LinearLayout rowDepartment,
-      @NonNull LinearLayout rowStudentId, @NonNull TextView tvDepartment, @NonNull TextView tvEmail,
+  private FragmentProfileBinding(@NonNull NestedScrollView rootView,
+      @NonNull MaterialButton btnLogout, @NonNull View dividerDepartment,
+      @NonNull View dividerStudentId, @NonNull LinearLayout rowDepartment,
+      @NonNull LinearLayout rowStudentId, @NonNull TextView tvAccountId,
+      @NonNull TextView tvAvatarInitials, @NonNull TextView tvDepartment, @NonNull TextView tvEmail,
       @NonNull TextView tvFullName, @NonNull TextView tvRole, @NonNull TextView tvRoleBadge,
       @NonNull TextView tvStudentId) {
     this.rootView = rootView;
     this.btnLogout = btnLogout;
     this.dividerDepartment = dividerDepartment;
+    this.dividerStudentId = dividerStudentId;
     this.rowDepartment = rowDepartment;
     this.rowStudentId = rowStudentId;
+    this.tvAccountId = tvAccountId;
+    this.tvAvatarInitials = tvAvatarInitials;
     this.tvDepartment = tvDepartment;
     this.tvEmail = tvEmail;
     this.tvFullName = tvFullName;
@@ -70,7 +85,7 @@ public final class FragmentProfileBinding implements ViewBinding {
 
   @Override
   @NonNull
-  public LinearLayout getRoot() {
+  public NestedScrollView getRoot() {
     return rootView;
   }
 
@@ -107,6 +122,12 @@ public final class FragmentProfileBinding implements ViewBinding {
         break missingId;
       }
 
+      id = R.id.dividerStudentId;
+      View dividerStudentId = ViewBindings.findChildViewById(rootView, id);
+      if (dividerStudentId == null) {
+        break missingId;
+      }
+
       id = R.id.rowDepartment;
       LinearLayout rowDepartment = ViewBindings.findChildViewById(rootView, id);
       if (rowDepartment == null) {
@@ -116,6 +137,18 @@ public final class FragmentProfileBinding implements ViewBinding {
       id = R.id.rowStudentId;
       LinearLayout rowStudentId = ViewBindings.findChildViewById(rootView, id);
       if (rowStudentId == null) {
+        break missingId;
+      }
+
+      id = R.id.tvAccountId;
+      TextView tvAccountId = ViewBindings.findChildViewById(rootView, id);
+      if (tvAccountId == null) {
+        break missingId;
+      }
+
+      id = R.id.tvAvatarInitials;
+      TextView tvAvatarInitials = ViewBindings.findChildViewById(rootView, id);
+      if (tvAvatarInitials == null) {
         break missingId;
       }
 
@@ -155,9 +188,9 @@ public final class FragmentProfileBinding implements ViewBinding {
         break missingId;
       }
 
-      return new FragmentProfileBinding((LinearLayout) rootView, btnLogout, dividerDepartment,
-          rowDepartment, rowStudentId, tvDepartment, tvEmail, tvFullName, tvRole, tvRoleBadge,
-          tvStudentId);
+      return new FragmentProfileBinding((NestedScrollView) rootView, btnLogout, dividerDepartment,
+          dividerStudentId, rowDepartment, rowStudentId, tvAccountId, tvAvatarInitials,
+          tvDepartment, tvEmail, tvFullName, tvRole, tvRoleBadge, tvStudentId);
     }
     String missingId = rootView.getResources().getResourceName(id);
     throw new NullPointerException("Missing required view with ID: ".concat(missingId));

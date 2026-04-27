@@ -4,8 +4,108 @@
         "source": "C:\\Users\\Wyben\\.gradle\\daemon\\8.9\\com.techtrack.inventory.app-main-54:\\layout\\fragment_my_loans.xml"
     },
     {
+        "merged": "com.techtrack.inventory.app-merged_res-52:/drawable_bg_profile_card.xml.flat",
+        "source": "com.techtrack.inventory.app-main-54:/drawable/bg_profile_card.xml"
+    },
+    {
         "merged": "C:\\Users\\Wyben\\.gradle\\daemon\\8.9\\com.techtrack.inventory.app-merged_res-52:\\layout_fragment_watchlist.xml.flat",
         "source": "C:\\Users\\Wyben\\.gradle\\daemon\\8.9\\com.techtrack.inventory.app-main-54:\\layout\\fragment_watchlist.xml"
+    },
+    {
+        "merged": "C:\\Users\\Wyben\\.gradle\\daemon\\8.9\\com.techtrack.inventory.app-merged_res-52:\\mipmap-hdpi_ic_launcher_foreground.webp.flat",
+        "source": "C:\\Users\\Wyben\\.gradle\\daemon\\8.9\\com.techtrack.inventory.app-main-54:\\mipmap-hdpi\\ic_launcher_foreground.webp"
+    },
+    {
+        "merged": "C:\\Users\\Wyben\\.gradle\\daemon\\8.9\\com.techtrack.inventory.app-merged_res-52:\\drawable_ic_launcher_background.xml.flat",
+        "source": "C:\\Users\\Wyben\\.gradle\\daemon\\8.9\\com.techtrack.inventory.app-main-54:\\drawable\\ic_launcher_background.xml"
+    },
+    {
+        "merged": "com.techtrack.inventory.app-merged_res-52:/layout_fragment_profile.xml.flat",
+        "source": "com.techtrack.inventory.app-main-54:/layout/fragment_profile.xml"
+    },
+    {
+        "merged": "C:\\Users\\Wyben\\.gradle\\daemon\\8.9\\com.techtrack.inventory.app-merged_res-52:\\mipmap-xxxhdpi_ic_launcher.webp.flat",
+        "source": "C:\\Users\\Wyben\\.gradle\\daemon\\8.9\\com.techtrack.inventory.app-main-54:\\mipmap-xxxhdpi\\ic_launcher.webp"
+    },
+    {
+        "merged": "C:\\Users\\Wyben\\.gradle\\daemon\\8.9\\com.techtrack.inventory.app-merged_res-52:\\color_nav_item_color.xml.flat",
+        "source": "C:\\Users\\Wyben\\.gradle\\daemon\\8.9\\com.techtrack.inventory.app-main-54:\\color\\nav_item_color.xml"
+    },
+    {
+        "merged": "C:\\Users\\Wyben\\.gradle\\daemon\\8.9\\com.techtrack.inventory.app-merged_res-52:\\mipmap-mdpi_ic_launcher_foreground.webp.flat",
+        "source": "C:\\Users\\Wyben\\.gradle\\daemon\\8.9\\com.techtrack.inventory.app-main-54:\\mipmap-mdpi\\ic_launcher_foreground.webp"
+    },
+    {
+        "merged": "com.techtrack.inventory.app-merged_res-52:/drawable_bg_section_header.xml.flat",
+        "source": "com.techtrack.inventory.app-main-54:/drawable/bg_section_header.xml"
+    },
+    {
+        "merged": "C:\\Users\\Wyben\\.gradle\\daemon\\8.9\\com.techtrack.inventory.app-merged_res-52:\\mipmap-hdpi_ic_launcher_round.webp.flat",
+        "source": "C:\\Users\\Wyben\\.gradle\\daemon\\8.9\\com.techtrack.inventory.app-main-54:\\mipmap-hdpi\\ic_launcher_round.webp"
+    },
+    {
+        "merged": "C:\\Users\\Wyben\\.gradle\\daemon\\8.9\\com.techtrack.inventory.app-merged_res-52:\\drawable_ic_launcher_foreground.xml.flat",
+        "source": "C:\\Users\\Wyben\\.gradle\\daemon\\8.9\\com.techtrack.inventory.app-main-54:\\drawable\\ic_launcher_foreground.xml"
+    },
+    {
+        "merged": "C:\\Users\\Wyben\\.gradle\\daemon\\8.9\\com.techtrack.inventory.app-merged_res-52:\\mipmap-xxxhdpi_ic_launcher_round.webp.flat",
+        "source": "C:\\Users\\Wyben\\.gradle\\daemon\\8.9\\com.techtrack.inventory.app-main-54:\\mipmap-xxxhdpi\\ic_launcher_round.webp"
+    },
+    {
+        "merged": "C:\\Users\\Wyben\\.gradle\\daemon\\8.9\\com.techtrack.inventory.app-merged_res-52:\\mipmap-xhdpi_ic_launcher.webp.flat",
+        "source": "C:\\Users\\Wyben\\.gradle\\daemon\\8.9\\com.techtrack.inventory.app-main-54:\\mipmap-xhdpi\\ic_launcher.webp"
+    },
+    {
+        "merged": "com.techtrack.inventory.app-merged_res-52:/drawable_bg_role_badge_student.xml.flat",
+        "source": "com.techtrack.inventory.app-main-54:/drawable/bg_role_badge_student.xml"
+    },
+    {
+        "merged": "com.techtrack.inventory.app-merged_res-52:/drawable_bg_avatar_ring.xml.flat",
+        "source": "com.techtrack.inventory.app-main-54:/drawable/bg_avatar_ring.xml"
+    },
+    {
+        "merged": "C:\\Users\\Wyben\\.gradle\\daemon\\8.9\\com.techtrack.inventory.app-merged_res-52:\\menu_bottom_nav_admin.xml.flat",
+        "source": "C:\\Users\\Wyben\\.gradle\\daemon\\8.9\\com.techtrack.inventory.app-main-54:\\menu\\bottom_nav_admin.xml"
+    },
+    {
+        "merged": "C:\\Users\\Wyben\\.gradle\\daemon\\8.9\\com.techtrack.inventory.app-merged_res-52:\\mipmap-xxhdpi_ic_launcher_round.webp.flat",
+        "source": "C:\\Users\\Wyben\\.gradle\\daemon\\8.9\\com.techtrack.inventory.app-main-54:\\mipmap-xxhdpi\\ic_launcher_round.webp"
+    },
+    {
+        "merged": "C:\\Users\\Wyben\\.gradle\\daemon\\8.9\\com.techtrack.inventory.app-merged_res-52:\\layout_activity_register.xml.flat",
+        "source": "C:\\Users\\Wyben\\.gradle\\daemon\\8.9\\com.techtrack.inventory.app-main-54:\\layout\\activity_register.xml"
+    },
+    {
+        "merged": "C:\\Users\\Wyben\\.gradle\\daemon\\8.9\\com.techtrack.inventory.app-merged_res-52:\\layout_fragment_asset_detail.xml.flat",
+        "source": "C:\\Users\\Wyben\\.gradle\\daemon\\8.9\\com.techtrack.inventory.app-main-54:\\layout\\fragment_asset_detail.xml"
+    },
+    {
+        "merged": "C:\\Users\\Wyben\\.gradle\\daemon\\8.9\\com.techtrack.inventory.app-merged_res-52:\\mipmap-xhdpi_ic_launcher_foreground.webp.flat",
+        "source": "C:\\Users\\Wyben\\.gradle\\daemon\\8.9\\com.techtrack.inventory.app-main-54:\\mipmap-xhdpi\\ic_launcher_foreground.webp"
+    },
+    {
+        "merged": "C:\\Users\\Wyben\\.gradle\\daemon\\8.9\\com.techtrack.inventory.app-merged_res-52:\\mipmap-mdpi_ic_launcher.webp.flat",
+        "source": "C:\\Users\\Wyben\\.gradle\\daemon\\8.9\\com.techtrack.inventory.app-main-54:\\mipmap-mdpi\\ic_launcher.webp"
+    },
+    {
+        "merged": "C:\\Users\\Wyben\\.gradle\\daemon\\8.9\\com.techtrack.inventory.app-merged_res-52:\\layout_activity_splash.xml.flat",
+        "source": "C:\\Users\\Wyben\\.gradle\\daemon\\8.9\\com.techtrack.inventory.app-main-54:\\layout\\activity_splash.xml"
+    },
+    {
+        "merged": "C:\\Users\\Wyben\\.gradle\\daemon\\8.9\\com.techtrack.inventory.app-merged_res-52:\\layout_fragment_admin_loan_queue.xml.flat",
+        "source": "C:\\Users\\Wyben\\.gradle\\daemon\\8.9\\com.techtrack.inventory.app-main-54:\\layout\\fragment_admin_loan_queue.xml"
+    },
+    {
+        "merged": "C:\\Users\\Wyben\\.gradle\\daemon\\8.9\\com.techtrack.inventory.app-merged_res-52:\\mipmap-xxxhdpi_ic_launcher_foreground.webp.flat",
+        "source": "C:\\Users\\Wyben\\.gradle\\daemon\\8.9\\com.techtrack.inventory.app-main-54:\\mipmap-xxxhdpi\\ic_launcher_foreground.webp"
+    },
+    {
+        "merged": "C:\\Users\\Wyben\\.gradle\\daemon\\8.9\\com.techtrack.inventory.app-merged_res-52:\\mipmap-anydpi-v26_ic_launcher_round.xml.flat",
+        "source": "C:\\Users\\Wyben\\.gradle\\daemon\\8.9\\com.techtrack.inventory.app-main-54:\\mipmap-anydpi-v26\\ic_launcher_round.xml"
+    },
+    {
+        "merged": "com.techtrack.inventory.app-merged_res-52:/drawable_bg_profile_hero.xml.flat",
+        "source": "com.techtrack.inventory.app-main-54:/drawable/bg_profile_hero.xml"
     },
     {
         "merged": "C:\\Users\\Wyben\\.gradle\\daemon\\8.9\\com.techtrack.inventory.app-merged_res-52:\\mipmap-mdpi_ic_launcher_round.webp.flat",
@@ -24,28 +124,12 @@
         "source": "C:\\Users\\Wyben\\.gradle\\daemon\\8.9\\com.techtrack.inventory.app-main-54:\\mipmap-xhdpi\\ic_launcher_round.webp"
     },
     {
-        "merged": "C:\\Users\\Wyben\\.gradle\\daemon\\8.9\\com.techtrack.inventory.app-merged_res-52:\\mipmap-hdpi_ic_launcher_foreground.webp.flat",
-        "source": "C:\\Users\\Wyben\\.gradle\\daemon\\8.9\\com.techtrack.inventory.app-main-54:\\mipmap-hdpi\\ic_launcher_foreground.webp"
-    },
-    {
         "merged": "C:\\Users\\Wyben\\.gradle\\daemon\\8.9\\com.techtrack.inventory.app-merged_res-52:\\layout_item_watchlist_row.xml.flat",
         "source": "C:\\Users\\Wyben\\.gradle\\daemon\\8.9\\com.techtrack.inventory.app-main-54:\\layout\\item_watchlist_row.xml"
     },
     {
-        "merged": "C:\\Users\\Wyben\\.gradle\\daemon\\8.9\\com.techtrack.inventory.app-merged_res-52:\\mipmap-xxxhdpi_ic_launcher.webp.flat",
-        "source": "C:\\Users\\Wyben\\.gradle\\daemon\\8.9\\com.techtrack.inventory.app-main-54:\\mipmap-xxxhdpi\\ic_launcher.webp"
-    },
-    {
-        "merged": "C:\\Users\\Wyben\\.gradle\\daemon\\8.9\\com.techtrack.inventory.app-merged_res-52:\\color_nav_item_color.xml.flat",
-        "source": "C:\\Users\\Wyben\\.gradle\\daemon\\8.9\\com.techtrack.inventory.app-main-54:\\color\\nav_item_color.xml"
-    },
-    {
-        "merged": "C:\\Users\\Wyben\\.gradle\\daemon\\8.9\\com.techtrack.inventory.app-merged_res-52:\\mipmap-mdpi_ic_launcher_foreground.webp.flat",
-        "source": "C:\\Users\\Wyben\\.gradle\\daemon\\8.9\\com.techtrack.inventory.app-main-54:\\mipmap-mdpi\\ic_launcher_foreground.webp"
-    },
-    {
-        "merged": "C:\\Users\\Wyben\\.gradle\\daemon\\8.9\\com.techtrack.inventory.app-merged_res-52:\\mipmap-hdpi_ic_launcher_round.webp.flat",
-        "source": "C:\\Users\\Wyben\\.gradle\\daemon\\8.9\\com.techtrack.inventory.app-main-54:\\mipmap-hdpi\\ic_launcher_round.webp"
+        "merged": "com.techtrack.inventory.app-merged_res-52:/layout_fragment_my_loans.xml.flat",
+        "source": "com.techtrack.inventory.app-main-54:/layout/fragment_my_loans.xml"
     },
     {
         "merged": "C:\\Users\\Wyben\\.gradle\\daemon\\8.9\\com.techtrack.inventory.app-merged_res-52:\\layout_activity_login.xml.flat",
@@ -64,18 +148,6 @@
         "source": "C:\\Users\\Wyben\\.gradle\\daemon\\8.9\\com.techtrack.inventory.app-main-54:\\menu\\bottom_nav_borrower.xml"
     },
     {
-        "merged": "C:\\Users\\Wyben\\.gradle\\daemon\\8.9\\com.techtrack.inventory.app-merged_res-52:\\drawable_ic_launcher_foreground.xml.flat",
-        "source": "C:\\Users\\Wyben\\.gradle\\daemon\\8.9\\com.techtrack.inventory.app-main-54:\\drawable\\ic_launcher_foreground.xml"
-    },
-    {
-        "merged": "C:\\Users\\Wyben\\.gradle\\daemon\\8.9\\com.techtrack.inventory.app-merged_res-52:\\mipmap-xxxhdpi_ic_launcher_round.webp.flat",
-        "source": "C:\\Users\\Wyben\\.gradle\\daemon\\8.9\\com.techtrack.inventory.app-main-54:\\mipmap-xxxhdpi\\ic_launcher_round.webp"
-    },
-    {
-        "merged": "C:\\Users\\Wyben\\.gradle\\daemon\\8.9\\com.techtrack.inventory.app-merged_res-52:\\mipmap-xhdpi_ic_launcher.webp.flat",
-        "source": "C:\\Users\\Wyben\\.gradle\\daemon\\8.9\\com.techtrack.inventory.app-main-54:\\mipmap-xhdpi\\ic_launcher.webp"
-    },
-    {
         "merged": "C:\\Users\\Wyben\\.gradle\\daemon\\8.9\\com.techtrack.inventory.app-merged_res-52:\\mipmap-hdpi_ic_launcher.webp.flat",
         "source": "C:\\Users\\Wyben\\.gradle\\daemon\\8.9\\com.techtrack.inventory.app-main-54:\\mipmap-hdpi\\ic_launcher.webp"
     },
@@ -84,16 +156,8 @@
         "source": "C:\\Users\\Wyben\\.gradle\\daemon\\8.9\\com.techtrack.inventory.app-main-54:\\layout\\item_asset_card.xml"
     },
     {
-        "merged": "C:\\Users\\Wyben\\.gradle\\daemon\\8.9\\com.techtrack.inventory.app-merged_res-52:\\menu_bottom_nav_admin.xml.flat",
-        "source": "C:\\Users\\Wyben\\.gradle\\daemon\\8.9\\com.techtrack.inventory.app-main-54:\\menu\\bottom_nav_admin.xml"
-    },
-    {
-        "merged": "C:\\Users\\Wyben\\.gradle\\daemon\\8.9\\com.techtrack.inventory.app-merged_res-52:\\mipmap-xxhdpi_ic_launcher_round.webp.flat",
-        "source": "C:\\Users\\Wyben\\.gradle\\daemon\\8.9\\com.techtrack.inventory.app-main-54:\\mipmap-xxhdpi\\ic_launcher_round.webp"
-    },
-    {
-        "merged": "C:\\Users\\Wyben\\.gradle\\daemon\\8.9\\com.techtrack.inventory.app-merged_res-52:\\layout_activity_register.xml.flat",
-        "source": "C:\\Users\\Wyben\\.gradle\\daemon\\8.9\\com.techtrack.inventory.app-main-54:\\layout\\activity_register.xml"
+        "merged": "com.techtrack.inventory.app-merged_res-52:/drawable_bg_btn_logout_outlined.xml.flat",
+        "source": "com.techtrack.inventory.app-main-54:/drawable/bg_btn_logout_outlined.xml"
     },
     {
         "merged": "C:\\Users\\Wyben\\.gradle\\daemon\\8.9\\com.techtrack.inventory.app-merged_res-52:\\mipmap-xxhdpi_ic_launcher.webp.flat",
@@ -112,20 +176,8 @@
         "source": "C:\\Users\\Wyben\\.gradle\\daemon\\8.9\\com.techtrack.inventory.app-main-54:\\layout\\item_image_slide.xml"
     },
     {
-        "merged": "C:\\Users\\Wyben\\.gradle\\daemon\\8.9\\com.techtrack.inventory.app-merged_res-52:\\layout_fragment_asset_detail.xml.flat",
-        "source": "C:\\Users\\Wyben\\.gradle\\daemon\\8.9\\com.techtrack.inventory.app-main-54:\\layout\\fragment_asset_detail.xml"
-    },
-    {
-        "merged": "C:\\Users\\Wyben\\.gradle\\daemon\\8.9\\com.techtrack.inventory.app-merged_res-52:\\mipmap-xhdpi_ic_launcher_foreground.webp.flat",
-        "source": "C:\\Users\\Wyben\\.gradle\\daemon\\8.9\\com.techtrack.inventory.app-main-54:\\mipmap-xhdpi\\ic_launcher_foreground.webp"
-    },
-    {
-        "merged": "C:\\Users\\Wyben\\.gradle\\daemon\\8.9\\com.techtrack.inventory.app-merged_res-52:\\mipmap-mdpi_ic_launcher.webp.flat",
-        "source": "C:\\Users\\Wyben\\.gradle\\daemon\\8.9\\com.techtrack.inventory.app-main-54:\\mipmap-mdpi\\ic_launcher.webp"
-    },
-    {
-        "merged": "com.techtrack.inventory.app-merged_res-52:/drawable_ic_launcher_background.xml.flat",
-        "source": "com.techtrack.inventory.app-main-54:/drawable/ic_launcher_background.xml"
+        "merged": "com.techtrack.inventory.app-merged_res-52:/layout_fragment_watchlist.xml.flat",
+        "source": "com.techtrack.inventory.app-main-54:/layout/fragment_watchlist.xml"
     },
     {
         "merged": "C:\\Users\\Wyben\\.gradle\\daemon\\8.9\\com.techtrack.inventory.app-merged_res-52:\\layout_fragment_home.xml.flat",
@@ -136,16 +188,16 @@
         "source": "C:\\Users\\Wyben\\.gradle\\daemon\\8.9\\com.techtrack.inventory.app-main-54:\\drawable\\bg_avatar_circle.xml"
     },
     {
+        "merged": "com.techtrack.inventory.app-merged_res-52:/drawable_bg_role_badge_admin.xml.flat",
+        "source": "com.techtrack.inventory.app-main-54:/drawable/bg_role_badge_admin.xml"
+    },
+    {
         "merged": "C:\\Users\\Wyben\\.gradle\\daemon\\8.9\\com.techtrack.inventory.app-merged_res-52:\\drawable_techtrack_logo.png.flat",
         "source": "C:\\Users\\Wyben\\.gradle\\daemon\\8.9\\com.techtrack.inventory.app-main-54:\\drawable\\techtrack_logo.png"
     },
     {
-        "merged": "C:\\Users\\Wyben\\.gradle\\daemon\\8.9\\com.techtrack.inventory.app-merged_res-52:\\layout_activity_splash.xml.flat",
-        "source": "C:\\Users\\Wyben\\.gradle\\daemon\\8.9\\com.techtrack.inventory.app-main-54:\\layout\\activity_splash.xml"
-    },
-    {
-        "merged": "C:\\Users\\Wyben\\.gradle\\daemon\\8.9\\com.techtrack.inventory.app-merged_res-52:\\layout_fragment_admin_loan_queue.xml.flat",
-        "source": "C:\\Users\\Wyben\\.gradle\\daemon\\8.9\\com.techtrack.inventory.app-main-54:\\layout\\fragment_admin_loan_queue.xml"
+        "merged": "com.techtrack.inventory.app-merged_res-52:/layout_fragment_home.xml.flat",
+        "source": "com.techtrack.inventory.app-main-54:/layout/fragment_home.xml"
     },
     {
         "merged": "C:\\Users\\Wyben\\.gradle\\daemon\\8.9\\com.techtrack.inventory.app-merged_res-52:\\layout_fragment_admin_dashboard.xml.flat",
@@ -162,13 +214,5 @@
     {
         "merged": "C:\\Users\\Wyben\\.gradle\\daemon\\8.9\\com.techtrack.inventory.app-merged_res-52:\\mipmap-xxhdpi_ic_launcher_foreground.webp.flat",
         "source": "C:\\Users\\Wyben\\.gradle\\daemon\\8.9\\com.techtrack.inventory.app-main-54:\\mipmap-xxhdpi\\ic_launcher_foreground.webp"
-    },
-    {
-        "merged": "C:\\Users\\Wyben\\.gradle\\daemon\\8.9\\com.techtrack.inventory.app-merged_res-52:\\mipmap-xxxhdpi_ic_launcher_foreground.webp.flat",
-        "source": "C:\\Users\\Wyben\\.gradle\\daemon\\8.9\\com.techtrack.inventory.app-main-54:\\mipmap-xxxhdpi\\ic_launcher_foreground.webp"
-    },
-    {
-        "merged": "C:\\Users\\Wyben\\.gradle\\daemon\\8.9\\com.techtrack.inventory.app-merged_res-52:\\mipmap-anydpi-v26_ic_launcher_round.xml.flat",
-        "source": "C:\\Users\\Wyben\\.gradle\\daemon\\8.9\\com.techtrack.inventory.app-main-54:\\mipmap-anydpi-v26\\ic_launcher_round.xml"
     }
 ]

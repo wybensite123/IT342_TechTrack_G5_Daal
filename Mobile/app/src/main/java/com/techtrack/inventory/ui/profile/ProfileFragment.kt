@@ -29,26 +29,51 @@ class ProfileFragment : Fragment() {
         val app = requireActivity().application as TechTrackApplication
         val token = app.tokenManager
 
-        val firstName = token.getFirstName() ?: ""
-        val lastName = token.getLastName() ?: ""
-        binding.tvFullName.text = "$firstName $lastName".trim()
-        binding.tvEmail.text = token.getEmail() ?: "—"
-        binding.tvRole.text = if (token.isAdmin()) getString(R.string.role_admin)
-                              else getString(R.string.role_borrower)
-        binding.tvRoleBadge.text = if (token.isAdmin()) "⚙ Admin" else "🎓 Student"
+        val firstName = token.getFirstName().orEmpty()
+        val lastName = token.getLastName().orEmpty()
+        val fullName = "$firstName $lastName".trim().ifBlank { "—" }
+        binding.tvFullName.text = fullName
 
-        val dept = token.getDepartment()
-        if (!dept.isNullOrBlank()) {
-            binding.tvDepartment.text = dept
+        // Avatar initials (web parity)
+        val initials = buildString {
+            firstName.firstOrNull()?.let { append(it.uppercaseChar()) }
+            lastName.firstOrNull()?.let { append(it.uppercaseChar()) }
+        }.ifBlank { "?" }
+        binding.tvAvatarInitials.text = initials
+
+        binding.tvEmail.text = token.getEmail() ?: "—"
+
+        val isAdmin = token.isAdmin()
+        binding.tvRole.text = if (isAdmin) getString(R.string.role_admin)
+                              else getString(R.string.role_borrower)
+
+        // Role badge — admin (blue) vs student (green) — same as web
+        if (isAdmin) {
+            binding.tvRoleBadge.text = "⚙ Admin"
+            binding.tvRoleBadge.setBackgroundResource(R.drawable.bg_role_badge_admin)
+            binding.tvRoleBadge.setTextColor(resources.getColor(R.color.primary, null))
+        } else {
+            binding.tvRoleBadge.text = "🎓 Student"
+            binding.tvRoleBadge.setBackgroundResource(R.drawable.bg_role_badge_student)
+            binding.tvRoleBadge.setTextColor(resources.getColor(R.color.secondary, null))
+        }
+
+        // Optional rows + their dividers
+        token.getDepartment()?.takeIf { it.isNotBlank() }?.let {
+            binding.tvDepartment.text = it
             binding.rowDepartment.show()
             binding.dividerDepartment.show()
         }
 
-        val sid = token.getStudentId()
-        if (!sid.isNullOrBlank()) {
-            binding.tvStudentId.text = sid
+        token.getStudentId()?.takeIf { it.isNotBlank() }?.let {
+            binding.tvStudentId.text = it
             binding.rowStudentId.show()
+            binding.dividerStudentId.show()
         }
+
+        // Account ID
+        val userId = token.getUserId()
+        binding.tvAccountId.text = if (userId > 0) "#$userId" else "—"
 
         binding.btnLogout.setOnClickListener {
             lifecycleScope.launch {

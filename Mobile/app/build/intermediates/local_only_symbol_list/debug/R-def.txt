@@ -31,7 +31,14 @@ color text_primary
 color text_secondary
 color warning
 drawable bg_avatar_circle
+drawable bg_avatar_ring
+drawable bg_btn_logout_outlined
 drawable bg_card_top_line
+drawable bg_profile_card
+drawable bg_profile_hero
+drawable bg_role_badge_admin
+drawable bg_role_badge_student
+drawable bg_section_header
 drawable ic_launcher_background
 drawable ic_launcher_foreground
 drawable techtrack_logo
@@ -54,6 +61,7 @@ id btnViewLoanQueue
 id btnWatchlist
 id chipGroupCategories
 id dividerDepartment
+id dividerStudentId
 id dotsContainer
 id etConfirmPassword
 id etEmail
@@ -94,9 +102,11 @@ id tilPurpose
 id tilReturnDate
 id tilSearch
 id tilUsername
+id tvAccountId
 id tvAssetName
 id tvAssetTag
 id tvAvailableCount
+id tvAvatarInitials
 id tvBorrowerName
 id tvCategory
 id tvDepartment

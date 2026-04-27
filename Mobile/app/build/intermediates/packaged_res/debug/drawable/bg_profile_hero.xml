@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Subtle blue gradient that fades from the brand blue at the top of the
+     hero card down to the surface color where the details start. -->
+<shape xmlns:android="http://schemas.android.com/apk/res/android"
+    android:shape="rectangle">
+    <gradient
+        android:startColor="#1F3B82F6"
+        android:centerColor="#10334155"
+        android:endColor="#00334155"
+        android:angle="270" />
+</shape>
