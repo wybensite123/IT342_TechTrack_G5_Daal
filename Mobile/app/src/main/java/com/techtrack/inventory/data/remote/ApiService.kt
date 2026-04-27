@@ -74,4 +74,21 @@ interface ApiService {
         @Path("id") id: Long,
         @Body body: Map<String, String>
     ): ApiResponse<LoanResponse>
+
+    // ── Watchlist ─────────────────────────────────────────────────────────────
+
+    @GET("watchlist")
+    suspend fun getMyWatchlist(
+        @Query("page") page: Int = 0,
+        @Query("size") size: Int = 50
+    ): ApiResponse<PaginatedData<AssetResponse>>
+
+    @POST("watchlist/{assetId}")
+    suspend fun addToWatchlist(@Path("assetId") assetId: Long): ApiResponse<AssetResponse>
+
+    @DELETE("watchlist/{assetId}")
+    suspend fun removeFromWatchlist(@Path("assetId") assetId: Long): ApiResponse<Unit>
+
+    @GET("watchlist/{assetId}/status")
+    suspend fun isWatched(@Path("assetId") assetId: Long): ApiResponse<Map<String, Boolean>>
 }

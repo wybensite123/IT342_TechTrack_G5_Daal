@@ -6,6 +6,7 @@ import com.techtrack.inventory.data.remote.RetrofitClient
 import com.techtrack.inventory.data.repository.AssetRepository
 import com.techtrack.inventory.data.repository.AuthRepository
 import com.techtrack.inventory.data.repository.LoanRepository
+import com.techtrack.inventory.data.repository.WatchlistRepository
 import com.techtrack.inventory.util.SessionManager
 import com.techtrack.inventory.util.TokenManager
 
@@ -23,6 +24,9 @@ class TechTrackApplication : Application() {
     lateinit var loanRepository: LoanRepository
         private set
 
+    lateinit var watchlistRepository: WatchlistRepository
+        private set
+
     lateinit var sessionManager: SessionManager
         private set
 
@@ -34,6 +38,7 @@ class TechTrackApplication : Application() {
         authRepository = AuthRepository(api, tokenManager)
         assetRepository = AssetRepository(api)
         loanRepository = LoanRepository(api)
+        watchlistRepository = WatchlistRepository(api)
         sessionManager = SessionManager(this, tokenManager)
     }
 }

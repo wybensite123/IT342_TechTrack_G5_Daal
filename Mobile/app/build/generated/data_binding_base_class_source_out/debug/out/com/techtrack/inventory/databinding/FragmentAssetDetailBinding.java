@@ -28,6 +28,9 @@ public final class FragmentAssetDetailBinding implements ViewBinding {
   public final MaterialButton btnRequestLoan;
 
   @NonNull
+  public final MaterialButton btnWatchlist;
+
+  @NonNull
   public final LinearLayout dotsContainer;
 
   @NonNull
@@ -61,13 +64,15 @@ public final class FragmentAssetDetailBinding implements ViewBinding {
   public final ViewPager2 viewPagerImages;
 
   private FragmentAssetDetailBinding(@NonNull CoordinatorLayout rootView,
-      @NonNull MaterialButton btnRequestLoan, @NonNull LinearLayout dotsContainer,
-      @NonNull ProgressBar progressBar, @NonNull NestedScrollView scrollContent,
-      @NonNull TextView tvAssetName, @NonNull TextView tvAssetTag, @NonNull TextView tvCategory,
-      @NonNull TextView tvDescription, @NonNull TextView tvError, @NonNull TextView tvSerialNumber,
-      @NonNull TextView tvStatus, @NonNull ViewPager2 viewPagerImages) {
+      @NonNull MaterialButton btnRequestLoan, @NonNull MaterialButton btnWatchlist,
+      @NonNull LinearLayout dotsContainer, @NonNull ProgressBar progressBar,
+      @NonNull NestedScrollView scrollContent, @NonNull TextView tvAssetName,
+      @NonNull TextView tvAssetTag, @NonNull TextView tvCategory, @NonNull TextView tvDescription,
+      @NonNull TextView tvError, @NonNull TextView tvSerialNumber, @NonNull TextView tvStatus,
+      @NonNull ViewPager2 viewPagerImages) {
     this.rootView = rootView;
     this.btnRequestLoan = btnRequestLoan;
+    this.btnWatchlist = btnWatchlist;
     this.dotsContainer = dotsContainer;
     this.progressBar = progressBar;
     this.scrollContent = scrollContent;
@@ -111,6 +116,12 @@ public final class FragmentAssetDetailBinding implements ViewBinding {
       id = R.id.btnRequestLoan;
       MaterialButton btnRequestLoan = ViewBindings.findChildViewById(rootView, id);
       if (btnRequestLoan == null) {
+        break missingId;
+      }
+
+      id = R.id.btnWatchlist;
+      MaterialButton btnWatchlist = ViewBindings.findChildViewById(rootView, id);
+      if (btnWatchlist == null) {
         break missingId;
       }
 
@@ -181,8 +192,8 @@ public final class FragmentAssetDetailBinding implements ViewBinding {
       }
 
       return new FragmentAssetDetailBinding((CoordinatorLayout) rootView, btnRequestLoan,
-          dotsContainer, progressBar, scrollContent, tvAssetName, tvAssetTag, tvCategory,
-          tvDescription, tvError, tvSerialNumber, tvStatus, viewPagerImages);
+          btnWatchlist, dotsContainer, progressBar, scrollContent, tvAssetName, tvAssetTag,
+          tvCategory, tvDescription, tvError, tvSerialNumber, tvStatus, viewPagerImages);
     }
     String missingId = rootView.getResources().getResourceName(id);
     throw new NullPointerException("Missing required view with ID: ".concat(missingId));

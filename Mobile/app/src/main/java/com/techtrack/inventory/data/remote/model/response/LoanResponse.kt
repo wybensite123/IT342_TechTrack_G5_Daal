@@ -23,8 +23,10 @@ data class LoanAssetDto(
 
 data class LoanBorrowerDto(
     val id: Long,
-    val firstname: String,
-    val lastname: String
+    val firstName: String?,
+    val lastName: String?
 ) {
-    fun fullName() = "$firstname $lastname"
+    fun fullName() = listOfNotNull(firstName, lastName)
+        .joinToString(" ")
+        .ifBlank { "—" }
 }

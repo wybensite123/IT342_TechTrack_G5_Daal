@@ -34,7 +34,7 @@ class AssetDetailFragment : Fragment() {
         val app = requireActivity().application as TechTrackApplication
         viewModel = ViewModelProvider(
             this,
-            AssetDetailViewModelFactory(app.assetRepository, app.loanRepository)
+            AssetDetailViewModelFactory(app.assetRepository, app.loanRepository, app.watchlistRepository)
         )[AssetDetailViewModel::class.java]
 
         val assetId = arguments?.getLong("assetId") ?: return
@@ -42,6 +42,17 @@ class AssetDetailFragment : Fragment() {
 
         observeAsset(app.tokenManager.isAdmin())
         observeLoan()
+        observeWatchlist(assetId)
+    }
+
+    private fun observeWatchlist(assetId: Long) {
+        viewModel.watched.observe(viewLifecycleOwner) { watched ->
+            binding.btnWatchlist.text =
+                if (watched) "♥ Remove from Watchlist" else "♡ Add to Watchlist"
+        }
+        binding.btnWatchlist.setOnClickListener {
+            viewModel.toggleWatchlist(assetId)
+        }
     }
 
     private fun observeAsset(isAdmin: Boolean) {

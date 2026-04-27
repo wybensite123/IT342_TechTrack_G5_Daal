@@ -160,6 +160,17 @@
                         android:textSize="15sp"
                         android:textStyle="bold" />
 
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/btnWatchlist"
+                        style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:text="♡ Add to Watchlist"
+                        android:textSize="14sp"
+                        android:textColor="@color/text_primary"
+                        app:strokeColor="@color/border" />
+
                 </LinearLayout>
             </androidx.cardview.widget.CardView>
 

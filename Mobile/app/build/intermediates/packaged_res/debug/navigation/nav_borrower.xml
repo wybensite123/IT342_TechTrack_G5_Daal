@@ -28,6 +28,11 @@
         android:label="My Loans" />
 
     <fragment
+        android:id="@+id/watchlistFragment"
+        android:name="com.techtrack.inventory.ui.watchlist.WatchlistFragment"
+        android:label="Watchlist" />
+
+    <fragment
         android:id="@+id/profileFragment"
         android:name="com.techtrack.inventory.ui.profile.ProfileFragment"
         android:label="Profile" />

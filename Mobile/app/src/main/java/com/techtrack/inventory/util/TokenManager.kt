@@ -29,22 +29,24 @@ class TokenManager(context: Context) {
         private const val KEY_USER_STUDENT_ID = "user_student_id"
     }
 
-    fun saveAccessToken(token: String) = prefs.edit().putString(KEY_ACCESS_TOKEN, token).apply()
+    // Every save* method accepts a nullable value so a missing field in the
+    // auth response never crashes login. Null clears the entry.
+    fun saveAccessToken(token: String?) = prefs.edit().putString(KEY_ACCESS_TOKEN, token).apply()
     fun getAccessToken(): String? = prefs.getString(KEY_ACCESS_TOKEN, null)
 
-    fun saveRole(role: String) = prefs.edit().putString(KEY_USER_ROLE, role).apply()
+    fun saveRole(role: String?) = prefs.edit().putString(KEY_USER_ROLE, role).apply()
     fun getRole(): String? = prefs.getString(KEY_USER_ROLE, null)
 
     fun saveUserId(id: Long) = prefs.edit().putLong(KEY_USER_ID, id).apply()
     fun getUserId(): Long = prefs.getLong(KEY_USER_ID, -1L)
 
-    fun saveEmail(email: String) = prefs.edit().putString(KEY_USER_EMAIL, email).apply()
+    fun saveEmail(email: String?) = prefs.edit().putString(KEY_USER_EMAIL, email).apply()
     fun getEmail(): String? = prefs.getString(KEY_USER_EMAIL, null)
 
-    fun saveFirstName(name: String) = prefs.edit().putString(KEY_USER_FIRST_NAME, name).apply()
+    fun saveFirstName(name: String?) = prefs.edit().putString(KEY_USER_FIRST_NAME, name).apply()
     fun getFirstName(): String? = prefs.getString(KEY_USER_FIRST_NAME, null)
 
-    fun saveLastName(name: String) = prefs.edit().putString(KEY_USER_LAST_NAME, name).apply()
+    fun saveLastName(name: String?) = prefs.edit().putString(KEY_USER_LAST_NAME, name).apply()
     fun getLastName(): String? = prefs.getString(KEY_USER_LAST_NAME, null)
 
     fun saveDepartment(dept: String?) = prefs.edit().putString(KEY_USER_DEPARTMENT, dept).apply()

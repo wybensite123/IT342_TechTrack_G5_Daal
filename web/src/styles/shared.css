@@ -184,13 +184,33 @@ html, body { height: 100%; background: var(--bg); font-family: 'DM Sans', sans-s
 .loan-asset-name { font-family: 'Rajdhani', sans-serif; font-size: 18px; font-weight: 700; color: var(--text); }
 .loan-asset-tag { font-size: 12px; color: var(--muted); font-family: monospace; margin-top: 2px; }
 .loan-card-body {
-  display: grid; grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
-  gap: 8px 16px; padding: 0 20px 16px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px 22px;
+  padding: 4px 20px 16px;
 }
-.loan-detail { display: flex; flex-direction: column; gap: 2px; }
-.loan-detail-full { grid-column: 1 / -1; }
-.detail-label { font-size: 10px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.07em; color: var(--muted); }
-.detail-value { font-size: 13px; color: var(--text); }
+.loan-detail {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 6px;
+  min-height: 22px;
+}
+.loan-detail-full {
+  flex-basis: 100%;
+}
+.detail-label {
+  font-size: 11px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--muted);
+}
+.detail-label::after { content: ":"; margin-left: 1px; }
+.detail-value {
+  font-size: 13px;
+  color: var(--text);
+  font-weight: 500;
+}
 .loan-card-footer { padding: 12px 20px; border-top: 1px solid var(--border); }
 
 /* ── ADMIN TABLE ── */
@@ -353,5 +373,5 @@ html, body { height: 100%; background: var(--bg); font-family: 'DM Sans', sans-s
   .main-content { padding: 16px; }
   .form-grid { grid-template-columns: 1fr; }
   .modal { padding: 20px; }
-  .loan-card-body { grid-template-columns: 1fr 1fr; }
+  .loan-card-body { gap: 8px 16px; }
 }

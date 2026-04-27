@@ -11,10 +11,11 @@ import RegisterPage from './pages/auth/RegisterPage';
 import LandingPage from './pages/LandingPage';
 import ErrorBoundary from './components/ErrorBoundary';
 
-const HomePage    = lazy(() => import('./pages/user/HomePage'));
-const MyLoansPage = lazy(() => import('./pages/user/MyLoansPage'));
-const AdminPage   = lazy(() => import('./pages/admin/AdminPage'));
-const ProfilePage = lazy(() => import('./pages/user/ProfilePage'));
+const HomePage      = lazy(() => import('./pages/user/HomePage'));
+const MyLoansPage   = lazy(() => import('./pages/user/MyLoansPage'));
+const WatchlistPage = lazy(() => import('./pages/user/WatchlistPage'));
+const AdminPage     = lazy(() => import('./pages/admin/AdminPage'));
+const ProfilePage   = lazy(() => import('./pages/user/ProfilePage'));
 
 const fallback = <div className="suspense-fallback" />;
 
@@ -40,6 +41,7 @@ function App() {
               <Route element={<ProtectedRoute><Layout /></ProtectedRoute>}>
                 <Route path="/dashboard" element={<Suspense fallback={fallback}><HomePage /></Suspense>} />
                 <Route path="/loans"     element={<Suspense fallback={fallback}><MyLoansPage /></Suspense>} />
+                <Route path="/watchlist" element={<Suspense fallback={fallback}><WatchlistPage /></Suspense>} />
                 <Route path="/profile"   element={<Suspense fallback={fallback}><ProfilePage /></Suspense>} />
                 <Route path="/admin"     element={
                   <AdminRoute>

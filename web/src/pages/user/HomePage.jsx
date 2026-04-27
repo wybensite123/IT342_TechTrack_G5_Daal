@@ -3,6 +3,7 @@ import { useNavigate, Link, useOutletContext } from "react-router-dom";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { getAssets, searchAssets } from "../../api/assetApi";
 import { submitLoan, getMyLoans } from "../../api/loanApi";
+import { getMyWatchlist, addToWatchlist, removeFromWatchlist } from "../../api/watchlistApi";
 import { useAuth } from "../../context/AuthContext";
 import "./HomePage.css";
 const STATUS_LABEL = {
@@ -158,7 +159,16 @@ export default function HomePage() {
   const [debouncedSearch, setDS]    = useState("");
   const [filter, setFilter]         = useState("all");
   const [page, setPage]             = useState(0);
-  const [wishlist, setWishlist]     = useState(new Set());
+
+  // Watchlist comes from the backend so it persists across reloads
+  // and is shared between web and mobile.
+  const { data: watchlistPage } = useQuery({
+    queryKey: ['watchlist'],
+    queryFn: () => getMyWatchlist(0, 200),
+    enabled: !!user,
+    staleTime: 60_000,
+  });
+  const wishlist = new Set((watchlistPage?.content ?? []).map(a => a.id));
   const [modal, setModal]           = useState(null);
   const [retDate, setRetDate]       = useState("");
   const [purpose, setPurpose]       = useState("");
@@ -243,13 +253,21 @@ export default function HomePage() {
       })
     : assets;
 
+  const watchlistMut = useMutation({
+    mutationFn: ({ id, watched }) => watched ? removeFromWatchlist(id) : addToWatchlist(id),
+    onSuccess: (_data, { watched }) => {
+      qc.invalidateQueries({ queryKey: ['watchlist'] });
+      showToast(watched ? "Removed from Watchlist" : "Added to Watchlist ♥",
+                watched ? "info" : "success");
+    },
+    onError: (err) => {
+      showToast(err?.response?.data?.error?.message ?? "Watchlist update failed", "error");
+    },
+  });
+
   const toggleWishlist = (id) => {
-    setWishlist(prev => {
-      const next = new Set(prev);
-      if (next.has(id)) { next.delete(id); showToast("Removed from Watchlist", "info"); }
-      else               { next.add(id);   showToast("Added to Watchlist ♥", "success"); }
-      return next;
-    });
+    if (watchlistMut.isPending) return;
+    watchlistMut.mutate({ id, watched: wishlist.has(id) });
   };
 
   const openModal  = (asset) => { setModal(asset); setRetDate(""); setPurpose(""); };

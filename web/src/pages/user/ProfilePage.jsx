@@ -1,5 +1,6 @@
 import { useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import '../../styles/shared.css';
 import { useAuth } from '../../context/AuthContext';
 import { uploadProfilePicture, getProfilePictureUrl } from '../../api/profileApi';
 import './ProfilePage.css';
@@ -28,14 +29,22 @@ const ProfilePage = () => {
   // Defensive: render a friendly empty state if user is somehow null.
   if (!user) {
     return (
-      <div className="profile-page">
-        <div className="profile-card">
-          <p className="profile-empty">Profile data unavailable. Please sign in again.</p>
-          <button className="profile-btn-logout" onClick={() => navigate('/login')}>
-            Go to login
-          </button>
+      <main className="main-content">
+        <header className="page-header">
+          <div>
+            <h1 className="page-title">My Profile</h1>
+            <p className="page-subtitle">Manage your account and preferences</p>
+          </div>
+        </header>
+        <div className="profile-page">
+          <div className="profile-card">
+            <p className="profile-empty">Profile data unavailable. Please sign in again.</p>
+            <button className="profile-btn-logout" onClick={() => navigate('/login')}>
+              Go to login
+            </button>
+          </div>
         </div>
-      </div>
+      </main>
     );
   }
 
@@ -82,8 +91,16 @@ const ProfilePage = () => {
   };
 
   return (
-    <div className="profile-page">
-      <div className="profile-card">
+    <main className="main-content">
+      <header className="page-header">
+        <div>
+          <h1 className="page-title">My Profile</h1>
+          <p className="page-subtitle">Manage your account and preferences</p>
+        </div>
+      </header>
+
+      <div className="profile-page">
+        <div className="profile-card">
         {/* Header */}
         <div className="profile-header">
           <div
@@ -147,8 +164,9 @@ const ProfilePage = () => {
             <IconLogout /> Logout
           </button>
         </div>
+        </div>
       </div>
-    </div>
+    </main>
   );
 };
 

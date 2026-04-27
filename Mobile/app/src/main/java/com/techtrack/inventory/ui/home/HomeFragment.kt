@@ -45,7 +45,7 @@ class HomeFragment : Fragment() {
         val isAdmin = app.tokenManager.isAdmin()
 
         viewModel = ViewModelProvider(this, HomeViewModelFactory(app.assetRepository))[HomeViewModel::class.java]
-        loanViewModel = ViewModelProvider(this, AssetDetailViewModelFactory(app.assetRepository, app.loanRepository))[AssetDetailViewModel::class.java]
+        loanViewModel = ViewModelProvider(this, AssetDetailViewModelFactory(app.assetRepository, app.loanRepository, app.watchlistRepository))[AssetDetailViewModel::class.java]
 
         setupCategoryChips()
         setupRecyclerView(isAdmin)

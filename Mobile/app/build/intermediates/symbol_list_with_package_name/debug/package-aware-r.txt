@@ -3285,9 +3285,11 @@ id btnLogin
 id btnLogout
 id btnRegister
 id btnReject
+id btnRemove
 id btnRequestLoan
 id btnReturn
 id btnViewLoanQueue
+id btnWatchlist
 id buttonPanel
 id cache_measures
 id callMeasure
@@ -3581,6 +3583,7 @@ id rectangles
 id recyclerAssets
 id recyclerLoans
 id recyclerRecentLoans
+id recyclerWatchlist
 id report_drawn
 id reverseSawtooth
 id right
@@ -3732,6 +3735,7 @@ id tvFullName
 id tvGoToLogin
 id tvGoToRegister
 id tvMaintenanceCount
+id tvName
 id tvOnLoanCount
 id tvPendingCount
 id tvRequestedAt
@@ -3741,6 +3745,7 @@ id tvRoleBadge
 id tvSerialNumber
 id tvStatus
 id tvStudentId
+id tvTag
 id tvTagline
 id unchecked
 id uniform
@@ -3757,6 +3762,7 @@ id view_tree_saved_state_registry_owner
 id view_tree_view_model_store_owner
 id visible
 id visible_removing_fragment_view_tag
+id watchlistFragment
 id west
 id withText
 id with_icon
@@ -3908,11 +3914,13 @@ layout fragment_asset_detail
 layout fragment_home
 layout fragment_my_loans
 layout fragment_profile
+layout fragment_watchlist
 layout ime_base_split_test_activity
 layout ime_secondary_split_test_activity
 layout item_asset_card
 layout item_image_slide
 layout item_loan_row
+layout item_watchlist_row
 layout m3_alert_dialog
 layout m3_alert_dialog_actions
 layout m3_alert_dialog_title
