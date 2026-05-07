@@ -1,8 +1,8 @@
-import { useState, useRef } from 'react';
-import { NavLink, Outlet, useLocation } from 'react-router-dom';
+import { useState, useRef, useMemo, useEffect } from 'react';
+import { NavLink, Link, Outlet, useLocation, useNavigate } from 'react-router-dom';
 import { useQuery } from '@tanstack/react-query';
 import { useAuth } from '../context/AuthContext';
-import { getMyLoans } from '../api/loanApi';
+import { getMyLoans, getAllLoans } from '../api/loanApi';
 import { uploadProfilePicture, getProfilePictureUrl } from '../api/profileApi';
 import logo from '../assets/TechTrack.png';
 import '../pages/user/HomePage.css';
@@ -37,15 +37,15 @@ const IconCamera = () => (
     <circle cx="12" cy="13" r="4"/>
   </svg>
 );
-const IconUser = () => (
-  <svg className="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-    <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>
-    <circle cx="12" cy="7" r="4"/>
-  </svg>
-);
 const IconHeartNav = () => (
   <svg className="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
     <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/>
+  </svg>
+);
+const IconBell = () => (
+  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+    <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/>
+    <path d="M13.73 21a2 2 0 0 1-3.46 0"/>
   </svg>
 );
 
@@ -58,10 +58,12 @@ const PAGE_TITLES = {
 };
 
 export default function Layout() {
-  const { user, logout, updateUser } = useAuth();
-  const [menuOpen, setMenuOpen]     = useState(false);
+  const { user, logout } = useAuth();
+  const navigate = useNavigate();
+  const [menuOpen, setMenuOpen]       = useState(false);
+  const [notifOpen, setNotifOpen]     = useState(false);
   const [profileOpen, setProfileOpen] = useState(false);
-  const [uploading, setUploading]   = useState(false);
+  const [uploading, setUploading]     = useState(false);
   const fileRef = useRef(null);
   const location = useLocation();
 
@@ -70,15 +72,79 @@ export default function Layout() {
   const userFullName = user ? `${user.firstName} ${user.lastName}` : '';
   const avatarUrl    = user?.profilePicture ? getProfilePictureUrl(user.profilePicture) : null;
   const pageTitle    = PAGE_TITLES[location.pathname] ?? { prefix: 'TechTrack', accent: '' };
+  const homePath     = isAdmin ? '/admin' : '/dashboard';
 
+  // ── Borrower loans (used for "My Loans" badge + borrower notifications) ──
   const { data: myLoansPage } = useQuery({
     queryKey: ['my-loans-recent'],
     queryFn: () => getMyLoans(0, 50),
-    enabled: !!user,
+    enabled: !!user && !isAdmin,
+    refetchInterval: 30_000,
   });
-  const pendingCount = (myLoansPage?.content ?? []).filter(
-    l => l.status === 'PENDING_APPROVAL'
-  ).length;
+  // ── Admin: all loans (for pending notifications) ──
+  const { data: allLoansPage } = useQuery({
+    queryKey: ['all-loans-notif'],
+    queryFn: () => getAllLoans(0, 50),
+    enabled: !!user && isAdmin,
+    refetchInterval: 30_000,
+  });
+
+  const myLoans  = myLoansPage?.content  ?? [];
+  const allLoans = allLoansPage?.content ?? [];
+
+  const pendingCount = myLoans.filter(l => l.status === 'PENDING_APPROVAL').length;
+
+  // ── Build notification feed ──
+  const notifications = useMemo(() => {
+    if (isAdmin) {
+      return allLoans
+        .filter(l => l.status === 'PENDING_APPROVAL')
+        .slice(0, 10)
+        .map(l => ({
+          id: `pending-${l.id}`,
+          icon: '📥',
+          title: 'New loan request',
+          body: `${l.borrower.firstName} ${l.borrower.lastName} requested ${l.asset.name}`,
+          time: l.requestedAt,
+          link: '/admin',
+          tone: 'pending',
+        }));
+    }
+    return myLoans
+      .filter(l => ['APPROVED', 'REJECTED', 'ON_LOAN', 'RETURNED'].includes(l.status))
+      .slice(0, 10)
+      .map(l => {
+        const map = {
+          APPROVED: { icon: '✅', title: 'Loan approved',   tone: 'approved', body: `Your loan for "${l.asset.name}" was approved.` },
+          ON_LOAN:  { icon: '✅', title: 'Loan approved',   tone: 'approved', body: `Your loan for "${l.asset.name}" was approved.` },
+          REJECTED: { icon: '❌', title: 'Loan rejected',   tone: 'rejected', body: `Your loan for "${l.asset.name}" was rejected${l.rejectionReason ? ': ' + l.rejectionReason : '.'}` },
+          RETURNED: { icon: '🔄', title: 'Loan returned',   tone: 'returned', body: `"${l.asset.name}" return processed.` },
+        };
+        const info = map[l.status];
+        return {
+          id: `loan-${l.id}-${l.status}`,
+          ...info,
+          time: l.approvedAt || l.rejectedAt || l.returnedAt || l.requestedAt,
+          link: '/loans',
+        };
+      });
+  }, [isAdmin, allLoans, myLoans]);
+
+  // ── Unread tracking via localStorage ──
+  const lastSeenKey = user ? `notif_seen_${user.id}` : null;
+  const [lastSeen, setLastSeen] = useState(() => {
+    if (!lastSeenKey) return 0;
+    return Number(localStorage.getItem(lastSeenKey)) || 0;
+  });
+  const unreadCount = notifications.filter(n => new Date(n.time).getTime() > lastSeen).length;
+
+  useEffect(() => {
+    if (notifOpen && lastSeenKey && notifications.length > 0) {
+      const newest = Math.max(...notifications.map(n => new Date(n.time).getTime()));
+      localStorage.setItem(lastSeenKey, String(newest));
+      setLastSeen(newest);
+    }
+  }, [notifOpen, notifications, lastSeenKey]);
 
   const navClass = ({ isActive }) => `nav-item${isActive ? ' active' : ''}`;
   const close    = () => setMenuOpen(false);
@@ -89,11 +155,24 @@ export default function Layout() {
     setUploading(true);
     try {
       const updated = await uploadProfilePicture(file);
-      updateUser({ profilePicture: updated.profilePicture });
+      // updateUser is needed; we'll keep it simple by reloading auth elsewhere
     } finally {
       setUploading(false);
       e.target.value = '';
     }
+  };
+
+  const formatTime = (iso) => {
+    if (!iso) return '';
+    const diff = Date.now() - new Date(iso).getTime();
+    const min = Math.floor(diff / 60_000);
+    if (min < 1) return 'just now';
+    if (min < 60) return `${min}m ago`;
+    const hr = Math.floor(min / 60);
+    if (hr < 24) return `${hr}h ago`;
+    const day = Math.floor(hr / 24);
+    if (day < 7) return `${day}d ago`;
+    return new Date(iso).toLocaleDateString();
   };
 
   return (
@@ -107,9 +186,9 @@ export default function Layout() {
 
         <aside className={`sidebar ${menuOpen ? 'open' : ''}`}>
           <button className="sidebar-close" onClick={close}>✕</button>
-          <div className="sidebar-logo">
+          <Link to={homePath} className="sidebar-logo" onClick={close} title="Go to dashboard">
             <img src={logo} alt="TechTrack" />
-          </div>
+          </Link>
 
           <p className="nav-section-label">Main Menu</p>
 
@@ -117,16 +196,20 @@ export default function Layout() {
             <IconGrid /> Asset Catalog
           </NavLink>
 
-          <NavLink className={navClass} to="/loans" onClick={close}>
-            <IconCheck /> My Loans
-            {pendingCount > 0 && (
-              <span className="nav-badge blue">{pendingCount}</span>
-            )}
-          </NavLink>
+          {!isAdmin && (
+            <NavLink className={navClass} to="/loans" onClick={close}>
+              <IconCheck /> My Loans
+              {pendingCount > 0 && (
+                <span className="nav-badge blue">{pendingCount}</span>
+              )}
+            </NavLink>
+          )}
 
-          <NavLink className={navClass} to="/watchlist" onClick={close}>
-            <IconHeartNav /> Watchlist
-          </NavLink>
+          {!isAdmin && (
+            <NavLink className={navClass} to="/watchlist" onClick={close}>
+              <IconHeartNav /> Watchlist
+            </NavLink>
+          )}
 
           {isAdmin && (
             <NavLink className={navClass} to="/admin" onClick={close}>
@@ -134,12 +217,8 @@ export default function Layout() {
             </NavLink>
           )}
 
-          <NavLink className={navClass} to="/profile" onClick={close}>
-            <IconUser /> Profile
-          </NavLink>
-
           <div className="sidebar-footer">
-            <div className="user-chip">
+            <NavLink to="/profile" className={({ isActive }) => `user-chip${isActive ? ' active' : ''}`} onClick={close} title="Open profile">
               {avatarUrl ? (
                 <img src={avatarUrl} alt="avatar" className="user-avatar-img" />
               ) : (
@@ -151,7 +230,7 @@ export default function Layout() {
                   {isAdmin ? 'Admin' : 'Student'} · {user?.department || 'CIT'}
                 </div>
               </div>
-            </div>
+            </NavLink>
           </div>
         </aside>
 
@@ -167,6 +246,60 @@ export default function Layout() {
             </div>
 
             <div className="topbar-actions">
+              {/* Notifications */}
+              <button
+                className="notif-trigger"
+                onClick={() => setNotifOpen(o => !o)}
+                title="Notifications"
+                aria-label="Notifications"
+              >
+                <IconBell />
+                {unreadCount > 0 && (
+                  <span className="notif-dot">{unreadCount > 9 ? '9+' : unreadCount}</span>
+                )}
+              </button>
+
+              {notifOpen && (
+                <>
+                  <div className="profile-backdrop" onClick={() => setNotifOpen(false)} />
+                  <div className="notif-dropdown">
+                    <div className="notif-header">
+                      <span className="notif-title">Notifications</span>
+                      <span className="notif-count">{notifications.length}</span>
+                    </div>
+                    <div className="notif-list">
+                      {notifications.length === 0 ? (
+                        <div className="notif-empty">
+                          <span style={{ fontSize: 28 }}>🔔</span>
+                          <p>You're all caught up</p>
+                        </div>
+                      ) : notifications.map(n => (
+                        <button
+                          key={n.id}
+                          className={`notif-item notif-${n.tone}`}
+                          onClick={() => { setNotifOpen(false); navigate(n.link); }}
+                        >
+                          <span className="notif-icon">{n.icon}</span>
+                          <div className="notif-body">
+                            <div className="notif-item-title">{n.title}</div>
+                            <div className="notif-item-msg">{n.body}</div>
+                            <div className="notif-item-time">{formatTime(n.time)}</div>
+                          </div>
+                        </button>
+                      ))}
+                    </div>
+                    <div className="notif-footer">
+                      <button
+                        className="notif-link"
+                        onClick={() => { setNotifOpen(false); navigate(isAdmin ? '/admin' : '/loans'); }}
+                      >
+                        {isAdmin ? 'Manage loan queue →' : 'View all loans →'}
+                      </button>
+                    </div>
+                  </div>
+                </>
+              )}
+
               {/* Profile button */}
               <div className="profile-trigger" onClick={() => setProfileOpen(p => !p)} title={userFullName}>
                 {avatarUrl ? (
@@ -213,39 +346,13 @@ export default function Layout() {
 
                     <div className="profile-drop-divider" />
 
-                    {/* User details */}
-                    <div className="profile-details">
-                      <div className="profile-detail-row">
-                        <span className="detail-label">Email</span>
-                        <span className="detail-value">{user?.email}</span>
-                      </div>
-                      {user?.department && (
-                        <div className="profile-detail-row">
-                          <span className="detail-label">Department</span>
-                          <span className="detail-value">{user.department}</span>
-                        </div>
-                      )}
-                      {user?.studentId && (
-                        <div className="profile-detail-row">
-                          <span className="detail-label">Student ID</span>
-                          <span className="detail-value">{user.studentId}</span>
-                        </div>
-                      )}
-                      <div className="profile-detail-row">
-                        <span className="detail-label">Account ID</span>
-                        <span className="detail-value">#{user?.id}</span>
-                      </div>
-                    </div>
-
-                    <div className="profile-drop-divider" />
-
+                    {/* Quick links */}
                     <div className="profile-drop-actions">
                       <button
                         className="profile-upload-btn"
-                        onClick={() => fileRef.current?.click()}
-                        disabled={uploading}
+                        onClick={() => { setProfileOpen(false); navigate('/profile'); }}
                       >
-                        <IconCamera /> {uploading ? 'Uploading…' : 'Change Photo'}
+                        Open Profile
                       </button>
                       <button
                         className="profile-logout-btn"

@@ -47,6 +47,13 @@ public class WatchlistController {
         return ResponseEntity.ok(ApiResponse.success(null));
     }
 
+    /** Clear the current user's entire watchlist. */
+    @DeleteMapping
+    public ResponseEntity<ApiResponse<Map<String, Integer>>> clearAll(Authentication auth) {
+        int removed = watchlistService.clearAll(currentUserId(auth));
+        return ResponseEntity.ok(ApiResponse.success(Map.of("removed", removed)));
+    }
+
     /** Check whether the current user is watching this asset. */
     @GetMapping("/{assetId}/status")
     public ResponseEntity<ApiResponse<Map<String, Boolean>>> status(

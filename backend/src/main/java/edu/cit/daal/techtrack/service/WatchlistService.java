@@ -63,6 +63,11 @@ public class WatchlistService {
         watchlistRepository.deleteByUserIdAndAssetId(userId, assetId);
     }
 
+    @Transactional
+    public int clearAll(Long userId) {
+        return watchlistRepository.deleteAllByUserId(userId);
+    }
+
     @Transactional(readOnly = true)
     public boolean isWatched(Long userId, Long assetId) {
         return watchlistRepository.existsByUserIdAndAssetId(userId, assetId);

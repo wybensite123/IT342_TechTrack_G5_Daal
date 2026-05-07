@@ -125,9 +125,9 @@ export default function AdminPage() {
       qc.invalidateQueries({ queryKey: ['admin-assets'] });
       qc.invalidateQueries({ queryKey: ['assets'] });
       setRetireConfirm(null);
-      showToast('Asset retired.');
+      showToast('Asset deleted.');
     },
-    onError: (e) => showToast(e?.response?.data?.error?.message ?? 'Retire failed.', 'error'),
+    onError: (e) => showToast(e?.response?.data?.error?.message ?? 'Delete failed.', 'error'),
   });
 
   const openCreateAsset = () => {
@@ -301,7 +301,7 @@ export default function AdminPage() {
                             <div className="action-btns">
                               <button className="btn-xs btn-secondary" onClick={() => openEditAsset(asset)}>Edit</button>
                               {asset.status !== 'RETIRED' && (
-                                <button className="btn-xs btn-danger" onClick={() => setRetireConfirm(asset)}>Retire</button>
+                                <button className="btn-xs btn-danger" onClick={() => setRetireConfirm(asset)}>Delete</button>
                               )}
                             </div>
                           </td>
@@ -495,16 +495,16 @@ export default function AdminPage() {
         </div>
       )}
 
-      {/* ── RETIRE CONFIRM ── */}
+      {/* ── DELETE CONFIRM ── */}
       {retireConfirm && (
         <div className="modal-backdrop" onClick={() => setRetireConfirm(null)}>
           <div className="modal" onClick={e => e.stopPropagation()}>
-            <h2 className="modal-title">Retire Asset</h2>
-            <p className="modal-body-text">Are you sure you want to retire <strong>{retireConfirm.name}</strong>? This cannot be undone.</p>
+            <h2 className="modal-title">Delete Asset</h2>
+            <p className="modal-body-text">Are you sure you want to delete <strong>{retireConfirm.name}</strong>? This cannot be undone.</p>
             <div className="modal-actions">
               <button className="btn-secondary" onClick={() => setRetireConfirm(null)}>Cancel</button>
               <button className="btn-danger" disabled={retireMut.isPending} onClick={() => retireMut.mutate(retireConfirm.id)}>
-                {retireMut.isPending ? 'Retiring…' : 'Retire Asset'}
+                {retireMut.isPending ? 'Deleting…' : 'Delete Asset'}
               </button>
             </div>
           </div>

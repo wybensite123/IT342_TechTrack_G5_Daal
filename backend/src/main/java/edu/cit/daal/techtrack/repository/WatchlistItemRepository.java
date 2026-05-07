@@ -21,6 +21,10 @@ public interface WatchlistItemRepository extends JpaRepository<WatchlistItem, Lo
     @Query("DELETE FROM WatchlistItem w WHERE w.user.id = :userId AND w.asset.id = :assetId")
     int deleteByUserIdAndAssetId(@Param("userId") Long userId, @Param("assetId") Long assetId);
 
+    @Modifying
+    @Query("DELETE FROM WatchlistItem w WHERE w.user.id = :userId")
+    int deleteAllByUserId(@Param("userId") Long userId);
+
     @Query("SELECT w.asset.id FROM WatchlistItem w WHERE w.user.id = :userId AND w.asset.id IN :assetIds")
     List<Long> findWatchedAssetIds(@Param("userId") Long userId, @Param("assetIds") Set<Long> assetIds);
 }

@@ -12,6 +12,9 @@ export const addToWatchlist = (assetId: number) =>
 export const removeFromWatchlist = (assetId: number) =>
   api.delete<ApiResponse<null>>(`/watchlist/${assetId}`).then(r => r.data);
 
+export const clearWatchlist = () =>
+  api.delete<ApiResponse<{ removed: number }>>('/watchlist').then(r => r.data.data!);
+
 export const isWatched = (assetId: number) =>
   api.get<ApiResponse<{ watched: boolean }>>(`/watchlist/${assetId}/status`)
      .then(r => r.data.data?.watched ?? false);

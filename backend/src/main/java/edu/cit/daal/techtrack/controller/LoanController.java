@@ -23,6 +23,7 @@ public class LoanController {
     private final LoanService loanService;
 
     @PostMapping
+    @PreAuthorize("hasRole('BORROWER')")
     public ResponseEntity<ApiResponse<LoanResponse>> submit(
             @Valid @RequestBody LoanRequest request,
             Authentication auth) {

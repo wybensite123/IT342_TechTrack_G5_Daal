@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
-import { getMyWatchlist, removeFromWatchlist } from '../../api/watchlistApi';
+import { getMyWatchlist, removeFromWatchlist, clearWatchlist } from '../../api/watchlistApi';
 import { submitLoan } from '../../api/loanApi';
 import '../../styles/shared.css';
 import './WatchlistPage.css';
@@ -40,6 +40,7 @@ export default function WatchlistPage() {
   const [modal, setModal] = useState(null);
   const [purpose, setPurpose] = useState('');
   const [retDate, setRetDate] = useState('');
+  const [clearOpen, setClearOpen] = useState(false);
 
   const showToast = (msg, type = 'success') => {
     setToast({ msg, type });
@@ -60,6 +61,16 @@ export default function WatchlistPage() {
       showToast('Removed from Watchlist', 'info');
     },
     onError: (e) => showToast(e?.response?.data?.error?.message ?? 'Could not remove', 'error'),
+  });
+
+  const clearMut = useMutation({
+    mutationFn: () => clearWatchlist(),
+    onSuccess: (data) => {
+      qc.invalidateQueries({ queryKey: ['watchlist'] });
+      setClearOpen(false);
+      showToast(`Cleared ${data.removed} item${data.removed === 1 ? '' : 's'} from your watchlist`, 'info');
+    },
+    onError: (e) => showToast(e?.response?.data?.error?.message ?? 'Could not clear watchlist', 'error'),
   });
 
   const loanMut = useMutation({
@@ -91,11 +102,21 @@ export default function WatchlistPage() {
     <main className="main-content">
       <Toast msg={toast?.msg} type={toast?.type} onClose={() => setToast(null)} />
 
-      <header className="page-header">
+      <header className="page-header page-header-row">
         <div>
           <h1 className="page-title">My Watchlist</h1>
           <p className="page-subtitle">Assets you've saved for later</p>
         </div>
+        {items.length > 0 && (
+          <button
+            type="button"
+            className="btn-xs btn-danger header-clear-btn"
+            onClick={() => setClearOpen(true)}
+            disabled={clearMut.isPending}
+          >
+            🗑 Clear All
+          </button>
+        )}
       </header>
 
       {isLoading ? (
@@ -167,6 +188,28 @@ export default function WatchlistPage() {
           <span className="page-info">Page {page + 1} of {pageData.totalPages}</span>
           <button className="page-btn" disabled={pageData.last}
                   onClick={() => setPage(p => p + 1)}>Next →</button>
+        </div>
+      )}
+
+      {clearOpen && (
+        <div className="modal-backdrop" onClick={() => setClearOpen(false)}>
+          <div className="modal" onClick={e => e.stopPropagation()}>
+            <h2 className="modal-title">Clear Watchlist?</h2>
+            <p className="modal-body-text">
+              This will remove all <strong>{items.length}</strong> item{items.length === 1 ? '' : 's'} from your watchlist. This action cannot be undone.
+            </p>
+            <div className="modal-actions">
+              <button type="button" className="btn-secondary" onClick={() => setClearOpen(false)}>Cancel</button>
+              <button
+                type="button"
+                className="btn-primary btn-danger"
+                disabled={clearMut.isPending}
+                onClick={() => clearMut.mutate()}
+              >
+                {clearMut.isPending ? 'Clearing…' : 'Clear All'}
+              </button>
+            </div>
+          </div>
         </div>
       )}
 

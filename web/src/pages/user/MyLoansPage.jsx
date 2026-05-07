@@ -1,9 +1,18 @@
-import { useState } from 'react';
+import { useState, useMemo, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import '../../styles/shared.css';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { useAuth } from '../../context/AuthContext';
 import { getMyLoans, returnLoan } from '../../api/loanApi';
+
+const hiddenKey = (uid) => `loans_past_hidden_${uid ?? 'guest'}`;
+const loadHidden = (uid) => {
+  try { return new Set(JSON.parse(localStorage.getItem(hiddenKey(uid)) || '[]')); }
+  catch { return new Set(); }
+};
+const saveHidden = (uid, set) => {
+  localStorage.setItem(hiddenKey(uid), JSON.stringify([...set]));
+};
 
 const STATUS_LABEL = {
   PENDING_APPROVAL: 'Pending',
@@ -35,6 +44,10 @@ export default function MyLoansPage() {
   const [condition, setCondition] = useState('GOOD');
   const [toast, setToast] = useState(null);
   const [page, setPage] = useState(0);
+  const [clearOpen, setClearOpen] = useState(false);
+  const [hidden, setHidden] = useState(() => loadHidden(user?.id));
+
+  useEffect(() => { setHidden(loadHidden(user?.id)); }, [user?.id]);
 
   const showToast = (msg, type = 'success') => {
     setToast({ msg, type });
@@ -47,9 +60,26 @@ export default function MyLoansPage() {
   });
 
   const loans = loanPage?.content ?? [];
-  const active = loans.filter(l => l.status === 'PENDING_APPROVAL' || l.status === 'ON_LOAN');
-  const past = loans.filter(l => l.status === 'RETURNED' || l.status === 'REJECTED');
+  const active = useMemo(
+    () => loans.filter(l => l.status === 'PENDING_APPROVAL' || l.status === 'ON_LOAN'),
+    [loans]
+  );
+  const past = useMemo(
+    () => loans
+      .filter(l => l.status === 'RETURNED' || l.status === 'REJECTED')
+      .filter(l => !hidden.has(l.id)),
+    [loans, hidden]
+  );
   const displayed = tab === 'active' ? active : past;
+
+  const handleClearPast = () => {
+    const next = new Set(hidden);
+    past.forEach(l => next.add(l.id));
+    saveHidden(user?.id, next);
+    setHidden(next);
+    setClearOpen(false);
+    showToast('Past loans cleared from view.', 'info');
+  };
 
   const returnMut = useMutation({
     mutationFn: ({ id, cond }) => returnLoan(id, cond),
@@ -80,21 +110,32 @@ export default function MyLoansPage() {
         </header>
 
         {/* Tabs */}
-        <div className="tabs">
-          <button
-            className={`tab-btn ${tab === 'active' ? 'tab-active' : ''}`}
-            onClick={() => setTab('active')}
-          >
-            Active
-            {active.length > 0 && <span className="tab-badge">{active.length}</span>}
-          </button>
-          <button
-            className={`tab-btn ${tab === 'past' ? 'tab-active' : ''}`}
-            onClick={() => setTab('past')}
-          >
-            Past
-            {past.length > 0 && <span className="tab-badge tab-badge-muted">{past.length}</span>}
-          </button>
+        <div className="tabs tabs-with-actions">
+          <div className="tabs-group">
+            <button
+              className={`tab-btn ${tab === 'active' ? 'tab-active' : ''}`}
+              onClick={() => setTab('active')}
+            >
+              Active
+              {active.length > 0 && <span className="tab-badge">{active.length}</span>}
+            </button>
+            <button
+              className={`tab-btn ${tab === 'past' ? 'tab-active' : ''}`}
+              onClick={() => setTab('past')}
+            >
+              Past
+              {past.length > 0 && <span className="tab-badge tab-badge-muted">{past.length}</span>}
+            </button>
+          </div>
+          {tab === 'past' && past.length > 0 && (
+            <button
+              type="button"
+              className="btn-xs btn-danger header-clear-btn"
+              onClick={() => setClearOpen(true)}
+            >
+              🗑 Clear All
+            </button>
+          )}
         </div>
 
         {/* Loan Cards */}
@@ -191,6 +232,24 @@ export default function MyLoansPage() {
           </div>
         )}
       </main>
+
+      {/* Clear Past Modal */}
+      {clearOpen && (
+        <div className="modal-backdrop" onClick={() => setClearOpen(false)}>
+          <div className="modal" onClick={e => e.stopPropagation()}>
+            <h2 className="modal-title">Clear past loans?</h2>
+            <p className="modal-body-text">
+              This will hide <strong>{past.length}</strong> past loan{past.length === 1 ? '' : 's'} from your view. Your loan history is preserved on the server.
+            </p>
+            <div className="modal-actions">
+              <button type="button" className="btn-secondary" onClick={() => setClearOpen(false)}>Cancel</button>
+              <button type="button" className="btn-primary btn-danger" onClick={handleClearPast}>
+                Clear All
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
 
       {/* Return Modal */}
       {returnModal && (

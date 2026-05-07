@@ -1,0 +1,11 @@
+{
+  "permissions": {
+    "allow": [
+      "PowerShell(Resolve-DnsName \"db.bicgrfraxlqeklfmlwab.supabase.co\" -ErrorAction SilentlyContinue)",
+      "PowerShell(Test-NetConnection -ComputerName \"2406:da18:243:7419:a497:7878:ac76:67ed\" -Port 5432 -WarningAction SilentlyContinue -InformationLevel Quiet)",
+      "Bash(echo \"Backend restarting with IPv6 direct address, PID $!\")",
+      "Bash(./mvnw spring-boot:run)",
+      "Bash(echo \"Backend PID: $!\")"
+    ]
+  }
+}

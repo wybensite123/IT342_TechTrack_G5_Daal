@@ -26,7 +26,6 @@ const ProfilePage = () => {
   const [uploading, setUploading] = useState(false);
   const [error, setError] = useState('');
 
-  // Defensive: render a friendly empty state if user is somehow null.
   if (!user) {
     return (
       <main className="main-content">
@@ -36,13 +35,11 @@ const ProfilePage = () => {
             <p className="page-subtitle">Manage your account and preferences</p>
           </div>
         </header>
-        <div className="profile-page">
-          <div className="profile-card">
-            <p className="profile-empty">Profile data unavailable. Please sign in again.</p>
-            <button className="profile-btn-logout" onClick={() => navigate('/login')}>
-              Go to login
-            </button>
-          </div>
+        <div className="profile-card">
+          <p className="profile-empty">Profile data unavailable. Please sign in again.</p>
+          <button className="profile-btn-logout" onClick={() => navigate('/login')}>
+            Go to login
+          </button>
         </div>
       </main>
     );
@@ -86,7 +83,7 @@ const ProfilePage = () => {
   };
 
   const handleLogout = () => {
-    try { logout(); } catch (_) { /* logout is fire-and-forget */ }
+    try { logout(); } catch (_) {}
     navigate('/login', { replace: true });
   };
 
@@ -100,70 +97,76 @@ const ProfilePage = () => {
       </header>
 
       <div className="profile-page">
-        <div className="profile-card">
-        {/* Header */}
-        <div className="profile-header">
-          <div
-            className="profile-avatar-wrap"
-            onClick={() => !uploading && fileRef.current?.click()}
-            title="Click to change photo"
-          >
-            {avatarUrl ? (
-              <img src={avatarUrl} alt="avatar" className="profile-avatar-img" />
-            ) : (
-              <div className="profile-avatar-initials">{initials}</div>
-            )}
-            <div className="profile-avatar-overlay">
-              <IconCamera />
+        {/* ── LEFT: Identity card ── */}
+        <div className="profile-card profile-card-side">
+          <div className="profile-header">
+            <div
+              className="profile-avatar-wrap"
+              onClick={() => !uploading && fileRef.current?.click()}
+              title="Click to change photo"
+            >
+              {avatarUrl ? (
+                <img src={avatarUrl} alt="avatar" className="profile-avatar-img" />
+              ) : (
+                <div className="profile-avatar-initials">{initials}</div>
+              )}
+              <div className="profile-avatar-overlay">
+                <IconCamera />
+              </div>
             </div>
+
+            <input
+              ref={fileRef}
+              type="file"
+              accept="image/jpeg,image/png"
+              style={{ display: 'none' }}
+              onChange={handlePhotoChange}
+            />
+
+            <h2 className="profile-name">{fullName}</h2>
+            <span className={`profile-role-badge ${isAdmin ? 'admin' : 'student'}`}>
+              {isAdmin ? '⚙ Admin' : '🎓 Student'}
+            </span>
           </div>
 
-          <input
-            ref={fileRef}
-            type="file"
-            accept="image/jpeg,image/png"
-            style={{ display: 'none' }}
-            onChange={handlePhotoChange}
-          />
+          {error && <div className="profile-error">{error}</div>}
 
-          <h2 className="profile-name">{fullName}</h2>
-          <span className={`profile-role-badge ${isAdmin ? 'admin' : 'student'}`}>
-            {isAdmin ? '⚙ Admin' : '🎓 Student'}
-          </span>
+          <div className="profile-actions">
+            <button
+              type="button"
+              className="profile-btn-photo"
+              onClick={() => fileRef.current?.click()}
+              disabled={uploading}
+            >
+              <IconCamera /> {uploading ? 'Uploading…' : 'Change Photo'}
+            </button>
+
+            <button
+              type="button"
+              className="profile-btn-logout"
+              onClick={handleLogout}
+            >
+              <IconLogout /> Logout
+            </button>
+          </div>
         </div>
 
-        {error && <div className="profile-error">{error}</div>}
+        {/* ── RIGHT: Account info ── */}
+        <div className="profile-card">
+          <div className="profile-section">
+            <h3 className="profile-section-title">Account Information</h3>
+            <DetailRow label="Email" value={user.email || '—'} />
+            <DetailRow label="Role" value={isAdmin ? 'Administrator' : 'Borrower'} />
+            {user.department && <DetailRow label="Department" value={user.department} />}
+            {user.studentId && <DetailRow label="Student ID" value={user.studentId} />}
+            <DetailRow label="Account ID" value={`#${user.id}`} />
+          </div>
 
-        {/* Details */}
-        <div className="profile-section">
-          <h3 className="profile-section-title">Account Information</h3>
-
-          <DetailRow label="Email" value={user.email || '—'} />
-          <DetailRow label="Role" value={isAdmin ? 'Administrator' : 'Borrower'} />
-          {user.department && <DetailRow label="Department" value={user.department} />}
-          {user.studentId && <DetailRow label="Student ID" value={user.studentId} />}
-          <DetailRow label="Account ID" value={`#${user.id}`} />
-        </div>
-
-        {/* Actions */}
-        <div className="profile-actions">
-          <button
-            type="button"
-            className="profile-btn-photo"
-            onClick={() => fileRef.current?.click()}
-            disabled={uploading}
-          >
-            <IconCamera /> {uploading ? 'Uploading…' : 'Change Photo'}
-          </button>
-
-          <button
-            type="button"
-            className="profile-btn-logout"
-            onClick={handleLogout}
-          >
-            <IconLogout /> Logout
-          </button>
-        </div>
+          <div className="profile-section">
+            <h3 className="profile-section-title">Preferences</h3>
+            <DetailRow label="Theme" value="Dark (default)" />
+            <DetailRow label="Notifications" value="In-app" />
+          </div>
         </div>
       </div>
     </main>
