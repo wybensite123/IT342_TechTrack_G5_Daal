@@ -1,0 +1,18 @@
+Regression evidence summary
+
+Backend commands:
+- cd backend
+- .\mvnw.cmd -q compile  => success
+- .\mvnw.cmd -q test     => success
+
+Web commands:
+- cd web
+- npm run build          => success
+
+Mobile commands:
+- cd Mobile
+- gradlew.bat -q tasks --all => success
+
+Notes:
+- The web build and backend test commands completed without compile or test failures.
+- The mobile Gradle task resolution command completed and confirmed the Android project is properly configured.

@@ -167,11 +167,27 @@ a single database:
 IT342_TechTrack_G5_Daal/
 ├── backend/                       # Spring Boot REST API
 │   ├── src/main/java/edu/cit/daal/techtrack/
-│   │   ├── controller/            # @RestController endpoints
-│   │   ├── service/               # business logic
-│   │   ├── repository/            # Spring Data JPA
-│   │   ├── entity/                # JPA entities
-│   │   ├── dto/{request,response}/
+│   │   ├── asset/                 # asset slice: controller, service, repository, dto
+│   │   │   ├── controller/
+│   │   │   └── service/
+│   │   ├── loan/                  # loan slice: controller, service, repository, dto
+│   │   │   ├── controller/
+│   │   │   └── service/
+│   │   ├── auth/                  # auth slice: controller, service, dto
+│   │   │   ├── controller/
+│   │   │   └── service/
+│   │   ├── profile/               # profile slice: controller, service
+│   │   │   ├── controller/
+│   │   │   └── service/
+│   │   ├── watchlist/             # watchlist slice: controller, service
+│   │   │   ├── controller/
+│   │   │   └── service/
+│   │   ├── file/                  # file upload / download slice
+│   │   │   ├── controller/
+│   │   │   └── service/
+│   │   ├── repository/            # shared JPA repositories
+│   │   ├── entity/                # shared JPA entities
+│   │   ├── dto/{request,response}/# shared request/response payloads
 │   │   ├── enums/                 # Role, AssetStatus, LoanStatus...
 │   │   ├── exception/             # global error handler
 │   │   └── security/              # JWT filter, Spring Security config
@@ -210,12 +226,6 @@ IT342_TechTrack_G5_Daal/
 │   │   │   └── util/
 │   │   ├── res/                   # layouts, drawables, themes, navigation
 │   │   └── AndroidManifest.xml
-│   └── build.gradle.kts
-│
-├── Docs/                          # Project docs (specs, screenshots, notes)
-└── README.md                      # ← you are here
-```
-
 ---
 
 ## Prerequisites

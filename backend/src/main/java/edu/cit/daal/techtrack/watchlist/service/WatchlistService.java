@@ -1,4 +1,4 @@
-package edu.cit.daal.techtrack.service;
+package edu.cit.daal.techtrack.watchlist.service;
 
 import edu.cit.daal.techtrack.dto.response.AssetResponse;
 import edu.cit.daal.techtrack.dto.response.PageResponse;
@@ -6,6 +6,7 @@ import edu.cit.daal.techtrack.entity.Asset;
 import edu.cit.daal.techtrack.entity.User;
 import edu.cit.daal.techtrack.entity.WatchlistItem;
 import edu.cit.daal.techtrack.exception.ResourceNotFoundException;
+import edu.cit.daal.techtrack.asset.service.AssetService;
 import edu.cit.daal.techtrack.repository.AssetRepository;
 import edu.cit.daal.techtrack.repository.UserRepository;
 import edu.cit.daal.techtrack.repository.WatchlistItemRepository;

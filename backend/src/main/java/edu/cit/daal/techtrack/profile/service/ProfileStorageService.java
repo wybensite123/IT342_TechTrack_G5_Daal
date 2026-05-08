@@ -1,4 +1,4 @@
-package edu.cit.daal.techtrack.service;
+package edu.cit.daal.techtrack.profile.service;
 
 import edu.cit.daal.techtrack.exception.BusinessRuleException;
 import org.springframework.beans.factory.annotation.Value;

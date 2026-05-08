@@ -1,18 +1,22 @@
-package edu.cit.daal.techtrack.controller;
+package edu.cit.daal.techtrack.file.controller;
 
-import edu.cit.daal.techtrack.service.FileStorageService;
-import edu.cit.daal.techtrack.service.ProfileStorageService;
-import lombok.RequiredArgsConstructor;
+import java.io.IOException;
+import java.net.MalformedURLException;
+import java.nio.file.Path;
+
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.UrlResource;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
-import java.io.IOException;
-import java.net.MalformedURLException;
-import java.nio.file.Path;
+import edu.cit.daal.techtrack.file.service.FileStorageService;
+import edu.cit.daal.techtrack.profile.service.ProfileStorageService;
+import lombok.RequiredArgsConstructor;
 
 @RestController
 @RequestMapping("/api/v1/files")

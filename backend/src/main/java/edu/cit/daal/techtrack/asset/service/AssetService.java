@@ -1,4 +1,4 @@
-package edu.cit.daal.techtrack.service;
+package edu.cit.daal.techtrack.asset.service;
 
 import edu.cit.daal.techtrack.dto.request.AssetRequest;
 import edu.cit.daal.techtrack.dto.response.AssetResponse;
@@ -9,6 +9,7 @@ import edu.cit.daal.techtrack.enums.AssetStatus;
 import edu.cit.daal.techtrack.exception.BusinessRuleException;
 import edu.cit.daal.techtrack.exception.DuplicateResourceException;
 import edu.cit.daal.techtrack.exception.ResourceNotFoundException;
+import edu.cit.daal.techtrack.file.service.FileStorageService;
 import edu.cit.daal.techtrack.repository.AssetImageRepository;
 import edu.cit.daal.techtrack.repository.AssetRepository;
 import lombok.RequiredArgsConstructor;
@@ -135,7 +136,7 @@ public class AssetService {
                 .build();
     }
 
-    AssetResponse toDto(Asset asset) {
+    public AssetResponse toDto(Asset asset) {
         List<AssetResponse.ImageDto> images = assetImageRepository.findByAssetId(asset.getId())
                 .stream()
                 .map(i -> AssetResponse.ImageDto.builder()

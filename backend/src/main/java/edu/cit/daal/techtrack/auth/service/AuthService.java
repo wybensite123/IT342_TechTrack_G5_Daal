@@ -1,4 +1,4 @@
-package edu.cit.daal.techtrack.service;
+package edu.cit.daal.techtrack.auth.service;
 
 import edu.cit.daal.techtrack.dto.request.LoginRequest;
 import edu.cit.daal.techtrack.dto.request.RegisterRequest;

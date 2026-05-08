@@ -1,4 +1,4 @@
-package edu.cit.daal.techtrack.service;
+package edu.cit.daal.techtrack.loan.service;
 
 import edu.cit.daal.techtrack.dto.request.LoanActionRequest;
 import edu.cit.daal.techtrack.dto.request.LoanRequest;
