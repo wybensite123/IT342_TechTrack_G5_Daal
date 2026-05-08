@@ -113,10 +113,16 @@ function assetEmoji(category = "") {
 function AssetCard({ asset, delay, onRequest, onWishlist, inWishlist }) {
   const isAvail = asset.status === "AVAILABLE";
   const statusCss = STATUS_CSS[asset.status] || "maintenance";
+  const primaryImage = asset.images?.find(img => img.primary) || asset.images?.[0];
+
   return (
     <div className="asset-card" style={{ animationDelay: `${delay}s` }}>
       <div className="asset-card-img">
-        <span>{assetEmoji(asset.category)}</span>
+        {primaryImage ? (
+          <img src={primaryImage.filePath} alt={asset.name} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+        ) : (
+          <span>{assetEmoji(asset.category)}</span>
+        )}
         <span className={`asset-status-float ${statusCss}`}>
           {STATUS_LABEL[asset.status] || asset.status}
         </span>
@@ -470,7 +476,12 @@ export default function HomePage() {
           {modal && (
             <>
               <div className="modal-asset-info">
-                <div className="modal-asset-emoji">{assetEmoji(modal.category)}</div>
+                {modal.images?.find(img => img.primary)?.filePath || modal.images?.[0]?.filePath ? (
+                  <img src={modal.images.find(img => img.primary)?.filePath || modal.images[0].filePath}
+                       alt={modal.name} style={{ width: 60, height: 60, borderRadius: 4, objectFit: 'cover' }} />
+                ) : (
+                  <div className="modal-asset-emoji">{assetEmoji(modal.category)}</div>
+                )}
                 <div>
                   <div className="modal-asset-name">{modal.name}</div>
                   <div className="modal-asset-tag">{modal.assetTag}</div>

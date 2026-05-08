@@ -47,6 +47,10 @@ class HomeFragment : Fragment() {
         viewModel = ViewModelProvider(this, HomeViewModelFactory(app.assetRepository))[HomeViewModel::class.java]
         loanViewModel = ViewModelProvider(this, AssetDetailViewModelFactory(app.assetRepository, app.loanRepository, app.watchlistRepository))[AssetDetailViewModel::class.java]
 
+        binding.btnBackArrow.setOnClickListener {
+            findNavController().popBackStack()
+        }
+
         setupCategoryChips()
         setupRecyclerView(isAdmin)
         setupSearch()
