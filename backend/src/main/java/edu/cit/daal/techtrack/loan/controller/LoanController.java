@@ -1,18 +1,5 @@
 package edu.cit.daal.techtrack.loan.controller;
 
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.security.core.Authentication;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
-
 import edu.cit.daal.techtrack.dto.request.LoanActionRequest;
 import edu.cit.daal.techtrack.dto.request.LoanRequest;
 import edu.cit.daal.techtrack.dto.response.ApiResponse;
@@ -22,6 +9,11 @@ import edu.cit.daal.techtrack.dto.response.PageResponse;
 import edu.cit.daal.techtrack.loan.service.LoanService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.Authentication;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api/v1/loans")
@@ -98,11 +90,19 @@ public class LoanController {
     @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<ApiResponse<LoanResponse>> processReturn(
             @PathVariable Long id,
-            @RequestBody LoanActionRequest request) {
+            @Valid @RequestBody LoanActionRequest request) {
         return ResponseEntity.ok(ApiResponse.success(loanService.processReturn(id, request)));
     }
 
     private Long currentUserId(Authentication auth) {
-        return (Long) auth.getCredentials();
+        // JwtAuthFilter stores userId as the credentials of the Authentication.
+        Object creds = auth.getCredentials();
+        if (creds instanceof Long id) return id;
+        if (creds != null) {
+            if (creds instanceof String s) return Long.valueOf(s);
+            if (creds instanceof Number n) return n.longValue();
+        }
+        throw new IllegalStateException("Unauthenticated or invalid user id in token");
     }
 }
+

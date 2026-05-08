@@ -115,7 +115,10 @@ public class AuthController {
         if (auth instanceof UsernamePasswordAuthenticationToken token) {
             Object creds = token.getCredentials();
             if (creds instanceof Long id) return id;
+            if (creds instanceof String s) return Long.valueOf(s);
+            if (creds instanceof Number n) return n.longValue();
         }
         return null;
     }
+
 }
