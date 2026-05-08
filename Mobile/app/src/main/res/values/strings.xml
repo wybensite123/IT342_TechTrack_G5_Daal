@@ -26,6 +26,7 @@
     <string name="nav_profile">Profile</string>
     <string name="nav_admin_dashboard">Dashboard</string>
     <string name="nav_loan_queue">Loan Queue</string>
+    <string name="back_button">Back</string>
 
     <!-- Home / Assets -->
     <string name="hint_search">Search equipment…</string>
