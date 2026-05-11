@@ -26,7 +26,8 @@ android {
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
             )
-            buildConfigField("String", "API_BASE_URL", "\"http://10.0.2.2:8080/api/v1/\"")
+            val prodUrl = System.getenv("API_BASE_URL") ?: "https://techtrack-backend.onrender.com/api/v1/"
+            buildConfigField("String", "API_BASE_URL", "\"$prodUrl\"")
         }
     }
 

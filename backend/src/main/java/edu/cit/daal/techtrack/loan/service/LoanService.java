@@ -151,12 +151,16 @@ public class LoanService {
     // ── Admin: Return ─────────────────────────────────────────
 
     @Transactional
-    public LoanResponse processReturn(Long loanId, LoanActionRequest request) {
+    public LoanResponse processReturn(Long loanId, Long callerId, boolean isAdmin, LoanActionRequest request) {
         if (request.getConditionOnReturn() == null || request.getConditionOnReturn().isBlank()) {
             throw new BusinessRuleException("VALID-001", "Condition on return is required");
         }
 
         Loan loan = findOrThrow(loanId);
+
+        if (!isAdmin && !loan.getBorrower().getId().equals(callerId)) {
+            throw new BusinessRuleException("BUSINESS-003", "Access denied");
+        }
 
         if (loan.getStatus() != LoanStatus.ON_LOAN) {
             throw new BusinessRuleException("BUSINESS-003",

@@ -1,6 +1,7 @@
 package com.techtrack.inventory.data.remote
 
 import com.techtrack.inventory.BuildConfig
+import com.techtrack.inventory.util.SessionManager
 import com.techtrack.inventory.util.TokenManager
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
@@ -10,14 +11,14 @@ import java.util.concurrent.TimeUnit
 
 object RetrofitClient {
 
-    fun create(tokenManager: TokenManager): ApiService {
+    fun create(tokenManager: TokenManager, sessionManager: SessionManager? = null): ApiService {
         val logging = HttpLoggingInterceptor().apply {
             level = if (BuildConfig.DEBUG) HttpLoggingInterceptor.Level.BODY
                     else HttpLoggingInterceptor.Level.NONE
         }
 
         val client = OkHttpClient.Builder()
-            .addInterceptor(AuthInterceptor(tokenManager))
+            .addInterceptor(AuthInterceptor(tokenManager, sessionManager))
             .addInterceptor(logging)
             .connectTimeout(30, TimeUnit.SECONDS)
             .readTimeout(30, TimeUnit.SECONDS)

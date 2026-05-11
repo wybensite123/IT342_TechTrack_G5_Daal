@@ -12,21 +12,27 @@ import com.techtrack.inventory.ui.main.MainActivity
 class SplashActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivitySplashBinding
+    private val handler = Handler(Looper.getMainLooper())
+    private val navigateRunnable = Runnable {
+        val app = application as TechTrackApplication
+        val intent = if (app.tokenManager.isLoggedIn()) {
+            Intent(this, MainActivity::class.java)
+        } else {
+            Intent(this, LoginActivity::class.java)
+        }
+        startActivity(intent)
+        finish()
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivitySplashBinding.inflate(layoutInflater)
         setContentView(binding.root)
+        handler.postDelayed(navigateRunnable, 2000L)
+    }
 
-        Handler(Looper.getMainLooper()).postDelayed({
-            val app = application as TechTrackApplication
-            val intent = if (app.tokenManager.isLoggedIn()) {
-                Intent(this, MainActivity::class.java)
-            } else {
-                Intent(this, LoginActivity::class.java)
-            }
-            startActivity(intent)
-            finish()
-        }, 2000L)
+    override fun onDestroy() {
+        handler.removeCallbacks(navigateRunnable)
+        super.onDestroy()
     }
 }

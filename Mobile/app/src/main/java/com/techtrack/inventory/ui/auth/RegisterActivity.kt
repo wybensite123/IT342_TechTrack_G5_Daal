@@ -39,7 +39,7 @@ class RegisterActivity : AppCompatActivity() {
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {}
             override fun afterTextChanged(s: Editable?) {
                 val password = s?.toString() ?: ""
-                binding.passwordStrengthBar.progress = calculateStrength(password)
+                binding.passwordStrengthBar.progress = calculateStrength(password) * 25
             }
         })
     }

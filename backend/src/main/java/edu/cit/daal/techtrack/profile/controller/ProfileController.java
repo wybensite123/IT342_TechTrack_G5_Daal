@@ -12,6 +12,7 @@ import edu.cit.daal.techtrack.auth.service.AuthService;
 import edu.cit.daal.techtrack.dto.response.ApiResponse;
 import edu.cit.daal.techtrack.dto.response.AuthResponse;
 import edu.cit.daal.techtrack.entity.User;
+import edu.cit.daal.techtrack.exception.ResourceNotFoundException;
 import edu.cit.daal.techtrack.profile.service.ProfileStorageService;
 import edu.cit.daal.techtrack.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
@@ -32,7 +33,7 @@ public class ProfileController {
 
         Long userId = (Long) auth.getCredentials();
         User user = userRepository.findById(userId)
-                .orElseThrow(() -> new RuntimeException("User not found"));
+                .orElseThrow(() -> new ResourceNotFoundException("User not found"));
 
         String filename = profileStorageService.store(file);
         user.setProfilePicture(filename);

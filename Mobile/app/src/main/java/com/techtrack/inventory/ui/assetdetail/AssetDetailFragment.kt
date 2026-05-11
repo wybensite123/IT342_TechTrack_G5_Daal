@@ -97,14 +97,22 @@ class AssetDetailFragment : Fragment() {
             binding.viewPagerImages.adapter = imageAdapter
         }
 
-        val canRequest = !isAdmin && asset.status == "AVAILABLE"
-        binding.btnRequestLoan.visibility = if (canRequest) View.VISIBLE else View.GONE
-        if (!canRequest && !isAdmin) {
-            binding.btnRequestLoan.visibility = View.VISIBLE
-            binding.btnRequestLoan.isEnabled = false
-            binding.btnRequestLoan.text = getString(R.string.not_available)
+        when {
+            isAdmin -> {
+                binding.btnRequestLoan.visibility = View.GONE
+            }
+            asset.status == "AVAILABLE" -> {
+                binding.btnRequestLoan.visibility = View.VISIBLE
+                binding.btnRequestLoan.isEnabled = true
+                binding.btnRequestLoan.text = getString(R.string.btn_submit)
+                binding.btnRequestLoan.setOnClickListener { showLoanDialog(asset) }
+            }
+            else -> {
+                binding.btnRequestLoan.visibility = View.VISIBLE
+                binding.btnRequestLoan.isEnabled = false
+                binding.btnRequestLoan.text = getString(R.string.not_available)
+            }
         }
-        binding.btnRequestLoan.setOnClickListener { showLoanDialog(asset) }
     }
 
     private fun observeLoan() {
