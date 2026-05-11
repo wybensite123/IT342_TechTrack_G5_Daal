@@ -23,6 +23,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Value;
 
 @RestController
 @RequestMapping("/api/v1/auth")
@@ -33,6 +34,9 @@ public class AuthController {
     private static final int REFRESH_COOKIE_MAX_AGE = 7 * 24 * 60 * 60; // 7 days
 
     private final AuthService authService;
+
+    @Value("${cookie.secure:false}")
+    private boolean cookieSecure;
 
     @PostMapping("/register")
     public ResponseEntity<ApiResponse<AuthResponse>> register(
@@ -78,6 +82,7 @@ public class AuthController {
     @GetMapping("/me")
     public ResponseEntity<ApiResponse<AuthResponse.UserDto>> me() {
         Long userId = currentUserId();
+        if (userId == null) throw new TokenException("AUTH-006", "Not authenticated");
         return ResponseEntity.ok(ApiResponse.success(authService.getProfile(userId)));
     }
 
@@ -86,7 +91,7 @@ public class AuthController {
     private void addRefreshCookie(HttpServletResponse response, String value) {
         Cookie cookie = new Cookie(REFRESH_COOKIE, value);
         cookie.setHttpOnly(true);
-        cookie.setSecure(false); // set true in production (HTTPS only)
+        cookie.setSecure(cookieSecure);
         cookie.setPath("/api/v1/auth");
         cookie.setMaxAge(REFRESH_COOKIE_MAX_AGE);
         response.addCookie(cookie);

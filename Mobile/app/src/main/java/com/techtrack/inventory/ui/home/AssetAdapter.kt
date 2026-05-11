@@ -46,6 +46,8 @@ class AssetAdapter(
             val imagePath = asset.primaryImagePath()
             if (imagePath != null) {
                 binding.ivAssetImage.load(imagePath.toImageUrl())
+            } else {
+                binding.ivAssetImage.setImageDrawable(null)
             }
 
             binding.root.setOnClickListener { onItemClick(asset) }

@@ -47,9 +47,7 @@ class HomeFragment : Fragment() {
         viewModel = ViewModelProvider(this, HomeViewModelFactory(app.assetRepository))[HomeViewModel::class.java]
         loanViewModel = ViewModelProvider(this, AssetDetailViewModelFactory(app.assetRepository, app.loanRepository, app.watchlistRepository))[AssetDetailViewModel::class.java]
 
-        binding.btnBackArrow.setOnClickListener {
-            findNavController().popBackStack()
-        }
+        binding.btnBackArrow.hide()
 
         setupCategoryChips()
         setupRecyclerView(isAdmin)
@@ -70,6 +68,8 @@ class HomeFragment : Fragment() {
                 if (checked) {
                     val query = if (cat == "All") null else cat
                     viewModel.loadAssets(query)
+                } else if (binding.chipGroupCategories.checkedChipIds.isEmpty()) {
+                    viewModel.loadAssets(null)
                 }
             }
             binding.chipGroupCategories.addView(chip)

@@ -34,11 +34,11 @@ class TechTrackApplication : Application() {
         super.onCreate()
         AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
         tokenManager = TokenManager(this)
-        val api = RetrofitClient.create(tokenManager)
+        sessionManager = SessionManager(this, tokenManager)
+        val api = RetrofitClient.create(tokenManager, sessionManager)
         authRepository = AuthRepository(api, tokenManager)
         assetRepository = AssetRepository(api)
         loanRepository = LoanRepository(api)
         watchlistRepository = WatchlistRepository(api)
-        sessionManager = SessionManager(this, tokenManager)
     }
 }

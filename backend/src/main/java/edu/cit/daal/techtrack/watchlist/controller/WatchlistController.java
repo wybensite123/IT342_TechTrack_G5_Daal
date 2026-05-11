@@ -71,6 +71,10 @@ public class WatchlistController {
     }
 
     private Long currentUserId(Authentication auth) {
-        return (Long) auth.getCredentials();
+        Object creds = auth.getCredentials();
+        if (creds instanceof Long id) return id;
+        if (creds instanceof String s) return Long.valueOf(s);
+        if (creds instanceof Number n) return n.longValue();
+        throw new IllegalStateException("Invalid user credentials in token");
     }
 }

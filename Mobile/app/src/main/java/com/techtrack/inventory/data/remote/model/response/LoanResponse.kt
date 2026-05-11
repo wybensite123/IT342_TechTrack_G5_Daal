@@ -7,7 +7,7 @@ data class LoanResponse(
     val purpose: String,
     val status: String,
     val requestedReturnDate: String,
-    val approvedBy: LoanBorrowerDto?,
+    val approvedBy: Long?,
     val approvedAt: String?,
     val actualReturnDate: String?,
     val conditionOnReturn: String?,

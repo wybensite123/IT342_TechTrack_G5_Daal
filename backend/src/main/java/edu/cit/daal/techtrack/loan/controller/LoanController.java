@@ -87,11 +87,14 @@ public class LoanController {
     }
 
     @PutMapping("/{id}/return")
-    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<ApiResponse<LoanResponse>> processReturn(
             @PathVariable Long id,
-            @Valid @RequestBody LoanActionRequest request) {
-        return ResponseEntity.ok(ApiResponse.success(loanService.processReturn(id, request)));
+            @Valid @RequestBody LoanActionRequest request,
+            Authentication auth) {
+        boolean isAdmin = auth.getAuthorities().stream()
+                .anyMatch(a -> a.getAuthority().equals("ROLE_ADMIN"));
+        return ResponseEntity.ok(ApiResponse.success(
+                loanService.processReturn(id, currentUserId(auth), isAdmin, request)));
     }
 
     private Long currentUserId(Authentication auth) {
