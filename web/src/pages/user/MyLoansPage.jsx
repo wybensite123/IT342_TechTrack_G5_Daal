@@ -4,6 +4,7 @@ import '../../styles/shared.css';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { useAuth } from '../../context/AuthContext';
 import { getMyLoans, returnLoan } from '../../api/loanApi';
+import { BASE_URL } from '../../api/axiosInstance';
 
 const hiddenKey = (uid) => `loans_past_hidden_${uid ?? 'guest'}`;
 const loadHidden = (uid) => {
@@ -25,6 +26,11 @@ const STATUS_CLASS = {
   ON_LOAN: 'badge-loan',
   RETURNED: 'badge-returned',
   REJECTED: 'badge-rejected',
+};
+
+const buildAssetImageUrl = (filePath) => {
+  if (!filePath) return null;
+  return `${BASE_URL.replace(/\/+$/, '')}/files/${encodeURIComponent(filePath)}`;
 };
 
 function Toast({ msg, type, onClose }) {
@@ -167,7 +173,18 @@ export default function MyLoansPage() {
                   </span>
                 </div>
 
-                <div className="loan-card-body">
+                <div className="loan-card-main">
+                  <div className="loan-card-media">
+                    {loan.asset.imagePath ? (
+                      <img
+                        src={buildAssetImageUrl(loan.asset.imagePath)}
+                        alt={loan.asset.name}
+                      />
+                    ) : (
+                      <div className="loan-card-fallback">{loan.asset.name?.[0] ?? 'A'}</div>
+                    )}
+                  </div>
+                  <div className="loan-card-body">
                   <div className="loan-detail">
                     <span className="detail-label">Purpose</span>
                     <span className="detail-value">{loan.purpose}</span>
@@ -206,6 +223,7 @@ export default function MyLoansPage() {
                       <span className="detail-value text-danger">{loan.rejectionReason}</span>
                     </div>
                   )}
+                  </div>
                 </div>
 
                 {loan.status === 'ON_LOAN' && (

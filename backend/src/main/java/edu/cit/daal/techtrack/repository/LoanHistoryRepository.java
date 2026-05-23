@@ -12,6 +12,6 @@ public interface LoanHistoryRepository extends JpaRepository<LoanHistory, Long> 
 
     List<LoanHistory> findByLoanIdOrderByCreatedAtAsc(Long loanId);
 
-    @Query("SELECT h FROM LoanHistory h JOIN FETCH h.loan l JOIN FETCH l.borrower JOIN FETCH l.asset ORDER BY h.createdAt DESC")
+    @Query("SELECT h FROM LoanHistory h LEFT JOIN FETCH h.loan l LEFT JOIN FETCH l.borrower LEFT JOIN FETCH l.asset ORDER BY h.createdAt DESC")
     Page<LoanHistory> findAllWithContext(Pageable pageable);
 }

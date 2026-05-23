@@ -6,6 +6,7 @@ import edu.cit.daal.techtrack.dto.response.LoanHistoryResponse;
 import edu.cit.daal.techtrack.dto.response.LoanResponse;
 import edu.cit.daal.techtrack.dto.response.PageResponse;
 import edu.cit.daal.techtrack.entity.Asset;
+import edu.cit.daal.techtrack.entity.AssetImage;
 import edu.cit.daal.techtrack.entity.Loan;
 import edu.cit.daal.techtrack.entity.LoanHistory;
 import edu.cit.daal.techtrack.entity.User;
@@ -14,6 +15,7 @@ import edu.cit.daal.techtrack.enums.LoanStatus;
 import edu.cit.daal.techtrack.enums.ReturnCondition;
 import edu.cit.daal.techtrack.exception.BusinessRuleException;
 import edu.cit.daal.techtrack.exception.ResourceNotFoundException;
+import edu.cit.daal.techtrack.repository.AssetImageRepository;
 import edu.cit.daal.techtrack.repository.AssetRepository;
 import edu.cit.daal.techtrack.repository.LoanHistoryRepository;
 import edu.cit.daal.techtrack.repository.LoanRepository;
@@ -28,6 +30,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -35,6 +38,7 @@ public class LoanService {
 
     private final LoanRepository loanRepository;
     private final AssetRepository assetRepository;
+    private final AssetImageRepository assetImageRepository;
     private final UserRepository userRepository;
     private final LoanHistoryRepository historyRepository;
 
@@ -247,19 +251,35 @@ public class LoanService {
 
     private LoanHistoryResponse toHistoryDto(LoanHistory h) {
         Loan loan = h.getLoan();
+        String borrowerName = null;
+        String borrowerEmail = null;
+        String loanStatus = null;
+        Long loanId = null;
+        String assetName = h.getAssetName();
+        String assetTag = h.getAssetTag();
+
+        if (loan != null) {
+            loanId = loan.getId();
+            borrowerName = loan.getBorrower().getFirstName() + " " + loan.getBorrower().getLastName();
+            borrowerEmail = loan.getBorrower().getEmail();
+            loanStatus = loan.getStatus().name();
+            if (assetName == null) assetName = loan.getAsset().getName();
+            if (assetTag == null) assetTag = loan.getAsset().getAssetTag();
+        }
+
         return LoanHistoryResponse.builder()
                 .id(h.getId())
-                .loanId(loan.getId())
+                .loanId(loanId)
                 .action(h.getAction())
                 .actorId(h.getActorId())
                 .actorName(h.getActorName())
                 .notes(h.getNotes())
                 .createdAt(h.getCreatedAt())
-                .borrowerName(loan.getBorrower().getFirstName() + " " + loan.getBorrower().getLastName())
-                .borrowerEmail(loan.getBorrower().getEmail())
-                .assetName(loan.getAsset().getName())
-                .assetTag(loan.getAsset().getAssetTag())
-                .loanStatus(loan.getStatus().name())
+                .borrowerName(borrowerName)
+                .borrowerEmail(borrowerEmail)
+                .assetName(assetName)
+                .assetTag(assetTag)
+                .loanStatus(loanStatus)
                 .build();
     }
 
@@ -282,6 +302,12 @@ public class LoanService {
     private LoanResponse toDto(Loan loan) {
         User borrower = loan.getBorrower();
         Asset asset = loan.getAsset();
+        List<AssetImage> assetImages = assetImageRepository.findByAssetId(asset.getId());
+        AssetImage selectedImage = assetImages.stream()
+                .filter(AssetImage::isPrimary)
+                .findFirst()
+                .orElseGet(() -> assetImages.stream().findFirst().orElse(null));
+        String imagePath = selectedImage != null ? selectedImage.getFilePath() : null;
 
         return LoanResponse.builder()
                 .id(loan.getId())
@@ -299,6 +325,7 @@ public class LoanService {
                         .category(asset.getCategory())
                         .assetTag(asset.getAssetTag())
                         .status(asset.getStatus().name())
+                        .imagePath(imagePath)
                         .build())
                 .purpose(loan.getPurpose())
                 .status(loan.getStatus().name())

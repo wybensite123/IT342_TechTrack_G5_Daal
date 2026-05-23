@@ -5,6 +5,7 @@ import edu.cit.daal.techtrack.dto.response.AssetResponse;
 import edu.cit.daal.techtrack.dto.response.PageResponse;
 import edu.cit.daal.techtrack.entity.Asset;
 import edu.cit.daal.techtrack.entity.AssetImage;
+import edu.cit.daal.techtrack.entity.LoanHistory;
 import edu.cit.daal.techtrack.enums.AssetStatus;
 import edu.cit.daal.techtrack.exception.BusinessRuleException;
 import edu.cit.daal.techtrack.exception.DuplicateResourceException;
@@ -12,6 +13,8 @@ import edu.cit.daal.techtrack.exception.ResourceNotFoundException;
 import edu.cit.daal.techtrack.file.service.FileStorageService;
 import edu.cit.daal.techtrack.repository.AssetImageRepository;
 import edu.cit.daal.techtrack.repository.AssetRepository;
+import edu.cit.daal.techtrack.repository.LoanHistoryRepository;
+import edu.cit.daal.techtrack.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -29,6 +32,8 @@ public class AssetService {
 
     private final AssetRepository assetRepository;
     private final AssetImageRepository assetImageRepository;
+    private final LoanHistoryRepository historyRepository;
+    private final UserRepository userRepository;
     private final FileStorageService fileStorageService;
 
     @Transactional(readOnly = true)
@@ -92,13 +97,27 @@ public class AssetService {
     }
 
     @Transactional
-    public void retire(Long id) {
+    public void retire(Long id, Long actorId) {
         Asset asset = findOrThrow(id);
         if (asset.getStatus() == AssetStatus.ON_LOAN || asset.getStatus() == AssetStatus.PENDING_APPROVAL) {
             throw new BusinessRuleException("BUSINESS-003", "Cannot retire an asset with an active loan");
         }
         asset.setStatus(AssetStatus.RETIRED);
         assetRepository.save(asset);
+
+        var actor = userRepository.findById(actorId)
+                .orElseThrow(() -> new ResourceNotFoundException("User not found"));
+
+        historyRepository.save(LoanHistory.builder()
+                .loan(null)
+                .action("DELETED")
+                .actorId(actor.getId())
+                .actorName(actor.getFirstName() + " " + actor.getLastName())
+                .notes("Asset retired permanently")
+                .assetId(asset.getId())
+                .assetName(asset.getName())
+                .assetTag(asset.getAssetTag())
+                .build());
     }
 
     @Transactional

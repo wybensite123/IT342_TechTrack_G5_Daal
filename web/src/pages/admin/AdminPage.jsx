@@ -9,8 +9,14 @@ const LOAN_STATUS_LABEL = { PENDING_APPROVAL: 'Pending', ON_LOAN: 'On Loan', RET
 const LOAN_STATUS_CLASS = { PENDING_APPROVAL: 'badge-pending', ON_LOAN: 'badge-loan', RETURNED: 'badge-returned', REJECTED: 'badge-rejected' };
 const ASSET_STATUS_CLASS = { AVAILABLE: 'badge-available', ON_LOAN: 'badge-loan', PENDING_APPROVAL: 'badge-pending', UNDER_MAINTENANCE: 'badge-maintenance', RETIRED: 'badge-retired' };
 
-const ACTION_ICON  = { SUBMITTED: '📤', APPROVED: '✅', REJECTED: '❌', RETURNED: '🔄' };
-const ACTION_CLASS = { SUBMITTED: 'hist-submitted', APPROVED: 'hist-approved', REJECTED: 'hist-rejected', RETURNED: 'hist-returned' };
+const ACTION_ICON  = { SUBMITTED: '📤', APPROVED: '✅', REJECTED: '❌', RETURNED: '🔄', DELETED: '🗑️' };
+const ACTION_CLASS = {
+  SUBMITTED: 'hist-submitted',
+  APPROVED: 'hist-approved',
+  REJECTED: 'hist-rejected',
+  RETURNED: 'hist-returned',
+  DELETED: 'hist-deleted',
+};
 
 function Toast({ msg, type, onClose }) {
   if (!msg) return null;
@@ -343,10 +349,10 @@ export default function AdminPage() {
                             {ACTION_ICON[h.action] ?? '•'} {h.action}
                           </span>
                         </td>
-                        <td className="text-muted text-sm">#{h.loanId}</td>
+                        <td className="text-muted text-sm">{h.loanId ? `#${h.loanId}` : '—'}</td>
                         <td>
-                          <div className="borrower-name">{h.borrowerName}</div>
-                          <div className="borrower-email">{h.borrowerEmail}</div>
+                          <div className="borrower-name">{h.borrowerName ?? '—'}</div>
+                          <div className="borrower-email">{h.borrowerEmail ?? '—'}</div>
                         </td>
                         <td>
                           <div className="asset-name">{h.assetName}</div>

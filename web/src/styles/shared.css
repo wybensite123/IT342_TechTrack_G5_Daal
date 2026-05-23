@@ -235,11 +235,37 @@ html, body { height: 100%; background: var(--bg); font-family: 'DM Sans', sans-s
 }
 .loan-asset-name { font-family: 'Rajdhani', sans-serif; font-size: 18px; font-weight: 700; color: var(--text); }
 .loan-asset-tag { font-size: 12px; color: var(--muted); font-family: monospace; margin-top: 2px; }
+.loan-card-main {
+  display: flex;
+  gap: 16px;
+  padding: 0 20px 16px;
+  align-items: flex-start;
+}
+.loan-card-media {
+  width: 96px;
+  min-width: 96px;
+  height: 96px;
+  border-radius: 16px;
+  overflow: hidden;
+  background: var(--surface2);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.loan-card-media img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.loan-card-fallback {
+  font-size: 28px;
+  color: var(--muted);
+}
 .loan-card-body {
   display: flex;
   flex-wrap: wrap;
   gap: 10px 22px;
-  padding: 4px 20px 16px;
+  padding: 4px 0 0;
 }
 .loan-detail {
   display: inline-flex;
@@ -406,10 +432,7 @@ html, body { height: 100%; background: var(--bg); font-family: 'DM Sans', sans-s
 .hist-approved  { background: var(--green-bg);  color: var(--green);  border: 1px solid rgba(16,185,129,0.3); }
 .hist-rejected  { background: var(--red-bg);    color: var(--red);    border: 1px solid rgba(239,68,68,0.3); }
 .hist-returned  { background: var(--blue-bg);   color: var(--accent); border: 1px solid rgba(59,130,246,0.3); }
-
-/* ── UTILITY ── */
-.text-danger  { color: var(--red) !important; }
-.text-success { color: var(--green) !important; }
+.hist-deleted   { background: rgba(248,113,113,0.12); color: #dc2626; border: 1px solid rgba(239,68,68,0.18); }
 .text-muted   { color: var(--muted) !important; }
 .text-sm      { font-size: 12px; }
 

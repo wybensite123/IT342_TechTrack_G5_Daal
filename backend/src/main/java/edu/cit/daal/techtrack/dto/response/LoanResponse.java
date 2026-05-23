@@ -42,5 +42,6 @@ public class LoanResponse {
         private String category;
         private String assetTag;
         private String status;
+        private String imagePath;
     }
 }

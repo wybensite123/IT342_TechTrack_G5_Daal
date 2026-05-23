@@ -20,6 +20,8 @@ import edu.cit.daal.techtrack.exception.DuplicateResourceException;
 import edu.cit.daal.techtrack.file.service.FileStorageService;
 import edu.cit.daal.techtrack.repository.AssetImageRepository;
 import edu.cit.daal.techtrack.repository.AssetRepository;
+import edu.cit.daal.techtrack.repository.LoanHistoryRepository;
+import edu.cit.daal.techtrack.repository.UserRepository;
 
 @ExtendWith(MockitoExtension.class)
 class AssetServiceTest {
@@ -29,6 +31,12 @@ class AssetServiceTest {
 
     @Mock
     private AssetImageRepository assetImageRepository;
+
+    @Mock
+    private LoanHistoryRepository historyRepository;
+
+    @Mock
+    private UserRepository userRepository;
 
     @Mock
     private FileStorageService fileStorageService;
@@ -62,7 +70,7 @@ class AssetServiceTest {
         when(assetRepository.findById(1L)).thenReturn(Optional.of(asset));
 
         BusinessRuleException exception = assertThrows(BusinessRuleException.class,
-                () -> assetService.retire(1L));
+                () -> assetService.retire(1L, 999L));
 
         assertEquals("Cannot retire an asset with an active loan", exception.getMessage());
     }

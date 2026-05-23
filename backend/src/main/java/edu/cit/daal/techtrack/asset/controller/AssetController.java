@@ -3,6 +3,7 @@ package edu.cit.daal.techtrack.asset.controller;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -67,9 +68,20 @@ public class AssetController {
 
     @DeleteMapping("/{id}")
     @PreAuthorize("hasRole('ADMIN')")
-    public ResponseEntity<ApiResponse<Void>> retire(@PathVariable Long id) {
-        assetService.retire(id);
+    public ResponseEntity<ApiResponse<Void>> retire(@PathVariable Long id, Authentication auth) {
+        Long actorId = currentUserId(auth);
+        assetService.retire(id, actorId);
         return ResponseEntity.ok(ApiResponse.success(null));
+    }
+
+    private Long currentUserId(Authentication auth) {
+        Object creds = auth.getCredentials();
+        if (creds instanceof Long id) return id;
+        if (creds != null) {
+            if (creds instanceof String s) return Long.valueOf(s);
+            if (creds instanceof Number n) return n.longValue();
+        }
+        throw new IllegalStateException("Unauthenticated or invalid user id in token");
     }
 
     @PostMapping("/{id}/images")

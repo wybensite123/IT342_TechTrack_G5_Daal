@@ -8,6 +8,7 @@ export interface LoanBorrower {
 }
 export interface LoanAsset {
   id: number; name: string; category: string; assetTag: string; status: string;
+  imagePath?: string;
 }
 export interface Loan {
   id: number; borrower: LoanBorrower; asset: LoanAsset;
@@ -20,11 +21,11 @@ export interface LoanRequest {
   assetId: number; purpose: string; requestedReturnDate: string;
 }
 export interface LoanHistory {
-  id: number; loanId: number; action: string;
+  id: number; loanId?: number; action: string;
   actorId: number | null; actorName: string | null; notes: string | null;
   createdAt: string;
-  borrowerName: string; borrowerEmail: string;
-  assetName: string; assetTag: string; loanStatus: string;
+  borrowerName?: string; borrowerEmail?: string;
+  assetName?: string; assetTag?: string; loanStatus?: string;
 }
 
 export const submitLoan = (data: LoanRequest) =>

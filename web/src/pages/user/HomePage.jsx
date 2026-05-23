@@ -21,6 +21,15 @@ const STATUS_CSS = {
   RETIRED:           "maintenance",
 };
 
+const BASE_API_URL = import.meta.env.VITE_API_BASE_URL ?? 'http://localhost:8080/api/v1';
+const buildAssetImageUrl = (filePath) => {
+  if (!filePath) return null;
+  if (filePath.startsWith('http://') || filePath.startsWith('https://')) {
+    return filePath;
+  }
+  return `${BASE_API_URL}/files/${filePath}`;
+};
+
 // ── SVG Icons ───────────────────────────────────────────────────────────────
 const IconGrid = () => (
   <svg className="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
@@ -114,12 +123,13 @@ function AssetCard({ asset, delay, onRequest, onWishlist, inWishlist }) {
   const isAvail = asset.status === "AVAILABLE";
   const statusCss = STATUS_CSS[asset.status] || "maintenance";
   const primaryImage = asset.images?.find(img => img.primary) || asset.images?.[0];
+  const imageUrl = primaryImage ? buildAssetImageUrl(primaryImage.filePath) : null;
 
   return (
     <div className="asset-card" style={{ animationDelay: `${delay}s` }}>
       <div className="asset-card-img">
-        {primaryImage ? (
-          <img src={primaryImage.filePath} alt={asset.name} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+        {imageUrl ? (
+          <img src={imageUrl} alt={asset.name} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
         ) : (
           <span>{assetEmoji(asset.category)}</span>
         )}
@@ -249,15 +259,16 @@ export default function HomePage() {
 
   // Category filter applied client-side after fetch
   const assets = assetPage?.content ?? [];
+  const visibleAssets = assets.filter(a => a.status !== "RETIRED");
   const filtered = isCategoryFilter
-    ? assets.filter(a => {
+    ? visibleAssets.filter(a => {
         if (filter === "laptops")   return a.category.toLowerCase().includes("laptop");
         if (filter === "kits")      return a.category.toLowerCase().includes("kit");
         if (filter === "projectors")return a.category.toLowerCase().includes("projector");
         if (filter === "cameras")   return a.category.toLowerCase().includes("camera");
         return true;
       })
-    : assets;
+    : visibleAssets;
 
   const watchlistMut = useMutation({
     mutationFn: ({ id, watched }) => watched ? removeFromWatchlist(id) : addToWatchlist(id),
@@ -477,7 +488,7 @@ export default function HomePage() {
             <>
               <div className="modal-asset-info">
                 {modal.images?.find(img => img.primary)?.filePath || modal.images?.[0]?.filePath ? (
-                  <img src={modal.images.find(img => img.primary)?.filePath || modal.images[0].filePath}
+                  <img src={buildAssetImageUrl(modal.images.find(img => img.primary)?.filePath || modal.images[0].filePath)}
                        alt={modal.name} style={{ width: 60, height: 60, borderRadius: 4, objectFit: 'cover' }} />
                 ) : (
                   <div className="modal-asset-emoji">{assetEmoji(modal.category)}</div>
