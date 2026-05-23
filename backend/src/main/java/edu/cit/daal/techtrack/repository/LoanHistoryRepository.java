@@ -1,12 +1,13 @@
 package edu.cit.daal.techtrack.repository;
 
-import edu.cit.daal.techtrack.entity.LoanHistory;
+import java.util.List;
+
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
-import java.util.List;
+import edu.cit.daal.techtrack.entity.LoanHistory;
 
 public interface LoanHistoryRepository extends JpaRepository<LoanHistory, Long> {
 
