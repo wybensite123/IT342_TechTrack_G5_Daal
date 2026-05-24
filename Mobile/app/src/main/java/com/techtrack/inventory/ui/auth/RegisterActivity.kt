@@ -55,7 +55,6 @@ class RegisterActivity : AppCompatActivity() {
 
     private fun setupListeners() {
         binding.btnRegister.setOnClickListener {
-            val username = binding.etUsername.text?.toString()?.trim() ?: ""
             val firstName = binding.etFirstName.text?.toString()?.trim() ?: ""
             val lastName = binding.etLastName.text?.toString()?.trim() ?: ""
             val email = binding.etEmail.text?.toString()?.trim() ?: ""
@@ -64,21 +63,19 @@ class RegisterActivity : AppCompatActivity() {
 
             clearErrors()
 
-            if (username.isEmpty()) { binding.tilUsername.error = "Username is required"; return@setOnClickListener }
             if (firstName.isEmpty()) { binding.tilFirstName.error = "First name is required"; return@setOnClickListener }
             if (lastName.isEmpty()) { binding.tilLastName.error = "Last name is required"; return@setOnClickListener }
             if (email.isEmpty()) { binding.tilEmail.error = "Email is required"; return@setOnClickListener }
             if (password.length < 8) { binding.tilPassword.error = "Min 8 characters"; return@setOnClickListener }
             if (password != confirm) { binding.tilConfirmPassword.error = "Passwords do not match"; return@setOnClickListener }
 
-            viewModel.register(username, firstName, lastName, email, password)
+            viewModel.register(firstName, lastName, email, password)
         }
 
         binding.tvGoToLogin.setOnClickListener { finish() }
     }
 
     private fun clearErrors() {
-        binding.tilUsername.error = null
         binding.tilFirstName.error = null
         binding.tilLastName.error = null
         binding.tilEmail.error = null

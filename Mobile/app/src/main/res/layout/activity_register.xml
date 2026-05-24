@@ -60,22 +60,6 @@
                         android:gravity="center"
                         android:layout_marginBottom="16dp" />
 
-                    <!-- Username -->
-                    <com.google.android.material.textfield.TextInputLayout
-                        android:id="@+id/tilUsername"
-                        style="@style/Widget.TechTrack.TextInputLayout"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:hint="@string/hint_username">
-                        <com.google.android.material.textfield.TextInputEditText
-                            android:id="@+id/etUsername"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:inputType="text"
-                            android:imeOptions="actionNext"
-                            android:textColor="@color/text_primary" />
-                    </com.google.android.material.textfield.TextInputLayout>
-
                     <!-- First / Last name row -->
                     <LinearLayout
                         android:layout_width="match_parent"

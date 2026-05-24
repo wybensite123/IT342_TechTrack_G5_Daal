@@ -6,19 +6,33 @@
     android:background="@color/background">
 
     <!-- Logo -->
-    <ImageView
-        android:id="@+id/ivLogo"
-        android:layout_width="296dp"
-        android:layout_height="319dp"
-        android:adjustViewBounds="true"
-        android:contentDescription="TechTrack Logo"
-        android:src="@drawable/techtrack_logo"
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/cardSplashLogo"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="32dp"
+        android:layout_marginBottom="16dp"
+        android:padding="18dp"
+        android:backgroundTint="@color/surface"
+        app:cardCornerRadius="20dp"
+        app:cardElevation="6dp"
         app:layout_constraintBottom_toTopOf="@id/tvTagline"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_chainStyle="packed"
-        app:layout_constraintWidth_percent="0.55" />
+        app:layout_constraintWidth_percent="0.7">
+
+        <ImageView
+            android:id="@+id/ivLogo"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:adjustViewBounds="true"
+            android:contentDescription="TechTrack Logo"
+            android:scaleType="fitCenter"
+            android:src="@drawable/techtrack_logo" />
+
+    </com.google.android.material.card.MaterialCardView>
 
     <!-- Tagline -->
     <TextView
@@ -33,7 +47,7 @@
         app:layout_constraintBottom_toTopOf="@id/progressBar"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/ivLogo" />
+        app:layout_constraintTop_toBottomOf="@id/cardSplashLogo" />
 
     <!-- Loading indicator -->
     <ProgressBar

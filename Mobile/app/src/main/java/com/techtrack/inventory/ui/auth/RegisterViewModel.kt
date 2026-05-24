@@ -16,7 +16,6 @@ class RegisterViewModel(private val repository: AuthRepository) : ViewModel() {
     val registerState: LiveData<Resource<AuthData>> = _registerState
 
     fun register(
-        username: String,
         firstName: String,
         lastName: String,
         email: String,
@@ -24,7 +23,7 @@ class RegisterViewModel(private val repository: AuthRepository) : ViewModel() {
     ) {
         _registerState.value = Resource.Loading
         viewModelScope.launch {
-            _registerState.value = repository.register(username, firstName, lastName, email, password)
+            _registerState.value = repository.register(firstName, lastName, email, password)
         }
     }
 }

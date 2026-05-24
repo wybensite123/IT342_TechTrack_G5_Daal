@@ -34,7 +34,6 @@ class AuthRepository(
     }
 
     suspend fun register(
-        username: String,
         firstName: String,
         lastName: String,
         email: String,
@@ -42,7 +41,7 @@ class AuthRepository(
     ): Resource<AuthData> {
         return try {
             val response = api.register(
-                RegisterRequest(username, firstName, lastName, email, password)
+                RegisterRequest(firstName, lastName, email, password)
             )
             if (response.success && response.data != null) {
                 Resource.Success(response.data)
