@@ -1,0 +1,38 @@
+# Gradle
+.gradle/
+build/
+**/build/
+
+# Local configuration
+local.properties
+
+# Android Studio
+.idea/
+*.iml
+
+# Kotlin/Java
+*.class
+*.jar
+*.war
+*.ear
+
+# APKs
+*.apk
+*.ap_
+
+# Logs and temporary files
+*.log
+build_mobile_lint.txt
+build_mobile_output.txt
+status_check.txt
+git_status2.txt
+test_gradle.txt
+
+# Other generated files
+captures/
+externalNativeBuild/
+.cxx/
+
+# OS files
+.DS_Store
+Thumbs.db
