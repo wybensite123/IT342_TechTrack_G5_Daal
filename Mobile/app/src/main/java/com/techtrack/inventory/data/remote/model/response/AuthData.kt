@@ -1,13 +1,14 @@
 package com.techtrack.inventory.data.remote.model.response
 
 data class AuthData(
-    val user: UserDto,
     val accessToken: String,
-    val refreshToken: String?
+    val tokenType: String,
+    val user: UserDto,
+    val refreshToken: String? = null
 )
 
 /**
- * Backend returns camelCase (firstName, lastName), so no @SerializedName is needed.
+ * Backend returns camelCase (firstName, lastName, profilePicture), so no @SerializedName is needed.
  * Every optional field is nullable so we never crash on a missing or null value.
  */
 data class UserDto(
@@ -18,5 +19,6 @@ data class UserDto(
     val role: String?,
     val department: String?,
     val studentId: String?,
-    val username: String?
+    val profilePicture: String?,
+    val username: String? = null
 )

@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Circular avatar ring: gradient fill + bright accent border (web parity). -->
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+    <item>
+        <shape android:shape="oval">
+            <solid android:color="#3B82F6" />
+        </shape>
+    </item>
+    <item
+        android:left="3dp" android:top="3dp"
+        android:right="3dp" android:bottom="3dp">
+        <shape android:shape="oval">
+            <gradient
+                android:startColor="#3B82F6"
+                android:endColor="#10B981"
+                android:angle="135" />
+        </shape>
+    </item>
+</layer-list>
