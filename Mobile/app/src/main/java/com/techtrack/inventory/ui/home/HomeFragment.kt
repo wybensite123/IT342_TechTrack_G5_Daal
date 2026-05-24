@@ -1,6 +1,7 @@
 package com.techtrack.inventory.ui.home
 
 import android.app.AlertDialog
+import android.app.DatePickerDialog
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
@@ -143,20 +144,42 @@ class HomeFragment : Fragment() {
 
     private fun showLoanDialog(asset: AssetResponse) {
         val dialogBinding = DialogLoanRequestBinding.inflate(layoutInflater)
-        AlertDialog.Builder(requireContext())
+        dialogBinding.etReturnDate.setOnClickListener { showDatePicker(dialogBinding.etReturnDate) }
+
+        val dialog = AlertDialog.Builder(requireContext())
             .setTitle(getString(R.string.dialog_loan_title))
             .setView(dialogBinding.root)
-            .setPositiveButton(getString(R.string.btn_submit)) { _, _ ->
+            .setPositiveButton(getString(R.string.btn_submit), null)
+            .setNegativeButton(getString(R.string.btn_cancel), null)
+            .create()
+
+        dialog.setOnShowListener {
+            dialog.getButton(AlertDialog.BUTTON_POSITIVE).setOnClickListener {
                 val purpose = dialogBinding.etPurpose.text.toString().trim()
                 val returnDate = dialogBinding.etReturnDate.text.toString().trim()
                 if (purpose.isEmpty() || returnDate.isEmpty()) {
                     requireContext().toast("Please fill all fields")
                 } else {
                     loanViewModel.submitLoan(asset.id, purpose, returnDate)
+                    dialog.dismiss()
                 }
             }
-            .setNegativeButton(getString(R.string.btn_cancel), null)
-            .show()
+        }
+
+        dialog.show()
+    }
+
+    private fun showDatePicker(input: com.google.android.material.textfield.TextInputEditText) {
+        val now = java.util.Calendar.getInstance()
+        DatePickerDialog(
+            requireContext(),
+            { _, year, month, dayOfMonth ->
+                input.setText(String.format("%04d-%02d-%02d", year, month + 1, dayOfMonth))
+            },
+            now.get(java.util.Calendar.YEAR),
+            now.get(java.util.Calendar.MONTH),
+            now.get(java.util.Calendar.DAY_OF_MONTH)
+        ).show()
     }
 
     override fun onDestroyView() {

@@ -29,7 +29,7 @@ const LoginPage = () => {
   const [isLogin, setIsLogin] = useState(true);
   const [form, setForm] = useState({ email: '', password: '' });
   const [registerForm, setRegisterForm] = useState({ 
-    firstName: '', lastName: '', email: '', password: '', confirmPassword: '', agreeTerms: false 
+    username: '', firstName: '', lastName: '', email: '', password: '', confirmPassword: '', agreeTerms: false 
   });
   const [showPassword, setShowPassword] = useState(false);
   const [error, setError] = useState('');
@@ -73,6 +73,7 @@ const LoginPage = () => {
   const handleRegisterSubmit = async (e) => {
     e.preventDefault();
     setError('');
+    if (!registerForm.username) { setError('Please enter a username.'); return; }
     if (!registerForm.firstName) { setError('Please enter your first name.'); return; }
     if (!registerForm.lastName) { setError('Please enter your last name.'); return; }
     if (!registerForm.email) { setError('Please enter your email.'); return; }
@@ -224,6 +225,15 @@ const LoginPage = () => {
               <p className="login-subtitle">Join TechTrack today</p>
 
               <form onSubmit={handleRegisterSubmit}>
+                <div className="form-field">
+                  <label htmlFor="username" className="field-label">Username</label>
+                  <input
+                    id="username" name="username" type="text"
+                    placeholder="johnsmith"
+                    value={registerForm.username} onChange={handleRegisterChange}
+                    className="input-field" required
+                  />
+                </div>
                 <div className="form-row">
                   <div className="form-field">
                     <label htmlFor="firstName" className="field-label">First Name</label>

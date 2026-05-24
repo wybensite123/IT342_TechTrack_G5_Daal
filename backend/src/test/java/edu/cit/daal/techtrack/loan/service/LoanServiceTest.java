@@ -1,6 +1,7 @@
 package edu.cit.daal.techtrack.loan.service;
 
 import java.time.LocalDate;
+import java.util.List;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -19,6 +20,7 @@ import edu.cit.daal.techtrack.entity.User;
 import edu.cit.daal.techtrack.enums.AssetStatus;
 import edu.cit.daal.techtrack.enums.LoanStatus;
 import edu.cit.daal.techtrack.exception.BusinessRuleException;
+import edu.cit.daal.techtrack.repository.AssetImageRepository;
 import edu.cit.daal.techtrack.repository.AssetRepository;
 import edu.cit.daal.techtrack.repository.LoanHistoryRepository;
 import edu.cit.daal.techtrack.repository.LoanRepository;
@@ -29,6 +31,9 @@ class LoanServiceTest {
 
     @Mock
     private LoanRepository loanRepository;
+
+    @Mock
+    private AssetImageRepository assetImageRepository;
 
     @Mock
     private AssetRepository assetRepository;
@@ -81,6 +86,7 @@ class LoanServiceTest {
         when(assetRepository.save(any())).thenAnswer(invocation -> invocation.getArgument(0));
         when(loanRepository.save(any())).thenAnswer(invocation -> invocation.getArgument(0));
         when(historyRepository.save(any())).thenAnswer(invocation -> invocation.getArgument(0));
+        when(assetImageRepository.findByAssetId(1L)).thenReturn(List.of());
 
         LoanRequest request = new LoanRequest();
         request.setAssetId(1L);

@@ -19,6 +19,6 @@ data class UserDto(
     val role: String?,
     val department: String?,
     val studentId: String?,
-    val profilePicture: String?,
+    val profilePicture: String? = null,
     val username: String? = null
 )
